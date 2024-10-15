@@ -4,7 +4,6 @@
 import { Calendar } from '@fullcalendar/core'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
-import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
 import rrulePlugin from '@fullcalendar/rrule'
 import esLocale from '@fullcalendar/core/locales/es';
 
@@ -17,12 +16,11 @@ export default $ => {
     const calendar = new Calendar(
       calendarelm, 
       {
-        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+        // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         locale: esLocale,
         plugins: [ 
           interactionPlugin,
           dayGridPlugin,
-          resourceTimelinePlugin,
           rrulePlugin
         ],
         headerToolbar: {
@@ -30,18 +28,35 @@ export default $ => {
           center: 'title',
           right: 'dayGridMonth'
         },
-        events: [
-          {
-            id: 'a',
-            title: 'my event',
-            start: '2024-10-17T09:00:00.000Z',
-            rrule: {
-              freq: 'weekly',
-              dtstart: '2024-10-17T09:00:00.000Z', // will also accept '20120201T103000'
-            }
-          }
-        ],
+        // dayMaxEventRows: 1,
         selectable: true,
+        events: (
+          fetchInfo,
+          success,
+          fail
+        ) => {
+
+          console.log(fetchInfo)
+
+          fetch(
+            '/wp-json/'
+          )
+
+          const events = []
+          for(let i=0; i<5; i++){
+
+            const datestart = new Date().getTime()
+            const dateend = datestart + (1 * 24 * 60 * 60 * 1000)
+
+            events.push({
+              'title': 'Title ' + i,
+              'start': datestart,
+              'end': dateend
+            })
+          }
+
+          success(events)
+        },
         /*
         dateClick: info => {
 
@@ -69,7 +84,6 @@ export default $ => {
 
           return true
         },
-        */
         eventClick: info => {
 
           console.log('----------------------------')
@@ -78,8 +92,11 @@ export default $ => {
 
           return true
         }
+        */
       }
     )
     calendar.render()
+
+    // calendar.refetchEvents()
   }
 }

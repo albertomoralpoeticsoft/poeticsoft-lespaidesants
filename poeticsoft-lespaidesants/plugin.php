@@ -4,11 +4,13 @@
 *
 * Plugin Name: poeticsoft-lespaidesants
 * Plugin URI: https://poeticsoft.com/plugins/lespaidesants
-* Description: Poeticsoft L'espai de Sants
+* Description: Poeticsoft L'espai de Sants Plugin
 * Version: 0.00
 * Author: Poeticsoft Team
 * Author URI: https://poeticsoft.com/about
 */
+
+// Calendar -- AIzaSyC9mAJ8ylhMf_nXJm0RSUVNhx3DUmh2HiI
 
 function core_log($display) { 
 
@@ -28,6 +30,14 @@ require_once(dirname(__FILE__) . '/mail.php');
 require_once(dirname(__FILE__) . '/analytics/main.php');
 require_once(dirname(__FILE__) . '/scripts.php');
 require_once(dirname(__FILE__) . '/reservas/main.php');
+
+register_activation_hook(
+	__FILE__,
+	function() {
+    
+    lespaidesants_plugin_reservas_init();
+  }
+);
 
 /**
 * Init
