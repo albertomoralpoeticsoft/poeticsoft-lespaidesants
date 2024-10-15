@@ -1,0 +1,1 @@
+call webpack --env=app-dev-watch
