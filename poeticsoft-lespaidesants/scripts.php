@@ -8,7 +8,11 @@ add_action(
       'poeticsoft-lespaidesants-app-js', 
       plugin_dir_url(__DIR__) . 'poeticsoft-lespaidesants/app/main.js',
       array(
-        'jquery'
+        'jquery',
+        'jquery-ui-dialog',
+        'jquery-form',
+        'jquery-ui-tooltip',
+        'jquery-ui-datepicker'
       ), 
       filemtime(plugin_dir_path(__DIR__) . 'poeticsoft-lespaidesants/app/main.js'),
       true

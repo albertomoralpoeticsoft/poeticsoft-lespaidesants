@@ -5,5 +5,7 @@ function lespaidesants_plugin_block_reservas_callback(
   $content
 ) {
 
-  return '<div class="ReservasCalendar"></div>';
+  return '<div class="ReservasCalendar">
+    <div class="Calendar"></div>
+  </div>';
 }

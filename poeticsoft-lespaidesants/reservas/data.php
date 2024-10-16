@@ -74,8 +74,8 @@ function lespaidesants_plugin_reservas_data_event_all( WP_REST_Request $req ) {
     $tablename = $baseprefix . 'reservas_events';
     
     $params = $req->get_params();
-    $start = $params['start'];
-    $end = $params['end'];
+    $start = $params['start']; // In milliseconds
+    $end = $params['end'];     //       "
 
     $query = "
       SELECT * 

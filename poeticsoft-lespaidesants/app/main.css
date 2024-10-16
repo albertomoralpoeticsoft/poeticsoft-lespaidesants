@@ -3,6 +3,10 @@
   \*****************************************************************************************************************/
 /* SIZES */
 /* Colors */
+/* 
+  ------------------------------------------------
+  Fonts 
+*/
 html,
 body {
   padding: 0;
@@ -16,6 +20,98 @@ body {
 }
 .ReservasCalendar .fc-day {
   cursor: pointer;
+}
+
+.CustomOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.ReservaDayDialog {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 10000;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.ReservaDayDialog .ui-dialog-titlebar {
+  padding: 24px 16px 8px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.ReservaDayDialog .ui-dialog-titlebar .ui-button {
+  display: none;
+}
+.ReservaDayDialog .ui-dialog-content {
+  padding: 8px 16px 16px;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field select {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field select option {
+  padding: 8px;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.HourSelector, .ReservaDayDialog .ui-dialog-content form .Fields .Field.DurationSelector {
+  width: calc(50% - 8px);
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent {
+  width: 100%;
+  margin: 24px 0 0 0;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent input {
+  width: 16px;
+  height: 16px;
+  margin: 0 4px 0 0;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent label {
+  flex: 1;
+  font-size: 1em;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Durante {
+  width: 100%;
+  margin: 12px 0 0 0;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Mail {
+  margin: 24px 0 0 0;
+}
+.ReservaDayDialog .ui-dialog-content form .Fields .Field.Mail input {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+  text-align: center;
+}
+.ReservaDayDialog .ui-dialog-content form .Actions {
+  margin: 16px 0 0 0;
+  text-align: right;
+}
+.ReservaDayDialog .ui-dialog-content form .Actions input {
+  padding: 8px 16px;
 }
 
 /*# sourceMappingURL=main.css.map*/

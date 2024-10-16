@@ -10,3 +10,131 @@
     cursor: pointer;
   }
 }
+
+.CustomOverlay {
+
+  @include absolutebox();
+  background-color: $color-dark-transparent-b;
+  z-index: 9999;
+}
+
+.ReservaDayDialog {
+
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 10000;
+  background-color: $color-light;
+  border-radius: $space * 0.5;  
+
+  .ui-dialog-titlebar {
+    
+    padding: $space * 3 $space * 2 $space; 
+    font-weight: bold;
+    font-size: 1.2em;
+    // border: solid $color-dark;
+    // border-width: 0 0 1px 0;
+
+    .ui-button {
+
+      display: none;
+    }
+  }
+
+  .ui-dialog-content {
+
+    padding: $space $space * 2 $space * 2;
+
+    form {
+
+      .Fields {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+
+        .Field {
+
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          select {
+
+            width: 100%;
+            padding: 0 0 $space * 0.5 0 !important;
+            border-width: 0 0 1px 0 !important;
+            border-radius: 0;
+            cursor: pointer;
+            height: auto !important;
+
+            option {
+
+              padding: $space;
+            }
+          }
+
+          &.HourSelector,
+          &.DurationSelector {
+
+            width: calc(50% - #{$space});
+          }
+
+          &.Recurrent {
+
+            width: 100%;
+            margin: $space * 3 0 0 0;
+
+            input {
+
+              width: $space * 2;
+              height: $space * 2;
+              margin: 0 $space * 0.5 0 0;
+            }
+
+            label {
+
+              flex: 1;
+              font-size: 1em;
+            }
+          }
+
+          &.Durante {
+
+            width: 100%;
+            margin: 12px 0 0 0;
+          }
+
+          &.Mail {
+
+            margin: $space * 3 0 0 0;
+
+            input {
+
+              width: 100%;
+              padding: 0 0 $space * 0.5 0 !important;
+              border-width: 0 0 1px 0 !important;
+              border-radius: 0;
+              cursor: pointer;
+              height: auto !important;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      .Actions {
+
+        margin: $space * 2 0 0 0;
+        text-align: right;
+
+        input {
+
+          padding: $space $space * 2
+        }
+      }
+    }
+  }
+}
