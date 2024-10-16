@@ -42,12 +42,26 @@ body {
   border-radius: 4px;
 }
 .ReservaDayDialog .ui-dialog-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
   padding: 24px 16px 8px;
   font-weight: bold;
   font-size: 1.2em;
 }
+.ReservaDayDialog .ui-dialog-titlebar .ui-dialog-title {
+  flex: 1;
+  line-height: 1.1em;
+}
 .ReservaDayDialog .ui-dialog-titlebar .ui-button {
-  display: none;
+  position: relative;
+  top: -8px;
+  right: -4px;
+  padding-top: 7px;
+  padding-right: 12px;
+  padding-bottom: 10px;
+  padding-left: 12px;
 }
 .ReservaDayDialog .ui-dialog-content {
   padding: 8px 16px 16px;
@@ -71,6 +85,9 @@ body {
   cursor: pointer;
   height: auto !important;
 }
+.ReservaDayDialog .ui-dialog-content form .Fields .Field select:disabled {
+  opacity: 0.2;
+}
 .ReservaDayDialog .ui-dialog-content form .Fields .Field select option {
   padding: 8px;
 }
@@ -80,11 +97,13 @@ body {
 .ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent {
   width: 100%;
   margin: 24px 0 0 0;
+  align-items: stretch;
 }
 .ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent input {
   width: 16px;
   height: 16px;
-  margin: 0 4px 0 0;
+  margin: 2px 6px 0 0;
+  cursor: pointer;
 }
 .ReservaDayDialog .ui-dialog-content form .Fields .Field.Recurrent label {
   flex: 1;
@@ -107,11 +126,13 @@ body {
   text-align: center;
 }
 .ReservaDayDialog .ui-dialog-content form .Actions {
-  margin: 16px 0 0 0;
-  text-align: right;
+  margin: 32px 0 0 0;
+  text-align: center;
 }
 .ReservaDayDialog .ui-dialog-content form .Actions input {
+  width: 90%;
   padding: 8px 16px;
+  margin: 4px auto;
 }
 
 /*# sourceMappingURL=main.css.map*/

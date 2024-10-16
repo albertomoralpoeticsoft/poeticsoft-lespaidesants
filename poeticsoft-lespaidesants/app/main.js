@@ -52,10 +52,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/app/js/reservas.js":
-/*!********************************!*\
-  !*** ./src/app/js/reservas.js ***!
-  \********************************/
+/***/ "./src/app/js/reservas/dialogreserva.js":
+/*!**********************************************!*\
+  !*** ./src/app/js/reservas/dialogreserva.js ***!
+  \**********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -65,46 +65,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
-/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
-/* harmony import */ var _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/rrule */ "./node_modules/@fullcalendar/rrule/index.js");
-/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
-// https://fullcalendar.io/docs/initialize-globals
-// https://fullcalendar.io/docs/date-clicking-selecting
+/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms */ "./src/app/js/reservas/forms.js");
 
 moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
 
-
-
-
-
-var form = function form(data) {
-  var houroptions = '<option value="Todo">Todo el día</option>';
-  for (var i = 9; i < 22; i++) {
-    var hour = i.toString().padStart(2, 0);
-    houroptions += "<option\n      value=\"".concat(hour, "\"\n    >\n      Desde ").concat(hour, ":00\n    </option>");
-  }
-  var durationoptions = '<option value="Todo"></option>';
-  for (var _i = 1; _i < 12; _i++) {
-    durationoptions += "<option\n      value=\"".concat(_i, "\"\n    >\n      ").concat(_i, " hora/s\n    </option>");
-  }
-  var durantenoptions = '<option value="No">Selecciona hasta cuando...</option>';
-  for (var _i2 = 2; _i2 < 9; _i2++) {
-    durantenoptions += "<option\n      value=\"".concat(_i2, "\"\n    >\n      Durante ").concat(_i2, " semanas\n    </option>");
-  }
-  return "\n    <form\n      action=\"/wp-json/lespaidesants/reservas/data/event/add\" \n      method=\"post\"\n    > \n      <div class=\"Fields\">\n        <div class=\"Field HourSelector\">\n          <select name=\"hour\"> \n            ".concat(houroptions, "\n          </select> \n        </div>\n        <div class=\"Field DurationSelector\">\n          <select name=\"duration\" disabled=\"disabled\"> \n            ").concat(durationoptions, "\n          </select> \n        </div>\n        <div class=\"Field Recurrent\">\n          <input \n            type=\"checkbox\" \n            name=\"recurrent\"\n          /> \n          <label for=\"recurrent\">\n            Quiero reservar este horario los ").concat(data.diasemana, "\n          </label>\n        </div>\n        <div class=\"Field Durante\">\n          <select name=\"duranten\" > \n            ").concat(durantenoptions, "\n          </select> \n        </div>\n        <div class=\"Field Mail\">\n          <input \n            type=\"email\" \n            placeholder=\"Tu Email para confirmar\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"reservarmas\"\n          type=\"submit\" \n          value=\"Reservar m\xE1s dias\" \n        /> \n        <input \n          id=\"reservar\"\n          type=\"submit\" \n          value=\"Reservar\" \n        /> \n      </div>\n    </form>\n  ");
-};
-var dialogreserva = function dialogreserva($, calendar, dayinfo, $elm) {
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, calendar, dayinfo, $elm) {
   var dia = moment__WEBPACK_IMPORTED_MODULE_0___default()(dayinfo.dateStr).format('D [de] MMMM');
   var diasemana = moment__WEBPACK_IMPORTED_MODULE_0___default()(dayinfo.dateStr).format('dddd');
-  $elm.append("<div id=\"ReservaDay\">\n    ".concat(form({
-    diasemana: diasemana
-  }), "\n  </div>"));
+  $elm.append("<div id=\"ReservaDay\">\n    <div id=\"form\"></div>\n  </div>");
   $('#ReservaDay').dialog({
     dialogClass: "ReservaDayDialog",
     modal: true,
     title: "Reserva el ".concat(diasemana, " d\xEDa ").concat(dia),
+    closeText: 'x',
     width: 340,
     open: function open() {
       $('.ui-widget-overlay').addClass('CustomOverlay');
@@ -114,19 +87,142 @@ var dialogreserva = function dialogreserva($, calendar, dayinfo, $elm) {
     },
     create: function create(event, ui) {
       var $dialog = $(event.target);
-      var $reservarmas = $dialog.find('#reservarmas');
-      var $reservar = $dialog.find('#reservar');
-      $reservarmas.on('click', function () {
-        $('#ReservaDay').dialog('close');
-        return false;
-      });
-      $reservar.on('click', function () {
-        $('#ReservaDay').dialog('close');
-        return false;
-      });
+      var $form = $dialog.find('#form');
+      var drawform = function drawform(formid) {
+        $form.empty();
+        switch (formid) {
+          case 'dates':
+            $form.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__.datesform)({
+              diasemana: diasemana
+            }));
+            break;
+          case 'confirm':
+            $form.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__.confirmform)());
+            break;
+          case 'saving':
+            $form.html((0,_forms__WEBPACK_IMPORTED_MODULE_1__.savingform)());
+            break;
+        }
+        var $selecthour = $form.find('#selecthour');
+        var $selectduration = $form.find('#selectduration');
+        var $isrecurrent = $form.find('#isrecurrent');
+        var $recurrentuntil = $form.find('#recurrentuntil');
+        var $yourmail = $form.find('#yourmail');
+        var $reservarmas = $form.find('#reservarmas');
+        var $reservar = $form.find('#reservar');
+        var $confirmreservation = $form.find('#confirmreservation');
+        $selecthour.length && $selecthour.on('change', function () {
+          var $this = $(this);
+          if ($this.val() == 'Todo') {
+            $selectduration.prop('disabled', 'disabled');
+            $selectduration.val('Todo');
+          } else {
+            $selectduration.prop('disabled', false);
+          }
+        });
+        $isrecurrent.length && $isrecurrent.on('change', function () {
+          var $this = $(this);
+          if ($this.is(':checked')) {
+            $recurrentuntil.prop('disabled', false);
+          } else {
+            $recurrentuntil.prop('disabled', 'disabled');
+            $recurrentuntil.val('No');
+          }
+        });
+        $reservarmas && $reservarmas.on('click', function () {
+          var reservadata = {
+            day: dayinfo.dateStr,
+            hora: $selecthour.val(),
+            duration: $selectduration.val(),
+            isrecurrent: $isrecurrent.is(':checked'),
+            recurrentuntil: $recurrentuntil.val()
+          };
+          drawform('saving');
+          setTimeout(function () {
+            $('#ReservaDay').dialog('close');
+          }, 1000);
+          return false;
+        });
+        $reservar && $reservar.on('click', function () {
+          $('#ReservaDay').dialog('option', 'title', 'Confirmar reservas');
+          drawform('confirm');
+          return false;
+        });
+        $confirmreservation && $confirmreservation.on('click', function () {
+          $('#ReservaDay').dialog('close');
+          return false;
+        });
+      };
+      drawform('dates');
     }
   });
+});
+
+/***/ }),
+
+/***/ "./src/app/js/reservas/forms.js":
+/*!**************************************!*\
+  !*** ./src/app/js/reservas/forms.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   confirmform: () => (/* binding */ confirmform),
+/* harmony export */   datesform: () => (/* binding */ datesform),
+/* harmony export */   savingform: () => (/* binding */ savingform)
+/* harmony export */ });
+var datesform = function datesform(data) {
+  var houroptions = '<option value="Todo">Todo el día</option>';
+  for (var i = 9; i < 22; i++) {
+    var hour = i.toString().padStart(2, 0);
+    houroptions += "<option\n      value=\"".concat(i, "\"\n    >\n      Desde ").concat(hour, ":00\n    </option>");
+  }
+  var durationoptions = '<option value="Todo">Cuantas horas?</option>';
+  for (var _i = 1; _i < 12; _i++) {
+    durationoptions += "<option\n      value=\"".concat(_i, "\"\n    >\n      ").concat(_i, " hora/s\n    </option>");
+  }
+  var durantenoptions = '<option value="No">Selecciona hasta cuando...</option>';
+  for (var _i2 = 2; _i2 < 9; _i2++) {
+    durantenoptions += "<option\n      value=\"".concat(_i2, "\"\n    >\n      Durante ").concat(_i2, " semanas\n    </option>");
+  }
+  return "\n    <form> \n      <div class=\"Fields\">\n        <div class=\"Field HourSelector\">\n          <select \n            id=\"selecthour\"\n            name=\"hour\"\n          > \n            ".concat(houroptions, "\n          </select> \n        </div>\n        <div class=\"Field DurationSelector\">\n          <select \n            id=\"selectduration\"\n            name=\"duration\" \n            disabled=\"disabled\"\n          > \n            ").concat(durationoptions, "\n          </select> \n        </div>\n        <div class=\"Field Recurrent\">\n          <input \n            id=\"isrecurrent\"\n            type=\"checkbox\" \n            name=\"recurrent\"\n          /> \n          <label for=\"recurrent\">\n            Quiero reservar este horario los ").concat(data.diasemana, "\n          </label>\n        </div>\n        <div class=\"Field Durante\">\n          <select \n            id=\"recurrentuntil\"\n            name=\"duranten\"\n            disabled=\"disabled\"\n          > \n            ").concat(durantenoptions, "\n          </select> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"reservarmas\"\n          type=\"submit\" \n          value=\"Guardar y seleccionar m\xE1s dias\" \n        /> \n        <input \n          id=\"reservar\"\n          type=\"submit\" \n          value=\"Reservar\" \n        /> \n      </div>\n    </form>\n  ");
 };
+var savingform = function savingform(data) {
+  return "\n    <form> \n      <div class=\"Message\">\n        Guardando...\n    </form>\n  ";
+};
+var confirmform = function confirmform(data) {
+  return "\n    <form> \n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email para confirmar\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmreservation\"\n          type=\"submit\" \n          value=\"Confirmar\" \n        /> \n      </div>\n    </form>\n  ";
+};
+
+/***/ }),
+
+/***/ "./src/app/js/reservas/main.js":
+/*!*************************************!*\
+  !*** ./src/app/js/reservas/main.js ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/rrule */ "./node_modules/@fullcalendar/rrule/index.js");
+/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
+/* harmony import */ var _dialogreserva__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dialogreserva */ "./src/app/js/reservas/dialogreserva.js");
+// https://fullcalendar.io/docs/initialize-globals
+// https://fullcalendar.io/docs/date-clicking-selecting
+
+
+
+
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   var $calendarreservas = $('.ReservasCalendar');
   if ($calendarreservas.length) {
@@ -137,12 +233,24 @@ var dialogreserva = function dialogreserva($, calendar, dayinfo, $elm) {
       // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
       locale: _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_2__["default"],
       plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__["default"], _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_5__["default"]],
+      customButtons: {
+        reservasbutton: {
+          text: 'Reservas [6]',
+          click: function click() {
+            console.log('Reservas');
+          }
+        }
+      },
+      validRange: function validRange(nowDate) {
+        return {
+          start: nowDate
+        };
+      },
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
-        right: 'dayGridMonth'
+        right: 'reservasbutton'
       },
-      selectable: true,
       events: function events(fetchInfo, success, fail) {
         var body = JSON.stringify({
           start: new Date(fetchInfo.startStr).getTime(),
@@ -162,32 +270,14 @@ var dialogreserva = function dialogreserva($, calendar, dayinfo, $elm) {
         });
       },
       dateClick: function dateClick(info) {
-        dialogreserva($, calendar, info, $calendarreserva);
+        (0,_dialogreserva__WEBPACK_IMPORTED_MODULE_0__["default"])($, calendar, info, $calendarreserva);
+      },
+      eventClick: function eventClick(info) {
+        console.log('----------------------------');
+        console.log('eventClick');
+        console.log(info);
+        return true;
       }
-      /*
-      select: info => {
-          console.log('----------------------------')
-        console.log('select')
-        // console.log(info)
-      },
-      unselect: info => {
-          console.log('----------------------------')
-        console.log('unselect')
-        // console.log(info)
-      },
-      selectAllow: info => {
-          console.log('----------------------------')
-        console.log('selectAllow')
-        // console.log(info)
-          return true
-      },
-      eventClick: info => {
-          console.log('----------------------------')
-        console.log('eventClick')
-        console.log(info)
-          return true
-      }
-      */
     });
     calendar.render();
 
@@ -40016,12 +40106,12 @@ var __webpack_exports__ = {};
   \*************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_analytics__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/analytics */ "./src/app/js/analytics.js");
-/* harmony import */ var _js_reservas__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/reservas */ "./src/app/js/reservas.js");
+/* harmony import */ var _js_reservas_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/reservas/main */ "./src/app/js/reservas/main.js");
 
 
 (function ($) {
   (0,_js_analytics__WEBPACK_IMPORTED_MODULE_0__["default"])($);
-  (0,_js_reservas__WEBPACK_IMPORTED_MODULE_1__["default"])($);
+  (0,_js_reservas_main__WEBPACK_IMPORTED_MODULE_1__["default"])($);
 })(jQuery);
 })();
 

@@ -30,15 +30,29 @@
 
   .ui-dialog-titlebar {
     
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $space;
     padding: $space * 3 $space * 2 $space; 
     font-weight: bold;
     font-size: 1.2em;
-    // border: solid $color-dark;
-    // border-width: 0 0 1px 0;
+
+    .ui-dialog-title {
+
+      flex: 1;
+      line-height: 1.1em;
+    }
 
     .ui-button {
 
-      display: none;
+      position: relative;
+      top: -$space;
+      right: -$space * 0.5;
+      padding-top: 7px;
+      padding-right: 12px;
+      padding-bottom: 10px;
+      padding-left: 12px;
     }
   }
 
@@ -70,6 +84,11 @@
             cursor: pointer;
             height: auto !important;
 
+            &:disabled {
+
+              opacity: 0.2;
+            }
+
             option {
 
               padding: $space;
@@ -86,12 +105,14 @@
 
             width: 100%;
             margin: $space * 3 0 0 0;
+            align-items: stretch;
 
             input {
 
               width: $space * 2;
               height: $space * 2;
-              margin: 0 $space * 0.5 0 0;
+              margin: 2px $space * 0.75 0 0;
+              cursor: pointer;
             }
 
             label {
@@ -127,12 +148,14 @@
 
       .Actions {
 
-        margin: $space * 2 0 0 0;
-        text-align: right;
+        margin: $space * 4 0 0 0;
+        text-align: center;
 
         input {
 
-          padding: $space $space * 2
+          width: 90%;
+          padding: $space $space * 2;
+          margin: $space * 0.5 auto;
         }
       }
     }
