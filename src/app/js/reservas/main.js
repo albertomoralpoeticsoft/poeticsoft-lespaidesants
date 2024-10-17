@@ -7,7 +7,9 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
 import esLocale from '@fullcalendar/core/locales/es'
 
-import datatransform from './datatransform'
+import {
+  receiveddatatransform
+} from './datatransform'
 import dialogreserva from './dialogreserva'
 
 import { 
@@ -53,7 +55,7 @@ export default $ => {
         },
         defaultAllDay: true,
         forceEventDuration: true,
-        eventDataTransform: datatransform,
+        eventDataTransform: receiveddatatransform,
         events: (
           fetchInfo,
           success,

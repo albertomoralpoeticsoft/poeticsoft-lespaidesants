@@ -1,6 +1,10 @@
 import moment from 'moment'
 moment.locale('es')
 
+import {
+  sentdatatransform
+} from './datatransform'
+
 export const callapi = data => {
 
   const urlbase = '/wp-json/lespaidesants/reservas/data/'
@@ -105,7 +109,7 @@ export const processreserva = data => {
 
     callapi({
       call: 'eventcreate',
-      body: eventdata
+      body: sentdatatransform(eventdata)
     })
     .then(resolve)
   })

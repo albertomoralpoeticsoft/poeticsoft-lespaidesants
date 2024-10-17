@@ -66,8 +66,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _datatransform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./datatransform */ "./src/app/js/reservas/datatransform.js");
 
 moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
+
 var callapi = function callapi(data) {
   var urlbase = '/wp-json/lespaidesants/reservas/data/';
   var P = new Promise(function (resolve, reject) {
@@ -139,7 +141,7 @@ var processreserva = function processreserva(data) {
     }
     callapi({
       call: 'eventcreate',
-      body: eventdata
+      body: (0,_datatransform__WEBPACK_IMPORTED_MODULE_1__.sentdatatransform)(eventdata)
     }).then(resolve);
   });
   return P;
@@ -156,10 +158,11 @@ var processreserva = function processreserva(data) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   receiveddatatransform: () => (/* binding */ receiveddatatransform),
+/* harmony export */   sentdatatransform: () => (/* binding */ sentdatatransform)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
-  return {
+var receiveddatatransform = function receiveddatatransform(data) {
+  var transformeddata = {
     id: data.id,
     overlap: data.overlap == "1",
     title: data.title,
@@ -167,13 +170,13 @@ __webpack_require__.r(__webpack_exports__);
     interactive: data.interactive == "1",
     groupId: data.groupId,
     allDay: data.allDay == "1",
-    start: parseInt(data.start),
-    end: parseInt(data.end),
-    daysOfWeek: data.daysOfWeek,
-    startTime: parseInt(data.startTime),
-    endTime: parseInt(data.endTime),
-    startRecur: parseInt(data.startRecur),
-    endRecur: parseInt(data.endRecur),
+    start: data.start ? parseInt(data.start) : null,
+    end: data.end ? parseInt(data.end) : null,
+    daysOfWeek: data.daysOfWeek ? JSON.parse(data.daysOfWeek) : null,
+    startTime: data.startTime ? parseInt(data.startTime) : null,
+    endTime: data.endTime ? parseInt(data.endTime) : null,
+    startRecur: data.startRecur ? parseInt(data.startRecur) : null,
+    endRecur: data.endRecur ? parseInt(data.endRecur) : null,
     editable: data.editable == "1",
     startEditable: data.startEditable,
     durationEditable: data.durationEditable,
@@ -190,7 +193,46 @@ __webpack_require__.r(__webpack_exports__);
     extendedProps: data.extendedProps,
     state: data.state
   };
-});
+  return transformeddata;
+};
+var sentdatatransform = function sentdatatransform(data) {
+  var transformeddata = {
+    overlap: false,
+    // data.overlap,
+
+    title: data.title,
+    url: data.url,
+    interactive: data.interactive,
+    groupId: data.groupId,
+    allDay: data.allDay,
+    start: data.start,
+    end: data.end,
+    daysOfWeek: data.daysOfWeek ? JSON.stringify(data.daysOfWeek) : null,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    startRecur: data.startRecur,
+    endRecur: data.endRecur,
+    editable: data.editable,
+    startEditable: data.startEditable,
+    durationEditable: data.durationEditable,
+    resourceEditable: data.resourceEditable,
+    resourceId: data.resourceId,
+    resourceIds: data.resourceIds,
+    display: data.display,
+    restriction: data.restriction,
+    className: data.className,
+    color: '#cc0000',
+    // data.color,
+    backgroundColor: '#00cc00',
+    // data.backgroundColor,
+    borderColor: data.borderColor,
+    textColor: data.textColor,
+    extendedProps: data.extendedProps,
+    state: data.state
+  };
+  console.log(transformeddata);
+  return transformeddata;
+};
 
 /***/ }),
 
@@ -401,7 +443,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       defaultAllDay: true,
       forceEventDuration: true,
-      eventDataTransform: _datatransform__WEBPACK_IMPORTED_MODULE_0__["default"],
+      eventDataTransform: _datatransform__WEBPACK_IMPORTED_MODULE_0__.receiveddatatransform,
       events: function events(fetchInfo, success, fail) {
         (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.callapi)({
           call: 'eventall',
