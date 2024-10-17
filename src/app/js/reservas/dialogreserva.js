@@ -5,6 +5,7 @@ import {
   savingform,
   confirmform
 } from './forms'
+import { processreserva } from './dataapi'
 
 export default (
   $, 
@@ -119,21 +120,19 @@ export default (
           'click',
           () => {
 
-            const reservadata = {
+            drawform('saving')
+
+            processreserva({
               day: dayinfo.dateStr,
               hora: $selecthour.val(),
               duration: $selectduration.val(),
               isrecurrent: $isrecurrent.is(':checked'),
               recurrentuntil: $recurrentuntil.val()
-            }
+            })
+            .then(processresult => {
 
-            drawform('saving')
-
-            setTimeout(() => {
-
-              $('#ReservaDay').dialog('close')
-
-            }, 1000)
+              calendar.refetchEvents()
+            })
 
             return false
           }

@@ -14,8 +14,8 @@ export const datesform = data => {
     </option>`
   }
 
-  let durationoptions = '<option value="Todo">Cuantas horas?</option>'
-  for(let i=1; i<12; i++) {
+  let durationoptions = '<option value="1">Duración (min 1h)</option>'
+  for(let i=2; i<12; i++) {
 
     durationoptions += `<option
       value="${ i }"
@@ -24,8 +24,8 @@ export const datesform = data => {
     </option>`
   }
 
-  let durantenoptions = '<option value="No">Selecciona hasta cuando...</option>'
-  for(let i=2; i<9; i++) {
+  let durantenoptions = '<option value="2">Selecciona hasta cuando (min 2 semanas)</option>'
+  for(let i=3; i<9; i++) {
 
     durantenoptions += `<option
       value="${ i }"

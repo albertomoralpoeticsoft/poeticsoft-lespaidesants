@@ -18,25 +18,31 @@ function lespaidesants_plugin_reservas_init() {
   // https://fullcalendar.io/docs/event-parsing
 
   $createsql = "CREATE TABLE IF NOT EXISTS $tablename (" .
-    "id INTEGER NOT NULL AUTO_INCREMENT," .      
+    "id INTEGER NOT NULL AUTO_INCREMENT," . 
+
+    "title VARCHAR(256)," .
+    "url VARCHAR(256)," .
+    "interactive TINYINT(1)," . // Boolean 0/1
+    "className VARCHAR(256)," . // 'myclass' | 'myclass1 myclass2'
+
     "groupId VARCHAR(256)," .
     "allDay TINYINT(1)," . // Boolean 0/1
     "start BIGINT," . // Date parseable https://fullcalendar.io/docs/date-parsing
     "end BIGINT," . // Date parseable
+
     "daysOfWeek VARCHAR(256)," . // JSON array [0,1]
     "startTime BIGINT," . // Duration object  https://fullcalendar.io/docs/duration-object
     "endTime BIGINT," . // Duration object
     "startRecur BIGINT," . // Date parseable
     "endRecur BIGINT," . // Date parseable
-    "title VARCHAR(256)," .
-    "url VARCHAR(256)," .
-    "interactive TINYINT(1)," . // Boolean 0/1
+    
     "editable TINYINT(1)," . // Boolean 0/1
     "startEditable TINYINT(1)," . // Boolean 0/1
     "durationEditable TINYINT(1)," . // Boolean 0/1
     "resourceEditable TINYINT(1)," . // Boolean 0/1
     "resourceId VARCHAR(256)," .
     "resourceIds VARCHAR(256)," . // JSON array ["resource id",...]
+    
     "display VARCHAR(256)," . // 'auto','block', 'list-item', 'background', 'inverse-background', or 'none'
     "overlap TINYINT(1)," . // Boolean 0/1
     "restriction VARCHAR(256)," . // fot constraint reserved key A groupId 
@@ -44,7 +50,10 @@ function lespaidesants_plugin_reservas_init() {
     "backgroundColor VARCHAR(256)," .
     "borderColor VARCHAR(256)," .
     "textColor VARCHAR(256)," .
-    "extendedProps VARCHAR(4096)," . // JSON object       
+    "extendedProps VARCHAR(4096)," . // JSON object 
+
+    "state VARCHAR(256)," . // reserved | paid | past
+
     "PRIMARY KEY (id)
   ) $charset_collate;";
 
@@ -110,27 +119,22 @@ function lespaidesants_plugin_reservas_data_event_create( WP_REST_Request $req )
 
       $blogid = get_current_blog_id();
       $baseprefix .= $blogid . '_';
-    }    
-
-    $tablename = $baseprefix . 'reservas_events';
-    
-    $params = $req->get_params();
+    }
+    $tablename = $baseprefix . 'reservas_events';    
+    $data = lespaidesants_plugin_reservas_data_event_parsefordb($req->get_params());
 
     $wpdb->insert(
       $tablename,
-      [
-        'title' => $params['title'],
-        'start_date' => $params['start_date'],
-        'end_date' => $params['end_date']
-      ],
-      [
-        'title' => '%s',
-        'start_date' => '%d',
-        'end_date' => '%d'
-      ]
+      $data
     );
 
-    $res->set_data($wpdb->insert_id);
+    $query = "
+      SELECT * 
+      FROM {$tablename};
+    ";    
+    $result = $wpdb->get_results($query);
+
+    $res->set_data($result);
   
   } catch (Exception $e) {
     

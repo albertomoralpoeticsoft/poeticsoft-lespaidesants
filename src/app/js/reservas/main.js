@@ -1,12 +1,18 @@
 // https://fullcalendar.io/docs/initialize-globals
 // https://fullcalendar.io/docs/date-clicking-selecting
+
 import { Calendar } from '@fullcalendar/core'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import rrulePlugin from '@fullcalendar/rrule'
 import esLocale from '@fullcalendar/core/locales/es'
 
+import datatransform from './datatransform'
 import dialogreserva from './dialogreserva'
+
+import { 
+  callapi
+} from './dataapi'
 
 export default $ => {
 
@@ -28,10 +34,10 @@ export default $ => {
         ],
         customButtons: {
           reservasbutton: {
-            text: 'Reservas [6]',
+            text: 'Refresh',
             click: function() {
 
-              console.log('Reservas');
+              calendar.refetchEvents()
             }
           }
         },
@@ -45,36 +51,30 @@ export default $ => {
           center: 'title',
           right: 'reservasbutton'
         },
+        defaultAllDay: true,
+        forceEventDuration: true,
+        eventDataTransform: datatransform,
         events: (
           fetchInfo,
           success,
           fail
         ) => {
 
-          const body = JSON.stringify({ 
-            start: new Date(fetchInfo.startStr).getTime(),
-            end: new Date(fetchInfo.endStr).getTime()
-          })
-
-          fetch(
-            '/wp-json/lespaidesants/reservas/data/event/all',
-            {
-              method: 'POST',
-              headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-              },
-              body: body
+          callapi({
+            call: 'eventall',
+            body: { 
+              start: new Date(fetchInfo.startStr).getTime(),
+              end: new Date(fetchInfo.endStr).getTime()
             }
-          )
-          .then(
-            response => response.json().then(
-              result => {              
+          })
+          .then(result => {
+            
+            success(result)
+            
+            $('#ReservaDay').dialog('close')
 
-                success(result)
-              }
-            )
-          )
+          })
+          .catch(fail)
         },
         dateClick: info => {
 
@@ -84,19 +84,9 @@ export default $ => {
             info,
             $calendarreserva
           )
-        },
-        eventClick: info => {
-
-          console.log('----------------------------')
-          console.log('eventClick')
-          console.log(info)
-
-          return true
         }
       }
     )
     calendar.render()
-
-    // calendar.refetchEvents()
   }
 }

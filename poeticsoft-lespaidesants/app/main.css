@@ -84,6 +84,7 @@ body {
   border-radius: 0;
   cursor: pointer;
   height: auto !important;
+  font-size: 1em;
 }
 .ReservaDayDialog .ui-dialog-content form .Fields .Field select:disabled {
   opacity: 0.2;

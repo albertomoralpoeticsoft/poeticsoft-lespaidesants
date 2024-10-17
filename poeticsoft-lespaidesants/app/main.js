@@ -52,6 +52,148 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/app/js/reservas/dataapi.js":
+/*!****************************************!*\
+  !*** ./src/app/js/reservas/dataapi.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   callapi: () => (/* binding */ callapi),
+/* harmony export */   processreserva: () => (/* binding */ processreserva)
+/* harmony export */ });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
+var callapi = function callapi(data) {
+  var urlbase = '/wp-json/lespaidesants/reservas/data/';
+  var P = new Promise(function (resolve, reject) {
+    if (!data.call) {
+      return reject({
+        result: 'error',
+        reason: 'Api call not provided'
+      });
+    }
+    var url = urlbase;
+    var method = 'POST';
+    switch (data.call) {
+      case 'eventall':
+        url += 'event/all';
+        break;
+      case 'eventcreate':
+        url += 'event/create';
+        break;
+    }
+    fetch(url, {
+      method: method,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data.body)
+    }).then(function (response) {
+      return response.json();
+    }).then(resolve)["catch"](reject);
+  });
+  return P;
+};
+var processreserva = function processreserva(data) {
+  var P = new Promise(function (resolve, reject) {
+    var eventdata = {};
+    if (data.isrecurrent) {
+      var startday = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
+      var weekday = startday.day();
+      eventdata.daysOfWeek = [weekday];
+      var until = parseInt(data.recurrentuntil);
+      var endday = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day).add(until, 'weeks');
+      eventdata.startRecur = startday.valueOf();
+      eventdata.endRecur = endday.valueOf();
+      if (data.hora != 'Todo') {
+        var hora = parseInt(data.hora);
+        var duration = parseInt(data.duration);
+        var starttime = moment__WEBPACK_IMPORTED_MODULE_0___default().duration(hora, 'hours');
+        var endtime = moment__WEBPACK_IMPORTED_MODULE_0___default().duration(hora + duration, 'hours');
+        eventdata.startTime = starttime.valueOf();
+        eventdata.endTime = endtime.valueOf();
+      }
+    } else {
+      if (data.hora == 'Todo') {
+        var start = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
+        var end = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
+        eventdata.allDay = true;
+        eventdata.start = start.valueOf();
+        eventdata.end = end.valueOf();
+      } else {
+        var _start = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
+        var _hora = parseInt(data.hora);
+        _start.add(_hora, 'hours');
+        var _duration = parseInt(data.duration) + 1;
+        var _end = moment__WEBPACK_IMPORTED_MODULE_0___default()(_start);
+        _end.add(_duration, 'hours');
+        eventdata.start = _start.valueOf();
+        eventdata.end = _end.valueOf();
+      }
+    }
+    callapi({
+      call: 'eventcreate',
+      body: eventdata
+    }).then(resolve);
+  });
+  return P;
+};
+
+/***/ }),
+
+/***/ "./src/app/js/reservas/datatransform.js":
+/*!**********************************************!*\
+  !*** ./src/app/js/reservas/datatransform.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function (data) {
+  return {
+    id: data.id,
+    overlap: data.overlap == "1",
+    title: data.title,
+    url: data.url,
+    interactive: data.interactive == "1",
+    groupId: data.groupId,
+    allDay: data.allDay == "1",
+    start: parseInt(data.start),
+    end: parseInt(data.end),
+    daysOfWeek: data.daysOfWeek,
+    startTime: parseInt(data.startTime),
+    endTime: parseInt(data.endTime),
+    startRecur: parseInt(data.startRecur),
+    endRecur: parseInt(data.endRecur),
+    editable: data.editable == "1",
+    startEditable: data.startEditable,
+    durationEditable: data.durationEditable,
+    resourceEditable: data.resourceEditable,
+    resourceId: data.resourceId,
+    resourceIds: data.resourceIds,
+    display: data.display,
+    restriction: data.restriction,
+    className: data.className,
+    color: data.color,
+    backgroundColor: data.backgroundColor,
+    borderColor: data.borderColor,
+    textColor: data.textColor,
+    extendedProps: data.extendedProps,
+    state: data.state
+  };
+});
+
+/***/ }),
+
 /***/ "./src/app/js/reservas/dialogreserva.js":
 /*!**********************************************!*\
   !*** ./src/app/js/reservas/dialogreserva.js ***!
@@ -66,8 +208,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms */ "./src/app/js/reservas/forms.js");
+/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
 
 moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, calendar, dayinfo, $elm) {
   var dia = moment__WEBPACK_IMPORTED_MODULE_0___default()(dayinfo.dateStr).format('D [de] MMMM');
@@ -130,17 +274,16 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
           }
         });
         $reservarmas && $reservarmas.on('click', function () {
-          var reservadata = {
+          drawform('saving');
+          (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.processreserva)({
             day: dayinfo.dateStr,
             hora: $selecthour.val(),
             duration: $selectduration.val(),
             isrecurrent: $isrecurrent.is(':checked'),
             recurrentuntil: $recurrentuntil.val()
-          };
-          drawform('saving');
-          setTimeout(function () {
-            $('#ReservaDay').dialog('close');
-          }, 1000);
+          }).then(function (processresult) {
+            calendar.refetchEvents();
+          });
           return false;
         });
         $reservar && $reservar.on('click', function () {
@@ -179,12 +322,12 @@ var datesform = function datesform(data) {
     var hour = i.toString().padStart(2, 0);
     houroptions += "<option\n      value=\"".concat(i, "\"\n    >\n      Desde ").concat(hour, ":00\n    </option>");
   }
-  var durationoptions = '<option value="Todo">Cuantas horas?</option>';
-  for (var _i = 1; _i < 12; _i++) {
+  var durationoptions = '<option value="1">Duración (min 1h)</option>';
+  for (var _i = 2; _i < 12; _i++) {
     durationoptions += "<option\n      value=\"".concat(_i, "\"\n    >\n      ").concat(_i, " hora/s\n    </option>");
   }
-  var durantenoptions = '<option value="No">Selecciona hasta cuando...</option>';
-  for (var _i2 = 2; _i2 < 9; _i2++) {
+  var durantenoptions = '<option value="2">Selecciona hasta cuando (min 2 semanas)</option>';
+  for (var _i2 = 3; _i2 < 9; _i2++) {
     durantenoptions += "<option\n      value=\"".concat(_i2, "\"\n    >\n      Durante ").concat(_i2, " semanas\n    </option>");
   }
   return "\n    <form> \n      <div class=\"Fields\">\n        <div class=\"Field HourSelector\">\n          <select \n            id=\"selecthour\"\n            name=\"hour\"\n          > \n            ".concat(houroptions, "\n          </select> \n        </div>\n        <div class=\"Field DurationSelector\">\n          <select \n            id=\"selectduration\"\n            name=\"duration\" \n            disabled=\"disabled\"\n          > \n            ").concat(durationoptions, "\n          </select> \n        </div>\n        <div class=\"Field Recurrent\">\n          <input \n            id=\"isrecurrent\"\n            type=\"checkbox\" \n            name=\"recurrent\"\n          /> \n          <label for=\"recurrent\">\n            Quiero reservar este horario los ").concat(data.diasemana, "\n          </label>\n        </div>\n        <div class=\"Field Durante\">\n          <select \n            id=\"recurrentuntil\"\n            name=\"duranten\"\n            disabled=\"disabled\"\n          > \n            ").concat(durantenoptions, "\n          </select> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"reservarmas\"\n          type=\"submit\" \n          value=\"Guardar y seleccionar m\xE1s dias\" \n        /> \n        <input \n          id=\"reservar\"\n          type=\"submit\" \n          value=\"Reservar\" \n        /> \n      </div>\n    </form>\n  ");
@@ -209,14 +352,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
-/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
-/* harmony import */ var _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/rrule */ "./node_modules/@fullcalendar/rrule/index.js");
-/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
-/* harmony import */ var _dialogreserva__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dialogreserva */ "./src/app/js/reservas/dialogreserva.js");
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fullcalendar/rrule */ "./node_modules/@fullcalendar/rrule/index.js");
+/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
+/* harmony import */ var _datatransform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./datatransform */ "./src/app/js/reservas/datatransform.js");
+/* harmony import */ var _dialogreserva__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dialogreserva */ "./src/app/js/reservas/dialogreserva.js");
+/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
 // https://fullcalendar.io/docs/initialize-globals
 // https://fullcalendar.io/docs/date-clicking-selecting
+
+
+
 
 
 
@@ -229,15 +377,15 @@ __webpack_require__.r(__webpack_exports__);
     var $calendarreserva = $calendarreservas.eq(0);
     var $calendar = $calendarreserva.find('.Calendar').eq(0);
     var calendarelm = $calendar[0];
-    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_1__.Calendar(calendarelm, {
+    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_3__.Calendar(calendarelm, {
       // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-      locale: _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_2__["default"],
-      plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_3__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_4__["default"], _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_5__["default"]],
+      locale: _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_4__["default"],
+      plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_5__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_6__["default"], _fullcalendar_rrule__WEBPACK_IMPORTED_MODULE_7__["default"]],
       customButtons: {
         reservasbutton: {
-          text: 'Reservas [6]',
+          text: 'Refresh',
           click: function click() {
-            console.log('Reservas');
+            calendar.refetchEvents();
           }
         }
       },
@@ -251,37 +399,26 @@ __webpack_require__.r(__webpack_exports__);
         center: 'title',
         right: 'reservasbutton'
       },
+      defaultAllDay: true,
+      forceEventDuration: true,
+      eventDataTransform: _datatransform__WEBPACK_IMPORTED_MODULE_0__["default"],
       events: function events(fetchInfo, success, fail) {
-        var body = JSON.stringify({
-          start: new Date(fetchInfo.startStr).getTime(),
-          end: new Date(fetchInfo.endStr).getTime()
-        });
-        fetch('/wp-json/lespaidesants/reservas/data/event/all', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: body
-        }).then(function (response) {
-          return response.json().then(function (result) {
-            success(result);
-          });
-        });
+        (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.callapi)({
+          call: 'eventall',
+          body: {
+            start: new Date(fetchInfo.startStr).getTime(),
+            end: new Date(fetchInfo.endStr).getTime()
+          }
+        }).then(function (result) {
+          success(result);
+          $('#ReservaDay').dialog('close');
+        })["catch"](fail);
       },
       dateClick: function dateClick(info) {
-        (0,_dialogreserva__WEBPACK_IMPORTED_MODULE_0__["default"])($, calendar, info, $calendarreserva);
-      },
-      eventClick: function eventClick(info) {
-        console.log('----------------------------');
-        console.log('eventClick');
-        console.log(info);
-        return true;
+        (0,_dialogreserva__WEBPACK_IMPORTED_MODULE_1__["default"])($, calendar, info, $calendarreserva);
       }
     });
     calendar.render();
-
-    // calendar.refetchEvents()
   }
 });
 
