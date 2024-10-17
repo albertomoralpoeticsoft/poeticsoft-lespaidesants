@@ -1,4 +1,62 @@
+export const loginform = data => {
 
+  return `
+    <div class="Form LoginForm"> 
+      <div class="Text">
+        Bienvenido a la reserva de sala.
+        Por favor usa tu mail para que podamos identificar tus reservas.
+      </div>
+      <div class="Fields">
+        <div class="Field Mail">
+          <input 
+            id="yourmail"
+            type="email" 
+            placeholder="Tu Email"
+          /> 
+        </div>
+      </div>
+      <div class="Actions">
+        <input 
+          id="confirmmail"
+          type="submit" 
+          value="Confirmar" 
+          disabled="disabled"
+        /> 
+        <div class="ErrorMessage"></div>
+      </div>
+    </div>
+  `
+}
+
+export const validateloginform = data => {
+
+  return `
+    <div class="Form ValidateLoginForm"> 
+      <div class="Text">
+        Te hemos enviado un mail a tu correo, 
+        Por favor escribe el código recibido 
+        para validar tu dirección de coreo electrónico.
+      </div>
+      <div class="Fields">
+        <div class="Field Mail">
+          <input 
+            id="validatecode"
+            type="text" 
+            placeholder="Codigo recibido"
+          /> 
+        </div>
+      </div>
+      <div class="Actions">
+        <input 
+          id="confirmcode"
+          type="submit" 
+          value="Confirmar código" 
+          disabled="disabled"
+        /> 
+      </div>
+    </div>
+  `
+}
 
 export const datesform = data => {
 
@@ -35,7 +93,7 @@ export const datesform = data => {
   }
 
   return `
-    <form> 
+    <div class="Form DatesForm"> 
       <div class="Fields">
         <div class="Field HourSelector">
           <select 
@@ -73,37 +131,47 @@ export const datesform = data => {
             ${ durantenoptions }
           </select> 
         </div>
+        <div class="Field Title">
+          <input 
+            id="reservatitle"
+            name="title"
+            placeholder="Titulo de la reserva (requerido)"
+          />
+        </div>
       </div>
       <div class="Actions">
         <input 
           id="reservarmas"
           type="submit" 
-          value="Guardar y seleccionar más dias" 
+          value="Guardar y seleccionar más dias"
+          disabled="disabled" 
         /> 
         <input 
           id="reservar"
           type="submit" 
           value="Reservar" 
+          disabled="disabled" 
         /> 
       </div>
-    </form>
+    </div>
   `
 }
 
-export const savingform = data => {
+export const messageform = data => {
 
   return `
-    <form> 
+    <div class="Form MessageForm"> 
       <div class="Message">
-        Guardando...
-    </form>
+        ${ data.message }
+      </div>
+    </div>
   `
 }
 
 export const confirmform = data => {
 
   return `
-    <form> 
+    <div class="Form ConfirmForm"> 
       <div class="Fields">
         <div class="Field Mail">
           <input 
@@ -120,6 +188,6 @@ export const confirmform = data => {
           value="Confirmar" 
         /> 
       </div>
-    </form>
+    </div>
   `
 }

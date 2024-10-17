@@ -2,7 +2,7 @@ import moment from 'moment'
 moment.locale('es')
 import {
   datesform,
-  savingform,
+  messageform,
   confirmform
 } from './forms'
 import { processreserva } from './dataapi'
@@ -63,7 +63,9 @@ export default (
 
           case 'saving':         
 
-            $form.html(savingform())
+            $form.html(messageform({
+              message: 'Guardando...'
+            }))
 
             break;
         }
@@ -72,6 +74,8 @@ export default (
         const $selectduration = $form.find('#selectduration')
         const $isrecurrent = $form.find('#isrecurrent')
         const $recurrentuntil = $form.find('#recurrentuntil')
+        const $reservatitle = $form.find('#reservatitle')
+        const $reservatitleerrormessage = $form.find('#reservatitleerrormessage')
         const $yourmail = $form.find('#yourmail')
         const $reservarmas = $form.find('#reservarmas')
         const $reservar = $form.find('#reservar')
@@ -114,6 +118,25 @@ export default (
             }
           }
         )
+        
+        $reservatitle
+        .on(
+          'keyup',
+          function() {
+            
+            const $this = $(this)
+            if($this.val() && $this.val().length > 4) {
+
+              $reservarmas.prop('disabled', false)
+              $reservar.prop('disabled', false)
+
+            } else {              
+
+              $reservarmas.prop('disabled', 'disabled')
+              $reservar.prop('disabled', 'disabled')
+            }            
+          }
+        )
 
         $reservarmas &&
         $reservarmas.on(
@@ -123,6 +146,7 @@ export default (
             drawform('saving')
 
             processreserva({
+              title: $reservatitle.val(),
               day: dayinfo.dateStr,
               hora: $selecthour.val(),
               duration: $selectduration.val(),

@@ -57,7 +57,7 @@ module.exports = env => {
       publicPath: paths.public,
       filename: '[name].js'
     },
-    mode: 'development',
+    mode: 'development', // 'production'
     devtool: 'source-map',
     module: {
       rules: [

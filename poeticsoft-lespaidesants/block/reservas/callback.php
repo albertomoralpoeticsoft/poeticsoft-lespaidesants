@@ -6,6 +6,5 @@ function lespaidesants_plugin_block_reservas_callback(
 ) {
 
   return '<div class="ReservasCalendar">
-    <div class="Calendar"></div>
   </div>';
 }

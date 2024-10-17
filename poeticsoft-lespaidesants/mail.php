@@ -5,16 +5,27 @@ add_action(
   function($phpmailer) {
 
     $phpmailer->isSMTP();
-    $phpmailer->Host = 'smtp1.s.ipzmarketing.com';
+    $phpmailer->Host = 'smtp.mail.ovh.net';
     $phpmailer->SMTPAuth = true;
-    $phpmailer->Port = 587;
-    $phpmailer->Username = 'nqgkdgylaxme';
-    $phpmailer->Password = 'nV2F3Sm5BC4m';
-    $phpmailer->SMTPSecure = 'tls';
+    $phpmailer->Port = 465;
+    $phpmailer->Username = 'hola@lespaidesants.com';
+    $phpmailer->Password = 'JsAU8)0000';
+    $phpmailer->SMTPSecure = 'ssl';
     $phpmailer->From = 'hola@lespaidesants.com';
     $phpmailer->FromName = 'hola@lespaidesants.com';    
     $phpmailer->isHTML(true);
   }
+);
+
+add_action(
+  'wp_mail_failed',
+  function ($wp_error) {
+
+    error_log('wp_mail_failed');
+    error_log(json_encode($wp_error));
+  } ,
+  10, 
+  1 
 );
 
 function lespaidesants_mail_sendtest( WP_REST_Request $req ) {

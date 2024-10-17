@@ -5,8 +5,8 @@ export const receiveddatatransform = data => {
     overlap: data.overlap == "1",
 
     title: data.title,
-    url: data.url,
-    interactive: data.interactive == "1",
+    // url: null, //data.url,
+    interactive: false, // data.interactive == "1",
 
     groupId: data.groupId,
     allDay: data.allDay == "1",
@@ -33,6 +33,7 @@ export const receiveddatatransform = data => {
     borderColor: data.borderColor,
     textColor: data.textColor,
     extendedProps: data.extendedProps,
+    
     state: data.state
   }
 
@@ -69,15 +70,14 @@ export const sentdatatransform = data => {
     display: data.display,
     restriction: data.restriction,
     className: data.className,
-    color: '#cc0000', // data.color,
-    backgroundColor: '#00cc00', // data.backgroundColor,
+    color: data.color,
+    backgroundColor: data.backgroundColor,
     borderColor: data.borderColor,
     textColor: data.textColor,
     extendedProps: data.extendedProps,
+
     state: data.state
   }
-
-  console.log(transformeddata)
 
   return transformeddata
 }

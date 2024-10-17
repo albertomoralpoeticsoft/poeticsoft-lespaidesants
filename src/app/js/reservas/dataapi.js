@@ -7,7 +7,9 @@ import {
 
 export const callapi = data => {
 
-  const urlbase = '/wp-json/lespaidesants/reservas/data/'
+  console.log(data)
+
+  const urlbase = '/wp-json/lespaidesants/reservas/'
 
   const P = new Promise((resolve, reject) => { 
 
@@ -26,13 +28,25 @@ export const callapi = data => {
 
       case 'eventall':
 
-        url += 'event/all' 
+        url += 'data/event/all' 
 
         break
 
       case 'eventcreate':
 
-        url += 'event/create'
+        url += 'data/event/create'
+
+        break
+
+      case 'validateuser':
+
+        url += 'user/validate'
+
+        break
+
+      case 'validatecode':
+
+        url += 'user/validatecode'
 
         break
     }
@@ -60,7 +74,9 @@ export const processreserva = data => {
 
   const P = new Promise((resolve, reject) => {
 
-    let eventdata = {}
+    let eventdata = {
+      title: data.title
+    }
 
     if(data.isrecurrent) {
 
