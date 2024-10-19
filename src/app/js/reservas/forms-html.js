@@ -1,7 +1,24 @@
-export const loginform = data => {
+export const formmessagehtml = data => {
 
   return `
-    <div class="Form LoginForm"> 
+    <div 
+    id="Form"
+    class="FormMessage"
+  > 
+      <div class="Message">
+        ${ data.message }
+      </div>
+    </div>
+  `
+}
+
+export const formloginhtml = data => {
+
+  return `
+    <div 
+      id="Form"
+      class="FormLogin"
+    > 
       <div class="Text">
         Bienvenido a la reserva de sala.
         Por favor usa tu mail para que podamos identificar tus reservas.
@@ -28,10 +45,13 @@ export const loginform = data => {
   `
 }
 
-export const validateloginform = data => {
+export const formvalidateloginhtml = data => {
 
   return `
-    <div class="Form ValidateLoginForm"> 
+    <div 
+      id="Form"
+      class="FormValidateLogin"
+    > 
       <div class="Text">
         Te hemos enviado un mail a tu correo, 
         Por favor escribe el código recibido 
@@ -58,7 +78,7 @@ export const validateloginform = data => {
   `
 }
 
-export const datesform = data => {
+export const formdateshtml = data => {
 
   let houroptions = '<option value="Todo">Todo el día</option>'
   for(let i=9; i<22; i++) {
@@ -93,7 +113,10 @@ export const datesform = data => {
   }
 
   return `
-    <div class="Form DatesForm"> 
+    <div 
+      id="Form"
+      class="FormDates"
+    > 
       <div class="Fields">
         <div class="Field HourSelector">
           <select 
@@ -157,21 +180,13 @@ export const datesform = data => {
   `
 }
 
-export const messageform = data => {
+export const formconfirmhtml = data => {
 
   return `
-    <div class="Form MessageForm"> 
-      <div class="Message">
-        ${ data.message }
-      </div>
-    </div>
-  `
-}
-
-export const confirmform = data => {
-
-  return `
-    <div class="Form ConfirmForm"> 
+    <div 
+      id="Form"
+      class="FormConfirm"
+    > 
       <div class="Fields">
         <div class="Field Mail">
           <input 

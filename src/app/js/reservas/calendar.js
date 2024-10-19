@@ -9,7 +9,7 @@ import esLocale from '@fullcalendar/core/locales/es'
 import {
   receiveddatatransform
 } from './datatransform'
-import dialogreserva from './dialogreserva'
+import formreserva from './form-reserva'
 
 import { 
   callapi
@@ -17,11 +17,12 @@ import {
 
 export default $ => {
 
-  const $calendarreservas = $('.ReservasCalendar')
+  const $calendarreservas = $('#LEDS-Reservas')
   if($calendarreservas.length) {
 
     const $calendarreserva = $calendarreservas.eq(0)
 
+    $calendarreserva.empty()
     $calendarreserva.html('<div class="Calendar"></div>')
 
     const $calendar =  $calendarreserva.find('.Calendar').eq(0)
@@ -81,11 +82,10 @@ export default $ => {
         },
         dateClick: info => {
 
-          dialogreserva(
+          formreserva(
             $,
             calendar,
-            info,
-            $calendarreserva
+            info
           )
         },
         eventClick: event => {

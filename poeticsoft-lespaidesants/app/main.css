@@ -1,3 +1,177 @@
-html,body{padding:0;margin:0;height:100%;-webkit-overflow-scrolling:touch}.ReservasCalendar table{margin:0}.ReservasCalendar .fc-day{cursor:pointer}.CustomOverlay{position:absolute;top:0;right:0;bottom:0;left:0;background-color:rgba(0,0,0,.2);z-index:9999}.ReservaDayDialog{position:absolute !important;top:50% !important;left:50% !important;transform:translateX(-50%) translateY(-50%);z-index:10000;background-color:#fff;border-radius:4px}.ReservaDayDialog .ui-dialog-titlebar{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:24px 16px 8px;font-weight:bold;font-size:1.2em}.ReservaDayDialog .ui-dialog-titlebar .ui-dialog-title{flex:1;line-height:1.1em}.ReservaDayDialog .ui-dialog-titlebar .ui-button{position:relative;top:-8px;right:-4px;padding-top:7px;padding-right:12px;padding-bottom:10px;padding-left:12px}.ReservaDayDialog .ui-dialog-content{padding:8px 16px 16px}#Login{max-width:340px;margin:0 auto;padding:24px;background-color:#fff;box-shadow:0 0 12px rgba(0,0,0,.6);border-radius:4px}#Login .Text,#Login .ErrorMessage,#Login .Form .Message{text-align:center}.Form .ErrorMessage{color:#c00;font-size:.9em;font-weight:bold}.Form .Fields{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}.Form .Fields .Field{width:100%;display:flex;align-items:center}.Form .Fields .Field select{width:100%;padding:0 0 4px 0 !important;border-width:0 0 1px 0 !important;border-radius:0;cursor:pointer;height:auto !important;font-size:1em}.Form .Fields .Field select:disabled{opacity:.2}.Form .Fields .Field select option{padding:8px}.Form .Fields .Field.HourSelector,.Form .Fields .Field.DurationSelector{width:calc(50% - 8px)}.Form .Fields .Field.Recurrent{width:100%;margin:24px 0 0 0;align-items:stretch}.Form .Fields .Field.Recurrent input{width:16px;height:16px;margin:2px 6px 0 0;cursor:pointer}.Form .Fields .Field.Recurrent label{flex:1;font-size:1em}.Form .Fields .Field.Durante{width:100%;margin:12px 0 0 0}.Form .Fields .Field.Title{margin:24px 0 0 0}.Form .Fields .Field.Title input{width:100%;padding:0 0 4px 0 !important;border-width:0 0 1px 0 !important;border-radius:0;height:auto !important}.Form .Fields .Field.Mail{margin:24px 0 0 0}.Form .Fields .Field.Mail input{width:100%;padding:0 0 4px 0 !important;border-width:0 0 1px 0 !important;border-radius:0;cursor:pointer;height:auto !important;text-align:center}.Form .Actions{margin:32px 0 0 0;text-align:center}.Form .Actions input{width:90%;padding:8px 16px;margin:4px auto;cursor:pointer;opacity:1;transition-property:opacity;transition-duration:1s}.Form .Actions input:disabled{opacity:.2;cursor:not-allowed}
+/*!*****************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/app/scss/main.scss ***!
+  \*****************************************************************************************************************/
+/* SIZES */
+/* Colors */
+/* 
+  ------------------------------------------------
+  Fonts 
+*/
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ReservasCalendar table {
+  margin: 0;
+}
+.ReservasCalendar .fc-day {
+  cursor: pointer;
+}
+
+.CustomOverlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+}
+
+.ReservaDayDialog {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 10000;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.ReservaDayDialog .ui-dialog-titlebar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 24px 16px 8px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.ReservaDayDialog .ui-dialog-titlebar .ui-dialog-title {
+  flex: 1;
+  line-height: 1.1em;
+}
+.ReservaDayDialog .ui-dialog-titlebar .ui-button {
+  position: relative;
+  top: -8px;
+  right: -4px;
+  padding-top: 7px;
+  padding-right: 12px;
+  padding-bottom: 10px;
+  padding-left: 12px;
+}
+.ReservaDayDialog .ui-dialog-content {
+  padding: 8px 16px 16px;
+}
+
+#Login {
+  max-width: 340px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+}
+#Login .Text,
+#Login .ErrorMessage,
+#Login .Form .Message {
+  text-align: center;
+}
+
+.Form .ErrorMessage {
+  color: #cc0000;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.Form .Fields {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.Form .Fields .Field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.Form .Fields .Field select {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+  font-size: 1em;
+}
+.Form .Fields .Field select:disabled {
+  opacity: 0.2;
+}
+.Form .Fields .Field select option {
+  padding: 8px;
+}
+.Form .Fields .Field.HourSelector, .Form .Fields .Field.DurationSelector {
+  width: calc(50% - 8px);
+}
+.Form .Fields .Field.Recurrent {
+  width: 100%;
+  margin: 24px 0 0 0;
+  align-items: stretch;
+}
+.Form .Fields .Field.Recurrent input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 6px 0 0;
+  cursor: pointer;
+}
+.Form .Fields .Field.Recurrent label {
+  flex: 1;
+  font-size: 1em;
+}
+.Form .Fields .Field.Durante {
+  width: 100%;
+  margin: 12px 0 0 0;
+}
+.Form .Fields .Field.Title {
+  margin: 24px 0 0 0;
+}
+.Form .Fields .Field.Title input {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  height: auto !important;
+}
+.Form .Fields .Field.Mail {
+  margin: 24px 0 0 0;
+}
+.Form .Fields .Field.Mail input {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+  text-align: center;
+}
+.Form .Actions {
+  margin: 32px 0 0 0;
+  text-align: center;
+}
+.Form .Actions input {
+  width: 90%;
+  padding: 8px 16px;
+  margin: 4px auto;
+  cursor: pointer;
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 1s;
+}
+.Form .Actions input:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
 
 /*# sourceMappingURL=main.css.map*/

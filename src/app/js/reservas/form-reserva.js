@@ -17,6 +17,17 @@ export default (
   const dia = moment(dayinfo.dateStr).format('D [de] MMMM')
   const diasemana = moment(dayinfo.dateStr).format('dddd')
 
+  $('body')
+  .append(`
+    <div id="ModalReserva">
+      <div 
+        id="Form"
+        class="FormReserva"
+      >
+      </div>
+    </div>
+  `)
+
   $elm
   .append(`<div id="ReservaDay">
     <div id="form"></div>
