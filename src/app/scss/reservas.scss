@@ -1,4 +1,6 @@
-.ReservasCalendar {
+#LEDS-Reservas {
+
+  position: relative;
 
   table {
 
@@ -9,204 +11,207 @@
 
     cursor: pointer;
   }
-}
 
-.CustomOverlay {
+  #FormWrapper {
 
-  @include absolutebox();
-  background-color: $color-dark-transparent-b;
-  z-index: 9999;
-}
-
-.ReservaDayDialog {
-
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 10000;
-  background-color: $color-light;
-  border-radius: $space * 0.5;  
-
-  .ui-dialog-titlebar {
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: $space;
-    padding: $space * 3 $space * 2 $space; 
-    font-weight: bold;
-    font-size: 1.2em;
-
-    .ui-dialog-title {
-
-      flex: 1;
-      line-height: 1.1em;
-    }
-
-    .ui-button {
-
-      position: relative;
-      top: -$space;
-      right: -$space * 0.5;
-      padding-top: 7px;
-      padding-right: 12px;
-      padding-bottom: 10px;
-      padding-left: 12px;
-    }
-  }
-
-  .ui-dialog-content {
-
-    padding: $space $space * 2 $space * 2;
-  }
-}
-
-#Login {
-
-  max-width: 340px;
-  margin: 0 auto;
-  padding: $space * 3;
-  background-color: $color-light;
-  box-shadow: 0 0 12px $color-dark-transparent-a;
-  border-radius: $space * 0.5;  
-
-  .Text,
-  .ErrorMessage,
-  .Form .Message {
-
+    @include absolutebox();
+    background-color: $color-dark-transparent-a;
+    z-index: 9999;
     text-align: center;
+
+    &:before,
+    &:after {
+
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 0;
+      vertical-align: middle;
+    }
+
+    #Form {
+
+      display: inline-block;
+      vertical-align: middle;
+    }
   }
-}
 
-.Form {
+  #Form {
 
-  .ErrorMessage {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: $space * 3;
+    background-color: $color-light;
+    box-shadow: 0 0 12px $color-dark-transparent-a;
+    border-radius: $space * 0.5; 
+    text-align: left;
 
-    color: $color-error;
-    font-size: 0.9em;
-    font-weight: bold;
-  }
-
-  .Fields {
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-
-    .Field {
-
-      width: 100%;
+    .Title {
+      
       display: flex;
+      justify-content: space-between;
       align-items: center;
+      margin: 0 0 $space * 2 0;
 
-      select {
+      .TitleText {
+
+        flex: 1;
+        line-height: 1.1em;
+        font-weight: bold;
+        font-size: 1.2em;
+        text-align: left;
+      }
+
+      .Close {
+
+        position: relative;
+        top: -$space * 2;
+        right: -$space * 1.5;
+        padding-top: 7px;
+        padding-right: 12px;
+        padding-bottom: 10px;
+        padding-left: 12px;
+      }
+    }
+
+    .Text,
+    .ErrorMessage,
+    .Message {
+
+      text-align: center;
+    }
+
+    .ErrorMessage {
+
+      color: $color-error;
+      font-size: 0.9em;
+      font-weight: bold;
+    }
+
+    .Fields {
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+
+      .Field {
 
         width: 100%;
-        padding: 0 0 $space * 0.5 0 !important;
-        border-width: 0 0 1px 0 !important;
-        border-radius: 0;
+        display: flex;
+        align-items: center;
+
+        select {
+
+          width: 100%;
+          padding: 0 0 $space * 0.5 0 !important;
+          border-width: 0 0 1px 0 !important;
+          border-radius: 0;
+          cursor: pointer;
+          height: auto !important;
+          font-size: 1em;
+
+          &:disabled {
+
+            opacity: 0.2;
+          }
+
+          option {
+
+            padding: $space;
+          }
+        }
+
+        &.HourSelector {
+
+          width: calc(45% - #{$space});
+        }
+
+        &.DurationSelector {
+
+          width: calc(55% - #{$space});
+        }
+
+        &.Recurrent {
+
+          width: 100%;
+          margin: $space * 2 0 0 0;
+          align-items: stretch;
+
+          input {
+
+            width: $space * 2;
+            height: $space * 2;
+            margin: 2px $space * 0.75 0 0;
+            cursor: pointer;
+          }
+
+          label {
+
+            flex: 1;
+            font-size: 1em;
+          }
+        }
+
+        &.Durante {
+
+          width: 100%;
+          margin: 12px 0 0 0;
+        }
+
+        &.Title {
+
+          margin: $space * 2 0 0 0;
+
+          input {
+
+            width: 100%;
+            padding: 0 0 $space * 0.5 0 !important;
+            border-width: 0 0 1px 0 !important;
+            border-radius: 0;
+            height: auto !important;
+          }
+        }
+
+        &.Mail {
+
+          margin: $space * 3 0 0 0;
+
+          input {
+
+            width: 100%;
+            padding: 0 0 $space * 0.5 0 !important;
+            border-width: 0 0 1px 0 !important;
+            border-radius: 0;
+            cursor: pointer;
+            height: auto !important;
+            text-align: center;
+          }
+        }
+      }
+    }
+
+    .Actions {
+
+      margin: $space * 4 0 0 0;
+      text-align: center;
+
+      input {
+
+        width: 90%;
+        padding: $space $space * 2;
+        margin: $space * 0.5 auto;
         cursor: pointer;
-        height: auto !important;
-        font-size: 1em;
+        opacity: 1;
+
+        transition-property: opacity;
+        transition-duration: 1s;
 
         &:disabled {
 
           opacity: 0.2;
+          cursor: not-allowed;
         }
-
-        option {
-
-          padding: $space;
-        }
-      }
-
-      &.HourSelector,
-      &.DurationSelector {
-
-        width: calc(50% - #{$space});
-      }
-
-      &.Recurrent {
-
-        width: 100%;
-        margin: $space * 3 0 0 0;
-        align-items: stretch;
-
-        input {
-
-          width: $space * 2;
-          height: $space * 2;
-          margin: 2px $space * 0.75 0 0;
-          cursor: pointer;
-        }
-
-        label {
-
-          flex: 1;
-          font-size: 1em;
-        }
-      }
-
-      &.Durante {
-
-        width: 100%;
-        margin: 12px 0 0 0;
-      }
-
-      &.Title {
-
-        margin: $space * 3 0 0 0;
-
-        input {
-
-          width: 100%;
-          padding: 0 0 $space * 0.5 0 !important;
-          border-width: 0 0 1px 0 !important;
-          border-radius: 0;
-          height: auto !important;
-        }
-      }
-
-      &.Mail {
-
-        margin: $space * 3 0 0 0;
-
-        input {
-
-          width: 100%;
-          padding: 0 0 $space * 0.5 0 !important;
-          border-width: 0 0 1px 0 !important;
-          border-radius: 0;
-          cursor: pointer;
-          height: auto !important;
-          text-align: center;
-        }
-      }
-    }
-  }
-
-  .Actions {
-
-    margin: $space * 4 0 0 0;
-    text-align: center;
-
-    input {
-
-      width: 90%;
-      padding: $space $space * 2;
-      margin: $space * 0.5 auto;
-      cursor: pointer;
-      opacity: 1;
-
-      transition-property: opacity;
-      transition-duration: 1s;
-
-      &:disabled {
-
-        opacity: 0.2;
-        cursor: not-allowed;
       }
     }
   }

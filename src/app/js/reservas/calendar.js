@@ -15,18 +15,14 @@ import {
   callapi
 } from './dataapi'
 
-export default $ => {
+export default $ => { 
+  
+  const $ledsreservasblock = $('#LEDS-Reservas')
+  if($ledsreservasblock.length) {
 
-  const $calendarreservas = $('#LEDS-Reservas')
-  if($calendarreservas.length) {
-
-    const $calendarreserva = $calendarreservas.eq(0)
-
-    $calendarreserva.empty()
-    $calendarreserva.html('<div class="Calendar"></div>')
-
-    const $calendar =  $calendarreserva.find('.Calendar').eq(0)
-    const calendarelm = $calendar[0]
+    const $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
+    $ledsreservas.empty()
+    const calendarelm = $ledsreservas[0]
     const calendar = new Calendar(
       calendarelm, 
       {
@@ -36,6 +32,7 @@ export default $ => {
           interactionPlugin,
           dayGridPlugin
         ],
+        aspectRatio: 1.3,
         customButtons: {
           reservasbutton: {
             text: 'Refresh',
@@ -94,6 +91,10 @@ export default $ => {
           event.jsEvent.preventDefault();
 
           return false
+        },
+        eventsSet: events => {
+          
+          window.eventsreceived(events) // Global event
         }
       }
     )

@@ -1,10 +1,10 @@
 import moment from 'moment'
 moment.locale('es')
-import {
-  datesform,
-  messageform,
-  confirmform
-} from './forms'
+import { 
+  formdateshtml,
+  formconfirmhtml,
+  formmessagehtml
+} from './forms-html'
 import { processreserva } from './dataapi'
 
 export default (
@@ -15,194 +15,207 @@ export default (
 ) => {
 
   const dia = moment(dayinfo.dateStr).format('D [de] MMMM')
-  const diasemana = moment(dayinfo.dateStr).format('dddd')
-
-  $('body')
+  const diasemana = moment(dayinfo.dateStr).format('dddd') 
+  
+  const $ledsreservasblock = $('#LEDS-Reservas')
+  const $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
+  $ledsreservas
   .append(`
-    <div id="ModalReserva">
-      <div 
-        id="Form"
-        class="FormReserva"
-      >
-      </div>
+    <div id="FormWrapper">
     </div>
   `)
+  const $formwrapper = $ledsreservas.find('#FormWrapper')  
 
-  $elm
-  .append(`<div id="ReservaDay">
-    <div id="form"></div>
-  </div>`)
-  $('#ReservaDay')
-  .dialog({    
-    dialogClass: "ReservaDayDialog",
-    modal: true,
-    title: `Reserva el ${ diasemana } día ${ dia }`,
-    closeText: 'x',
-    width: 340,
-    open: () => {
+  // Redraw forms dom
+
+  const drawform = formid => {
+
+    $formwrapper.empty()   
+
+    switch(formid) {
+
+      case 'dates':
       
-      $('.ui-widget-overlay').addClass('CustomOverlay');
-    },
-    close: () => {
+        $formwrapper.append(formdateshtml({
+          diasemana: diasemana,
+          dia: dia
+        }))
 
-      $('#ReservaDay, .ReservaDayDialog, .CustomOverlay').remove()
-    },
-    create: (event, ui) => {
+        break;
+
+      case 'confirm':
       
-      const $dialog = $(event.target)
-      const $form = $dialog.find('#form')
+        $formwrapper.html(formconfirmhtml())
 
-      const drawform = formid => {
+        break;
 
-        $form.empty()   
+      case 'saving':  
+      
+        $formwrapper.html(formmessagehtml({
+          message: 'Guardando...'
+        }))
 
-        switch(formid) {
+        break;
 
-          case 'dates':         
+      case 'saved':  
+      
+        $formwrapper.html(formmessagehtml({
+          message: 'Reserva guardada'
+        }))
 
-            $form.html(datesform({
-              diasemana: diasemana
-            }))
+        break;
+    }
 
-            break;
+    const $form = $formwrapper.find('#Form');
+    const $close = $form.find('.Title .Close')
+    const $selecthour = $form.find('#selecthour')
+    const $selectduration = $form.find('#selectduration')
+    const $isrecurrent = $form.find('#isrecurrent')
+    const $recurrentuntil = $form.find('#recurrentuntil')
+    const $reservatitle = $form.find('#reservatitle')
+    const $reservatitleerrormessage = $form.find('#reservatitleerrormessage')
+    const $yourmail = $form.find('#yourmail')
+    const $reservarmas = $form.find('#reservarmas')
+    const $reservar = $form.find('#reservar')
+    const $confirmreservation = $form.find('#confirmreservation')
 
-          case 'confirm':         
+    // Events
+        
+    $selecthour.length &&
+    $selecthour
+    .on(
+      'change',
+      function() {
 
-            $form.html(confirmform())
+        const $this = $(this)
+        if($this.val() == 'Todo') {
 
-            break;
+          $selectduration.prop('disabled', 'disabled')
+          $selectduration.val('Todo')
 
-          case 'saving':         
+        } else {
 
-            $form.html(messageform({
-              message: 'Guardando...'
-            }))
-
-            break;
+          $selectduration.prop('disabled', false)
         }
+      }
+    )
+          
+    $isrecurrent.length &&
+    $isrecurrent
+    .on(
+      'change',
+      function() {
 
-        const $selecthour = $form.find('#selecthour')
-        const $selectduration = $form.find('#selectduration')
-        const $isrecurrent = $form.find('#isrecurrent')
-        const $recurrentuntil = $form.find('#recurrentuntil')
-        const $reservatitle = $form.find('#reservatitle')
-        const $reservatitleerrormessage = $form.find('#reservatitleerrormessage')
-        const $yourmail = $form.find('#yourmail')
-        const $reservarmas = $form.find('#reservarmas')
-        const $reservar = $form.find('#reservar')
-        const $confirmreservation = $form.find('#confirmreservation')
-      
-        $selecthour.length &&
-        $selecthour
-        .on(
-          'change',
-          function() {
+        const $this = $(this)
+        if($this.is(':checked')) {
 
-            const $this = $(this)
-            if($this.val() == 'Todo') {
+          $recurrentuntil.prop('disabled', false)
 
-              $selectduration.prop('disabled', 'disabled')
-              $selectduration.val('Todo')
+        } else {
 
-            } else {
-
-              $selectduration.prop('disabled', false)
-            }
-          }
-        )
+          $recurrentuntil.prop('disabled', 'disabled')
+          $recurrentuntil.val('No')
+        }
+      }
+    )
+          
+    $reservatitle.length &&
+    $reservatitle
+    .on(
+      'keyup',
+      function() {
         
-        $isrecurrent.length &&
-        $isrecurrent
-        .on(
-          'change',
-          function() {
+        const $this = $(this)
+        if($this.val() && $this.val().length > 4) {
 
-            const $this = $(this)
-            if($this.is(':checked')) {
+          $reservarmas.prop('disabled', false)
+          $reservar.prop('disabled', false)
 
-              $recurrentuntil.prop('disabled', false)
+        } else {              
 
-            } else {
+          $reservarmas.prop('disabled', 'disabled')
+          $reservar.prop('disabled', 'disabled')
+        }            
+      }
+    )
 
-              $recurrentuntil.prop('disabled', 'disabled')
-              $recurrentuntil.val('No')
-            }
-          }
-        )
-        
-        $reservatitle
-        .on(
-          'keyup',
-          function() {
-            
-            const $this = $(this)
-            if($this.val() && $this.val().length > 4) {
+    $close.length &&
+    $close
+    .on(
+      'click',
+      function() {
 
-              $reservarmas.prop('disabled', false)
-              $reservar.prop('disabled', false)
+        $formwrapper.remove()
+      }
+    )
 
-            } else {              
+    $reservarmas.length &&
+    $reservarmas
+    .on(
+      'click',
+      () => {
 
-              $reservarmas.prop('disabled', 'disabled')
-              $reservar.prop('disabled', 'disabled')
-            }            
-          }
+        drawform(
+          'saving'
         )
 
-        $reservarmas &&
-        $reservarmas.on(
-          'click',
-          () => {
+        processreserva({
+          title: $reservatitle.val(),
+          day: dayinfo.dateStr,
+          hora: $selecthour.val(),
+          duration: $selectduration.val(),
+          isrecurrent: $isrecurrent.is(':checked'),
+          recurrentuntil: $recurrentuntil.val()
+        })
+        .then(processresult => {
 
-            drawform('saving')
+          window.eventsreceived = events => {
 
-            processreserva({
-              title: $reservatitle.val(),
-              day: dayinfo.dateStr,
-              hora: $selecthour.val(),
-              duration: $selectduration.val(),
-              isrecurrent: $isrecurrent.is(':checked'),
-              recurrentuntil: $recurrentuntil.val()
-            })
-            .then(processresult => {
-
-              calendar.refetchEvents()
-            })
-
-            return false
-          }
-        )
-
-        $reservar &&
-        $reservar.on(
-          'click',
-          () => {
-
-            $('#ReservaDay').dialog(
-              'option',
-              'title', 
-              'Confirmar reservas' 
+            drawform(
+              'saved'
             )
 
-            drawform('confirm')
-
-            return false
+            setTimeout(
+              () => {
+                
+                $formwrapper.remove()
+              },
+              2000
+            )
           }
-        )
 
-        $confirmreservation &&
-        $confirmreservation.on(
-          'click',
-          () => {
+          calendar.refetchEvents()
+        })
 
-            $('#ReservaDay').dialog('close')
-
-            return false
-          }
-        )
+        return false
       }
+    )
 
-      drawform('dates')
-    }
-  })
+    $reservar.length &&
+    $reservar
+    .on(
+      'click',
+      () => {
+
+        drawform('confirm')
+      }
+    )
+
+    $confirmreservation.length &&
+    $confirmreservation
+    .on(
+      'click',
+      () => {
+
+        window.eventsreceived = events => {
+
+          $formwrapper.remove()
+        }
+
+        calendar.refetchEvents()
+      }
+    )
+  }
+  
+  drawform('dates')
 }

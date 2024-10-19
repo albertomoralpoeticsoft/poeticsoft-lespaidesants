@@ -13,9 +13,8 @@ export default $ => {
   const $ledsreservasblock = $('#LEDS-Reservas')
   if($ledsreservasblock.length) {
 
-    $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
-
-    $ledreservas.empty()
+    const $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
+    $ledsreservas.empty()
     $ledsreservas
     .append(formloginhtml())
 
@@ -62,9 +61,12 @@ export default $ => {
 
         const emailforvalidation = $yourmail.val()
 
-        formmessage({
-          message: 'Comprobando...'
-        })
+        formmessage(
+          $,
+          {
+            message: 'Comprobando...'
+          }
+        )
 
         const $this = $(this)        
 

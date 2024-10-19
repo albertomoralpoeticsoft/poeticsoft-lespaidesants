@@ -117,6 +117,12 @@ export const formdateshtml = data => {
       id="Form"
       class="FormDates"
     > 
+      <div class="Title">
+        <div class="TitleText">
+          ${ `Reserva el ${ data.diasemana } día ${ data.dia }` }
+        </div>
+        <button class="Close">x</button>
+      </div>
       <div class="Fields">
         <div class="Field HourSelector">
           <select 

@@ -7,8 +7,6 @@ import {
 
 export const callapi = data => {
 
-  console.log(data)
-
   const urlbase = '/wp-json/lespaidesants/reservas/'
 
   const P = new Promise((resolve, reject) => { 
@@ -128,6 +126,7 @@ export const processreserva = data => {
       body: sentdatatransform(eventdata)
     })
     .then(resolve)
+    .catch(reject)
   })
 
   return P

@@ -1,14 +1,14 @@
 import { formvalidateloginhtml } from './forms-html'
-import calendar
+import formmessage from './form-message'
+// import calendar from './calendar'
 
 export default $ => {  
   
   const $ledsreservasblock = $('#LEDS-Reservas')
   if($ledsreservasblock.length) {
 
-    $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
-
-    $ledreservas.empty()
+    const $ledsreservas = $ledsreservasblock.eq(0) // Only allow one instance
+    $ledsreservas.empty()
     $ledsreservas
     .append(formvalidateloginhtml())    
             
@@ -41,9 +41,12 @@ export default $ => {
       'click',
       function() {
 
-        formmessage({
-          message: 'Validando...'
-        })        
+        formmessage(
+          $,
+          {
+            message: 'Validando...'
+          }
+        )        
 
         callapi({
           call: 'validatecode',
@@ -66,7 +69,7 @@ export default $ => {
                 message: `
                   Código válido, gracias por tu interés 
                   en nuestro espacio, por favor, 
-                  selecciona tu reserva en el calendario.
+                  selecciona tu/s reserva/s en el calendario.
                 `
               }
             )
