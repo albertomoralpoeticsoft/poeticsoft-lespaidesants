@@ -48,10 +48,10 @@
 
     .Title {
       
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 0 0 $space * 2 0;
+      margin: 0 0 $space * 3 0;
+      padding: 0 $space * 4 0 0;
+      position: relative;
+      min-height: $space * 2;
 
       .TitleText {
 
@@ -64,8 +64,8 @@
 
       .Close {
 
-        position: relative;
-        top: -$space * 2;
+        position: absolute;
+        top: -$space * 1.5;
         right: -$space * 1.5;
         padding-top: 7px;
         padding-right: 12px;
@@ -110,16 +110,10 @@
           cursor: pointer;
           height: auto !important;
           font-size: 1em;
-          text-indent: 5px;
 
           &:disabled {
 
             opacity: 0.2;
-          }
-
-          option {
-
-            padding: $space;
           }
         }
 

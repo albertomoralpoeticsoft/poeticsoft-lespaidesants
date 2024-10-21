@@ -10,6 +10,7 @@ import {
   receiveddatatransform
 } from './datatransform'
 import formreserva from './form-reserva'
+import formevent from './form-event'
 
 import { 
   callapi
@@ -55,6 +56,7 @@ export default $ => {
         defaultAllDay: true,
         forceEventDuration: true,
         eventDataTransform: receiveddatatransform,
+        eventOverlap: false,
         events: (
           fetchInfo,
           success,
@@ -86,6 +88,12 @@ export default $ => {
           )
         },
         eventClick: event => {
+
+          formevent(
+            $,
+            calendar,
+            event
+          )
 
           event.jsEvent.cancelBubble = true;
           event.jsEvent.preventDefault();

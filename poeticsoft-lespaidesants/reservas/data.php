@@ -158,6 +158,43 @@ function lespaidesants_plugin_reservas_data_event_create( WP_REST_Request $req )
   return $res;
 }
 
+// DELETE
+
+function lespaidesants_plugin_reservas_data_event_delete( WP_REST_Request $req ) {
+      
+  $res = new WP_REST_Response(); 
+
+  try { 
+
+    global $wpdb;
+
+    $baseprefix = $wpdb->base_prefix;
+    if(is_multisite()) {
+
+      $blogid = get_current_blog_id();
+      $baseprefix .= $blogid . '_';
+    }
+    $tablename = $baseprefix . 'reservas_events';    
+    $eventid = $req->get_param('eventid');
+
+    $delete = $wpdb->delete(
+      $tablename,
+      [
+        'id' => $eventid
+      ]
+    );
+
+    $res->set_data($delete);
+  
+  } catch (Exception $e) {
+    
+    $res->set_status($e->getCode());
+    $res->set_data($e->getMessage());
+  }
+
+  return $res;
+}
+
 // CREATE
 
 function lespaidesants_plugin_reservas_user_validate( WP_REST_Request $req ) {
@@ -317,6 +354,16 @@ add_action(
       [
         'methods'  => 'POST',
         'callback' => 'lespaidesants_plugin_reservas_data_event_create',
+        'permission_callback' => '__return_true'
+      ]
+    );
+
+    register_rest_route(
+      'lespaidesants/reservas/data',
+      'event/delete',
+      [
+        'methods'  => 'POST',
+        'callback' => 'lespaidesants_plugin_reservas_data_event_delete',
         'permission_callback' => '__return_true'
       ]
     );

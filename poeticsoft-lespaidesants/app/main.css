@@ -55,10 +55,10 @@ body {
   text-align: left;
 }
 #LEDS-Reservas #Form .Title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 0 16px 0;
+  margin: 0 0 24px 0;
+  padding: 0 32px 0 0;
+  position: relative;
+  min-height: 16px;
 }
 #LEDS-Reservas #Form .Title .TitleText {
   flex: 1;
@@ -68,8 +68,8 @@ body {
   text-align: left;
 }
 #LEDS-Reservas #Form .Title .Close {
-  position: relative;
-  top: -16px;
+  position: absolute;
+  top: -12px;
   right: -12px;
   padding-top: 7px;
   padding-right: 12px;
@@ -105,13 +105,9 @@ body {
   cursor: pointer;
   height: auto !important;
   font-size: 1em;
-  text-indent: 5px;
 }
 #LEDS-Reservas #Form .Fields .Field select:disabled {
   opacity: 0.2;
-}
-#LEDS-Reservas #Form .Fields .Field select option {
-  padding: 8px;
 }
 #LEDS-Reservas #Form .Fields .Field.HourSelector {
   width: calc(45% - 8px);

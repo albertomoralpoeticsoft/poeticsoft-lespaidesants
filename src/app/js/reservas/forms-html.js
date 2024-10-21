@@ -1,3 +1,6 @@
+import moment from 'moment'
+moment.locale('es')
+
 export const formmessagehtml = data => {
 
   return `
@@ -130,7 +133,7 @@ export const formdateshtml = data => {
     </option>`
   }
 
-  let durantenoptions = '<option value="2">Selecciona hasta cuando (min 2 semanas)</option>'
+  let durantenoptions = '<option value="2">Hasta cuando? (min 2 semanas)</option>'
   for(let i=3; i<9; i++) {
 
     durantenoptions += `<option
@@ -209,6 +212,61 @@ export const formdateshtml = data => {
           value="Reservar" 
           disabled="disabled" 
         /> 
+      </div>
+    </div>
+  `
+}
+
+export const formreservaconfirmhtml = data => {
+
+  return `
+    <div 
+      id="Form"
+      class="FormReservaConfirm"
+    >   
+      <div class="Title">
+        <button class="Close">x</button>
+      </div>    
+      <div class="Text">
+        ${ data.message }
+      </div>
+      <div class="Actions">
+        <input 
+          id="confirm"
+          type="submit" 
+          value="Si"
+        />
+      </div>
+    </div>
+  `
+}
+
+export const formeventhtml = data => {
+
+  const date = moment(data.event.start).format('DD [de] MMMM [de] YYYY')
+
+  return `
+    <div 
+      id="Form"
+      class="FormEvent"
+    > 
+      <div class="Title">
+        <div class="TitleText">
+          Reserva del dia ${ date }
+        </div>
+        <button class="Close">x</button>
+      </div> 
+      <div class="Text">
+        Te hemos enviado un mail a tu correo, 
+        Por favor escribe el código recibido 
+        para validar tu dirección de coreo electrónico.
+      </div>
+      <div class="Actions">
+        <input 
+          id="deleteevent"
+          type="submit" 
+          value="Eliminar reserva"
+        />
       </div>
     </div>
   `

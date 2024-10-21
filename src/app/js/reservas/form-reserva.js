@@ -177,10 +177,18 @@ export default (
 
             setTimeout(
               () => {
+
+                $formwrapper
+                .fadeOut(
+                  1000,
+                  () => {
+                    
+                    $formwrapper.remove() 
+                  }
+                )              
                 
-                $formwrapper.remove()
               },
-              2000
+              500
             )
           }
 

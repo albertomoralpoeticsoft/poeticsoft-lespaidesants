@@ -36,6 +36,12 @@ export const callapi = data => {
 
         break
 
+      case 'eventdelete':
+
+        url += 'data/event/delete'
+
+        break
+
       case 'validateuser':
 
         url += 'user/validate'
