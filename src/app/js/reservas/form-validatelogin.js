@@ -1,8 +1,9 @@
 import { formvalidateloginhtml } from './forms-html'
 import formmessage from './form-message'
-// import calendar from './calendar'
+import { callapi } from './dataapi'
+import calendar from './calendar'
 
-export default $ => {  
+export default ($, email) => {  
   
   const $ledsreservasblock = $('#LEDS-Reservas')
   if($ledsreservasblock.length) {
@@ -51,35 +52,30 @@ export default $ => {
         callapi({
           call: 'validatecode',
           body: {
-            email: emailforvalidation,
+            email: email,
             code: $validatecode.val()
           }
         })
         .then(result => {
 
-          if(
-            result.result
-            &&
-            result.result == 'ok'
-          ) {   
+          localStorage.setItem("LEDS-Reservas-Email", email);
 
-            formmessage(
-              $,
-              {
-                message: `
-                  Código válido, gracias por tu interés 
-                  en nuestro espacio, por favor, 
-                  selecciona tu/s reserva/s en el calendario.
-                `
-              }
-            )
+          formmessage(
+            $,
+            {
+              message: `
+                Código válido para <strong>${ email }</strong>, gracias por tu interés 
+                en nuestro espacio, por favor, 
+                selecciona tu/s reserva/s en el calendario.
+              `
+            }
+          )
 
-            setTimeout(() => {
+          setTimeout(() => {
 
-              calendar($)
-              
-            }, 3000)
-          } 
+            calendar($)
+            
+          }, 4000)
         })
       }
     )

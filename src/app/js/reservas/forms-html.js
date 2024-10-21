@@ -12,6 +12,34 @@ export const formmessagehtml = data => {
   `
 }
 
+export const formacceptemail = data => {
+
+  return `
+    <div 
+      id="Form"
+      class="FormAcceptEmail"
+    > 
+      <div class="Text">
+        Bienvenido a la reserva de sala.
+        Tu mail guardado es <strong>${ data.emailsaved }</strong>
+        quieres usarlo para identificar tus reservas?
+      </div>
+      <div class="Actions">
+        <input 
+          id="confirmmail"
+          type="submit" 
+          value="Si"
+        /> 
+        <input 
+          id="changemail"
+          type="submit" 
+          value="No, quiero usar otro"
+        /> 
+      </div>
+    </div>
+  `
+}
+
 export const formloginhtml = data => {
 
   return `

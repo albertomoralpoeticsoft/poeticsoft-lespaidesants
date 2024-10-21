@@ -1,57 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/app/js/analytics.js":
-/*!*********************************!*\
-  !*** ./src/app/js/analytics.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
-  /* mision-landing-newsletter-y-masterclass */
-
-  var $sintoniza_pensamiento_emocion_accion_action_subscribe = $('.page-id-1757 #wpforms-submit-1297');
-  $sintoniza_pensamiento_emocion_accion_action_subscribe.on('click', function () {
-    gtag('event', 'form_subscription', {
-      'form': 'SINTONIZA PENSAMIENTO, EMOCIÓN Y ACCIÓN',
-      'debug_mode': true
-    });
-  });
-
-  /* newsletter-alta */
-
-  var $inscribete_nuestra_newsletter_action_subscribe = $('.page-id-1785 #wpforms-submit-1297');
-  $inscribete_nuestra_newsletter_action_subscribe.on('click', function () {
-    gtag('event', 'form_subscription', {
-      'form': 'INSCRÍBETE A NUESTRA NEWSLETTER',
-      'debug_mode': true
-    });
-  });
-
-  /*
-  */
-  var title = $(document).attr('title');
-  var $iframe = $('iframe#mailrelay-subscription');
-  if ($iframe.length) {
-    $iframe.on('load', function () {
-      var $button = $iframe.contents().find('#subscribe-form .submit-wrapper input');
-      $button.on('click', function () {
-        gtag('event', 'mailrelay_subscription', {
-          'page_title': title,
-          'debug_mode': true
-        });
-      });
-    });
-  }
-});
-
-/***/ }),
-
 /***/ "./src/app/js/reservas/calendar.js":
 /*!*****************************************!*\
   !*** ./src/app/js/reservas/calendar.js ***!
@@ -333,6 +282,47 @@ var sentdatatransform = function sentdatatransform(data) {
 
 /***/ }),
 
+/***/ "./src/app/js/reservas/form-acceptemail.js":
+/*!*************************************************!*\
+  !*** ./src/app/js/reservas/form-acceptemail.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
+/* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
+/* harmony import */ var _form_login__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-login */ "./src/app/js/reservas/form-login.js");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  var $ledsreservasblock = $('#LEDS-Reservas');
+  if ($ledsreservasblock.length) {
+    var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
+    $ledsreservas.empty();
+    var emailsaved = localStorage.getItem('LEDS-Reservas-Email');
+    $ledsreservas.append((0,_forms_html__WEBPACK_IMPORTED_MODULE_0__.formacceptemail)({
+      emailsaved: emailsaved
+    }));
+    var $acceptemail = $ledsreservas.find('#Form.FormAcceptEmail');
+    var $confirmmail = $acceptemail.find('#confirmmail');
+    var $changemail = $acceptemail.find('#changemail');
+    $confirmmail.on('click', function () {
+      (0,_calendar__WEBPACK_IMPORTED_MODULE_1__["default"])($);
+    });
+    $changemail.on('click', function () {
+      localStorage.removeItem('LEDS-Reservas-Email');
+      (0,_form_login__WEBPACK_IMPORTED_MODULE_2__["default"])($);
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./src/app/js/reservas/form-login.js":
 /*!*******************************************!*\
   !*** ./src/app/js/reservas/form-login.js ***!
@@ -346,7 +336,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
 /* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
-/* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
+/* harmony import */ var _form_acceptemail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-acceptemail */ "./src/app/js/reservas/form-acceptemail.js");
+/* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
+/* harmony import */ var _form_validatelogin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form-validatelogin */ "./src/app/js/reservas/form-validatelogin.js");
+
+
 
 
 
@@ -355,16 +349,19 @@ var validateemail = function validateemail(email) {
   return emailReg.test(email);
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  var usermail = localStorage.getItem('LEDS-Reservas-Email');
+  if (usermail) {
+    return (0,_form_acceptemail__WEBPACK_IMPORTED_MODULE_2__["default"])($);
+  }
   var $ledsreservasblock = $('#LEDS-Reservas');
   if ($ledsreservasblock.length) {
     var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
     $ledsreservas.empty();
     $ledsreservas.append((0,_forms_html__WEBPACK_IMPORTED_MODULE_0__.formloginhtml)());
     var $login = $ledsreservas.find('#Form.FormLogin');
-    var $loginform = $login.find('.Form.LoginForm');
-    var $yourmail = $loginform.find('#yourmail');
-    var $confirmmail = $loginform.find('#confirmmail');
-    var $errormessage = $loginform.find('.ErrorMessage');
+    var $yourmail = $login.find('#yourmail');
+    var $confirmmail = $login.find('#confirmmail');
+    var $errormessage = $login.find('.ErrorMessage');
     $yourmail.on('keyup', function () {
       $errormessage.html('');
       var $this = $(this);
@@ -380,22 +377,20 @@ var validateemail = function validateemail(email) {
       }
     });
     $confirmmail.on('click', function () {
-      var emailforvalidation = $yourmail.val();
-      (0,_form_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, {
+      (0,_form_message__WEBPACK_IMPORTED_MODULE_3__["default"])($, {
         message: 'Comprobando...'
       });
       var $this = $(this);
       (0,_dataapi__WEBPACK_IMPORTED_MODULE_1__.callapi)({
         call: 'validateuser',
         body: {
-          email: emailforvalidation
+          email: $yourmail.val()
         }
       }).then(function (result) {
-        if (result.result && result.result == 'ok') {
-          formvalidatelogin($);
-        }
+        return (0,_form_validatelogin__WEBPACK_IMPORTED_MODULE_4__["default"])($, $yourmail.val());
       })["catch"](function (error) {
         console.log('Error');
+        console.log(error);
       });
     });
   }
@@ -573,11 +568,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
 /* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
+/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
+/* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
 
 
-// import calendar from './calendar'
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, email) {
   var $ledsreservasblock = $('#LEDS-Reservas');
   if ($ledsreservasblock.length) {
     var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
@@ -598,21 +595,20 @@ __webpack_require__.r(__webpack_exports__);
       (0,_form_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, {
         message: 'Validando...'
       });
-      callapi({
+      (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.callapi)({
         call: 'validatecode',
         body: {
-          email: emailforvalidation,
+          email: email,
           code: $validatecode.val()
         }
       }).then(function (result) {
-        if (result.result && result.result == 'ok') {
-          (0,_form_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, {
-            message: "\n                  C\xF3digo v\xE1lido, gracias por tu inter\xE9s \n                  en nuestro espacio, por favor, \n                  selecciona tu/s reserva/s en el calendario.\n                "
-          });
-          setTimeout(function () {
-            calendar($);
-          }, 3000);
-        }
+        localStorage.setItem("LEDS-Reservas-Email", email);
+        (0,_form_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, {
+          message: "\n                C\xF3digo v\xE1lido para <strong>".concat(email, "</strong>, gracias por tu inter\xE9s \n                en nuestro espacio, por favor, \n                selecciona tu/s reserva/s en el calendario.\n              ")
+        });
+        setTimeout(function () {
+          (0,_calendar__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+        }, 4000);
       });
     });
   }
@@ -629,6 +625,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   formacceptemail: () => (/* binding */ formacceptemail),
 /* harmony export */   formconfirmhtml: () => (/* binding */ formconfirmhtml),
 /* harmony export */   formdateshtml: () => (/* binding */ formdateshtml),
 /* harmony export */   formloginhtml: () => (/* binding */ formloginhtml),
@@ -637,6 +634,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var formmessagehtml = function formmessagehtml(data) {
   return "\n    <div \n    id=\"Form\"\n    class=\"FormMessage\"\n  > \n      <div class=\"Message\">\n        ".concat(data.message, "\n      </div>\n    </div>\n  ");
+};
+var formacceptemail = function formacceptemail(data) {
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormAcceptEmail\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Tu mail guardado es <strong>".concat(data.emailsaved, "</strong>\n        quieres usarlo para identificar tus reservas?\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmmail\"\n          type=\"submit\" \n          value=\"Si\"\n        /> \n        <input \n          id=\"changemail\"\n          type=\"submit\" \n          value=\"No, quiero usar otro\"\n        /> \n      </div>\n    </div>\n  ");
 };
 var formloginhtml = function formloginhtml(data) {
   return "\n    <div \n      id=\"Form\"\n      class=\"FormLogin\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Por favor usa tu mail para que podamos identificar tus reservas.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmmail\"\n          type=\"submit\" \n          value=\"Confirmar\" \n          disabled=\"disabled\"\n        /> \n        <div class=\"ErrorMessage\"></div>\n      </div>\n    </div>\n  ";
@@ -678,10 +678,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _form_login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form-login */ "./src/app/js/reservas/form-login.js");
-/* harmony import */ var _form_validatelogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-validatelogin */ "./src/app/js/reservas/form-validatelogin.js");
-/* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
-
-
 
 
 // Global
@@ -691,7 +687,7 @@ window.eventsreceived = function (events) {};
 // Init
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
-  (0,_calendar__WEBPACK_IMPORTED_MODULE_2__["default"])($);
+  (0,_form_login__WEBPACK_IMPORTED_MODULE_0__["default"])($);
 });
 
 /***/ }),
@@ -35924,13 +35920,10 @@ var __webpack_exports__ = {};
   !*** ./src/app/main.js ***!
   \*************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_analytics__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/analytics */ "./src/app/js/analytics.js");
-/* harmony import */ var _js_reservas_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/reservas/main */ "./src/app/js/reservas/main.js");
-
+/* harmony import */ var _js_reservas_main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/reservas/main */ "./src/app/js/reservas/main.js");
 
 (function ($) {
-  (0,_js_analytics__WEBPACK_IMPORTED_MODULE_0__["default"])($);
-  (0,_js_reservas_main__WEBPACK_IMPORTED_MODULE_1__["default"])($);
+  (0,_js_reservas_main__WEBPACK_IMPORTED_MODULE_0__["default"])($);
 })(jQuery);
 })();
 

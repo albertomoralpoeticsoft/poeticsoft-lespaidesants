@@ -225,9 +225,7 @@ function lespaidesants_plugin_reservas_user_validate( WP_REST_Request $req ) {
 
       if($mailsent) {
 
-        $res->set_data([
-          'result' => 'ok'
-        ]);
+        $res->set_data('ok');
 
       } else {
 

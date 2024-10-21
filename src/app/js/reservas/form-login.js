@@ -1,6 +1,10 @@
-import { formloginhtml } from './forms-html'
+import { 
+  formloginhtml
+} from './forms-html'
 import { callapi } from './dataapi'
+import formacceptemail from './form-acceptemail'
 import formmessage from './form-message'
+import formvalidatelogin from './form-validatelogin'
 
 const validateemail = email => {
 
@@ -9,6 +13,12 @@ const validateemail = email => {
 }
 
 export default $ => {  
+
+  const usermail = localStorage.getItem('LEDS-Reservas-Email')
+  if(usermail) {
+
+    return formacceptemail($)
+  }
   
   const $ledsreservasblock = $('#LEDS-Reservas')
   if($ledsreservasblock.length) {
@@ -19,10 +29,9 @@ export default $ => {
     .append(formloginhtml())
 
     const $login = $ledsreservas.find('#Form.FormLogin')
-    const $loginform = $login.find('.Form.LoginForm')
-    const $yourmail = $loginform.find('#yourmail')
-    const $confirmmail = $loginform.find('#confirmmail')
-    const $errormessage = $loginform.find('.ErrorMessage')
+    const $yourmail = $login.find('#yourmail')
+    const $confirmmail = $login.find('#confirmmail')
+    const $errormessage = $login.find('.ErrorMessage')
 
     $yourmail
     .on(
@@ -59,8 +68,6 @@ export default $ => {
       'click',
       function() {
 
-        const emailforvalidation = $yourmail.val()
-
         formmessage(
           $,
           {
@@ -73,23 +80,14 @@ export default $ => {
         callapi({
           call: 'validateuser',
           body: {
-            email: emailforvalidation
+            email: $yourmail.val()
           }
         })
-        .then(result => {
-
-          if(
-            result.result
-            && 
-            result.result == 'ok'
-          ) {
-
-            formvalidatelogin($)
-          }
-        })
+        .then(result => formvalidatelogin($, $yourmail.val()))
         .catch(error => {
 
           console.log('Error')
+          console.log(error)
         })
       }
     )
