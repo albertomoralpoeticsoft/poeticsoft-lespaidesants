@@ -79,7 +79,8 @@ export const processreserva = data => {
   const P = new Promise((resolve, reject) => {
 
     let eventdata = {
-      title: data.title
+      title: data.title,
+      extendedProps: {}
     }
 
     if(data.isrecurrent) {
@@ -92,6 +93,10 @@ export const processreserva = data => {
       eventdata.startRecur = startday.valueOf()
       eventdata.endRecur = endday.valueOf()
 
+      eventdata.extendedProps.isrecurrent = true      
+      eventdata.extendedProps.startRecur = eventdata.startRecur
+      eventdata.extendedProps.endRecur = eventdata.endRecur
+
       if(data.hora != 'Todo') {
 
         const hora = parseInt(data.hora)
@@ -100,6 +105,13 @@ export const processreserva = data => {
         const endtime = moment.duration(hora + duration, 'hours')
         eventdata.startTime = starttime.valueOf()
         eventdata.endTime = endtime.valueOf()
+  
+        eventdata.extendedProps.startTime = eventdata.startTime
+        eventdata.extendedProps.endTime = eventdata.endTime
+
+      } else {
+
+        eventdata.extendedProps.allDay = true        
       }
 
     } else {      
@@ -112,6 +124,8 @@ export const processreserva = data => {
         eventdata.allDay = true
         eventdata.start = start.valueOf()
         eventdata.end = end.valueOf()
+
+        eventdata.extendedProps.allDay = true  
 
       } else {
         

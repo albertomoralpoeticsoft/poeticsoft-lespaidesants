@@ -32,7 +32,7 @@ export const receiveddatatransform = data => {
     backgroundColor: data.backgroundColor,
     borderColor: data.borderColor,
     textColor: data.textColor,
-    extendedProps: data.extendedProps,
+    extendedProps: data.extendedProps ? JSON.parse(data.extendedProps) : null,
     
     state: data.state
   }
@@ -74,7 +74,7 @@ export const sentdatatransform = data => {
     backgroundColor: data.backgroundColor,
     borderColor: data.borderColor,
     textColor: data.textColor,
-    extendedProps: data.extendedProps,
+    extendedProps: data.extendedProps ? JSON.stringify(data.extendedProps) : null,
 
     state: data.state
   }

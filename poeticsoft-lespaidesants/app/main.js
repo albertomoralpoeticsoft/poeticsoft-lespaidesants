@@ -157,7 +157,8 @@ var callapi = function callapi(data) {
 var processreserva = function processreserva(data) {
   var P = new Promise(function (resolve, reject) {
     var eventdata = {
-      title: data.title
+      title: data.title,
+      extendedProps: {}
     };
     if (data.isrecurrent) {
       var startday = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
@@ -167,6 +168,9 @@ var processreserva = function processreserva(data) {
       var endday = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day).add(until, 'weeks');
       eventdata.startRecur = startday.valueOf();
       eventdata.endRecur = endday.valueOf();
+      eventdata.extendedProps.isrecurrent = true;
+      eventdata.extendedProps.startRecur = eventdata.startRecur;
+      eventdata.extendedProps.endRecur = eventdata.endRecur;
       if (data.hora != 'Todo') {
         var hora = parseInt(data.hora);
         var duration = parseInt(data.duration);
@@ -174,6 +178,10 @@ var processreserva = function processreserva(data) {
         var endtime = moment__WEBPACK_IMPORTED_MODULE_0___default().duration(hora + duration, 'hours');
         eventdata.startTime = starttime.valueOf();
         eventdata.endTime = endtime.valueOf();
+        eventdata.extendedProps.startTime = eventdata.startTime;
+        eventdata.extendedProps.endTime = eventdata.endTime;
+      } else {
+        eventdata.extendedProps.allDay = true;
       }
     } else {
       if (data.hora == 'Todo') {
@@ -182,6 +190,7 @@ var processreserva = function processreserva(data) {
         eventdata.allDay = true;
         eventdata.start = start.valueOf();
         eventdata.end = end.valueOf();
+        eventdata.extendedProps.allDay = true;
       } else {
         var _start = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.day);
         var _hora = parseInt(data.hora);
@@ -246,7 +255,7 @@ var receiveddatatransform = function receiveddatatransform(data) {
     backgroundColor: data.backgroundColor,
     borderColor: data.borderColor,
     textColor: data.textColor,
-    extendedProps: data.extendedProps,
+    extendedProps: data.extendedProps ? JSON.parse(data.extendedProps) : null,
     state: data.state
   };
   return transformeddata;
@@ -281,7 +290,7 @@ var sentdatatransform = function sentdatatransform(data) {
     backgroundColor: data.backgroundColor,
     borderColor: data.borderColor,
     textColor: data.textColor,
-    extendedProps: data.extendedProps,
+    extendedProps: data.extendedProps ? JSON.stringify(data.extendedProps) : null,
     state: data.state
   };
   return transformeddata;
@@ -802,8 +811,16 @@ var formreservaconfirmhtml = function formreservaconfirmhtml(data) {
   return "\n    <div \n      id=\"Form\"\n      class=\"FormReservaConfirm\"\n    >   \n      <div class=\"Title\">\n        <button class=\"Close\">x</button>\n      </div>    \n      <div class=\"Text\">\n        ".concat(data.message, "\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirm\"\n          type=\"submit\" \n          value=\"Si\"\n        />\n      </div>\n    </div>\n  ");
 };
 var formeventhtml = function formeventhtml(data) {
+  console.log(data.event.extendedProps);
   var date = moment__WEBPACK_IMPORTED_MODULE_0___default()(data.event.start).format('DD [de] MMMM [de] YYYY');
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormEvent\"\n    > \n      <div class=\"Title\">\n        <div class=\"TitleText\">\n          Reserva del dia ".concat(date, "\n        </div>\n        <button class=\"Close\">x</button>\n      </div> \n      <div class=\"Text\">\n        Te hemos enviado un mail a tu correo, \n        Por favor escribe el c\xF3digo recibido \n        para validar tu direcci\xF3n de coreo electr\xF3nico.\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"deleteevent\"\n          type=\"submit\" \n          value=\"Eliminar reserva\"\n        />\n      </div>\n    </div>\n  ");
+  var message = '';
+  var extendeddata = data.event.extendedProps;
+  if (extendeddata.isrecurrent) {
+    var rfrom = moment__WEBPACK_IMPORTED_MODULE_0___default()(extendeddata.startRecur).format('DD [de] MMMM [de] YYYY');
+    var rto = moment__WEBPACK_IMPORTED_MODULE_0___default()(extendeddata.endRecur).format('DD [de] MMMM [de] YYYY');
+    message += "\n      Esta reserva se repite \n      desde el dia \n      <strong>".concat(rfrom, "</strong> \n      hasta el \n      <strong>").concat(rto, "</strong>\n    ");
+  }
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormEvent\"\n    > \n      <div class=\"Title\">\n        <div class=\"TitleText\">\n          Reserva del dia ".concat(date, "\n        </div>\n        <button class=\"Close\">x</button>\n      </div> \n      <div class=\"Text\">\n        ").concat(message, "\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"deleteevent\"\n          type=\"submit\" \n          value=\"Eliminar reserva\"\n        />\n      </div>\n    </div>\n  ");
 };
 var formconfirmhtml = function formconfirmhtml(data) {
   return "\n    <div \n      id=\"Form\"\n      class=\"FormConfirm\"\n    > \n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email para confirmar\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmreservation\"\n          type=\"submit\" \n          value=\"Confirmar\" \n        /> \n      </div>\n    </div>\n  ";

@@ -243,7 +243,25 @@ export const formreservaconfirmhtml = data => {
 
 export const formeventhtml = data => {
 
+  console.log(data.event.extendedProps)
+
   const date = moment(data.event.start).format('DD [de] MMMM [de] YYYY')
+  let message = ''
+  const extendeddata = data.event.extendedProps
+
+  if(extendeddata.isrecurrent) {
+
+    const rfrom = moment(extendeddata.startRecur).format('DD [de] MMMM [de] YYYY')
+    const rto = moment(extendeddata.endRecur).format('DD [de] MMMM [de] YYYY')
+
+    message += `
+      Esta reserva se repite 
+      desde el dia 
+      <strong>${ rfrom }</strong> 
+      hasta el 
+      <strong>${ rto }</strong>
+    `
+  }
 
   return `
     <div 
@@ -257,9 +275,7 @@ export const formeventhtml = data => {
         <button class="Close">x</button>
       </div> 
       <div class="Text">
-        Te hemos enviado un mail a tu correo, 
-        Por favor escribe el código recibido 
-        para validar tu dirección de coreo electrónico.
+        ${ message }
       </div>
       <div class="Actions">
         <input 
