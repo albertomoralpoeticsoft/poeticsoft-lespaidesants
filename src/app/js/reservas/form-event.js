@@ -3,7 +3,7 @@ import {
 } from './forms-html'
 import formreservaconfirm from './form-reserva-confirm'
 import formreservamessage from './form-reserva-message'
-import { callapi } from './dataapi'
+import { callapi } from './api'
 
 export default (
   $, 

@@ -1,6 +1,6 @@
 import { formvalidateloginhtml } from './forms-html'
 import formmessage from './form-message'
-import { callapi } from './dataapi'
+import { callapi } from './api'
 import calendar from './calendar'
 
 export default ($, email) => {  

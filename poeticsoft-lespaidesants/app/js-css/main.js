@@ -1,115 +1,21 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/app/js/reservas/calendar.js":
-/*!*****************************************!*\
-  !*** ./src/app/js/reservas/calendar.js ***!
-  \*****************************************/
+/***/ "./src/app/js/reservas/api.js":
+/*!************************************!*\
+  !*** ./src/app/js/reservas/api.js ***!
+  \************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
-/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
-/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
-/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
-/* harmony import */ var _datatransform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./datatransform */ "./src/app/js/reservas/datatransform.js");
-/* harmony import */ var _form_reserva__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-reserva */ "./src/app/js/reservas/form-reserva.js");
-/* harmony import */ var _form_event__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-event */ "./src/app/js/reservas/form-event.js");
-/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
-// https://fullcalendar.io/docs/initialize-globals
-// https://fullcalendar.io/docs/date-clicking-selecting
-
-
-
-
-
-
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
-  var $ledsreservasblock = $('#LEDS-Reservas');
-  if ($ledsreservasblock.length) {
-    var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
-    $ledsreservas.empty();
-    var calendarelm = $ledsreservas[0];
-    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_4__.Calendar(calendarelm, {
-      // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-      locale: _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_5__["default"],
-      plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_6__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_7__["default"]],
-      aspectRatio: 1.3,
-      customButtons: {
-        reservasbutton: {
-          text: 'Refresh',
-          click: function click() {
-            calendar.refetchEvents();
-          }
-        }
-      },
-      validRange: function validRange(nowDate) {
-        return {
-          start: nowDate
-        };
-      },
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'reservasbutton'
-      },
-      defaultAllDay: true,
-      forceEventDuration: true,
-      eventDataTransform: _datatransform__WEBPACK_IMPORTED_MODULE_0__.receiveddatatransform,
-      eventOverlap: false,
-      events: function events(fetchInfo, success, fail) {
-        (0,_dataapi__WEBPACK_IMPORTED_MODULE_3__.callapi)({
-          call: 'eventall',
-          body: {
-            start: new Date(fetchInfo.startStr).getTime(),
-            end: new Date(fetchInfo.endStr).getTime()
-          }
-        }).then(function (result) {
-          success(result);
-          $('#ReservaDay').dialog('close');
-        })["catch"](fail);
-      },
-      dateClick: function dateClick(info) {
-        (0,_form_reserva__WEBPACK_IMPORTED_MODULE_1__["default"])($, calendar, info);
-      },
-      eventClick: function eventClick(event) {
-        (0,_form_event__WEBPACK_IMPORTED_MODULE_2__["default"])($, calendar, event);
-        event.jsEvent.cancelBubble = true;
-        event.jsEvent.preventDefault();
-        return false;
-      },
-      eventsSet: function eventsSet(events) {
-        window.eventsreceived(events); // Global event
-      }
-    });
-    calendar.render();
-  }
-});
-
-/***/ }),
-
-/***/ "./src/app/js/reservas/dataapi.js":
-/*!****************************************!*\
-  !*** ./src/app/js/reservas/dataapi.js ***!
-  \****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   callapi: () => (/* binding */ callapi),
-/* harmony export */   processreserva: () => (/* binding */ processreserva)
+/* harmony export */   "callapi": () => (/* binding */ callapi),
+/* harmony export */   "processreserva": () => (/* binding */ processreserva)
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _datatransform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./datatransform */ "./src/app/js/reservas/datatransform.js");
+/* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./transform */ "./src/app/js/reservas/transform.js");
 
 moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
 
@@ -126,13 +32,13 @@ var callapi = function callapi(data) {
     var method = 'POST';
     switch (data.call) {
       case 'eventall':
-        url += 'data/event/all';
+        url += 'event/all';
         break;
       case 'eventcreate':
-        url += 'data/event/create';
+        url += 'event/create';
         break;
       case 'eventdelete':
-        url += 'data/event/delete';
+        url += 'event/delete';
         break;
       case 'validateuser':
         url += 'user/validate';
@@ -149,8 +55,19 @@ var callapi = function callapi(data) {
       },
       body: JSON.stringify(data.body)
     }).then(function (response) {
-      return response.json();
-    }).then(resolve)["catch"](reject);
+      if (response.status != 200) {
+        response.json().then(function (result) {
+          return reject({
+            status: response.status,
+            reason: result
+          });
+        });
+      } else {
+        response.json().then(function (result) {
+          return resolve(result);
+        });
+      }
+    })["catch"](reject);
   });
   return P;
 };
@@ -204,7 +121,7 @@ var processreserva = function processreserva(data) {
     }
     callapi({
       call: 'eventcreate',
-      body: (0,_datatransform__WEBPACK_IMPORTED_MODULE_1__.sentdatatransform)(eventdata)
+      body: (0,_transform__WEBPACK_IMPORTED_MODULE_1__.senttransform)(eventdata)
     }).then(resolve)["catch"](reject);
   });
   return P;
@@ -212,89 +129,97 @@ var processreserva = function processreserva(data) {
 
 /***/ }),
 
-/***/ "./src/app/js/reservas/datatransform.js":
-/*!**********************************************!*\
-  !*** ./src/app/js/reservas/datatransform.js ***!
-  \**********************************************/
+/***/ "./src/app/js/reservas/calendar.js":
+/*!*****************************************!*\
+  !*** ./src/app/js/reservas/calendar.js ***!
+  \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   receiveddatatransform: () => (/* binding */ receiveddatatransform),
-/* harmony export */   sentdatatransform: () => (/* binding */ sentdatatransform)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-var receiveddatatransform = function receiveddatatransform(data) {
-  var transformeddata = {
-    id: data.id,
-    overlap: data.overlap == "1",
-    title: data.title,
-    // url: null, //data.url,
-    interactive: false,
-    // data.interactive == "1",
+/* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
+/* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
+/* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
+/* harmony import */ var _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/core/locales/es */ "./node_modules/@fullcalendar/core/locales/es.js");
+/* harmony import */ var _transform__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./transform */ "./src/app/js/reservas/transform.js");
+/* harmony import */ var _form_reserva__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-reserva */ "./src/app/js/reservas/form-reserva.js");
+/* harmony import */ var _form_event__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-event */ "./src/app/js/reservas/form-event.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
+// https://fullcalendar.io/docs/initialize-globals
+// https://fullcalendar.io/docs/date-clicking-selecting
 
-    groupId: data.groupId,
-    allDay: data.allDay == "1",
-    start: data.start ? parseInt(data.start) : null,
-    end: data.end ? parseInt(data.end) : null,
-    daysOfWeek: data.daysOfWeek ? JSON.parse(data.daysOfWeek) : null,
-    startTime: data.startTime ? parseInt(data.startTime) : null,
-    endTime: data.endTime ? parseInt(data.endTime) : null,
-    startRecur: data.startRecur ? parseInt(data.startRecur) : null,
-    endRecur: data.endRecur ? parseInt(data.endRecur) : null,
-    editable: data.editable == "1",
-    startEditable: data.startEditable,
-    durationEditable: data.durationEditable,
-    resourceEditable: data.resourceEditable,
-    resourceId: data.resourceId,
-    resourceIds: data.resourceIds,
-    display: data.display,
-    restriction: data.restriction,
-    className: data.className,
-    color: data.color,
-    backgroundColor: data.backgroundColor,
-    borderColor: data.borderColor,
-    textColor: data.textColor,
-    extendedProps: data.extendedProps ? JSON.parse(data.extendedProps) : null,
-    state: data.state
-  };
-  return transformeddata;
-};
-var sentdatatransform = function sentdatatransform(data) {
-  var transformeddata = {
-    overlap: false,
-    // data.overlap,
 
-    title: data.title,
-    url: data.url,
-    interactive: data.interactive,
-    groupId: data.groupId,
-    allDay: data.allDay,
-    start: data.start,
-    end: data.end,
-    daysOfWeek: data.daysOfWeek ? JSON.stringify(data.daysOfWeek) : null,
-    startTime: data.startTime,
-    endTime: data.endTime,
-    startRecur: data.startRecur,
-    endRecur: data.endRecur,
-    editable: data.editable,
-    startEditable: data.startEditable,
-    durationEditable: data.durationEditable,
-    resourceEditable: data.resourceEditable,
-    resourceId: data.resourceId,
-    resourceIds: data.resourceIds,
-    display: data.display,
-    restriction: data.restriction,
-    className: data.className,
-    color: data.color,
-    backgroundColor: data.backgroundColor,
-    borderColor: data.borderColor,
-    textColor: data.textColor,
-    extendedProps: data.extendedProps ? JSON.stringify(data.extendedProps) : null,
-    state: data.state
-  };
-  return transformeddata;
-};
+
+
+
+
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  var $ledsreservasblock = $('#LEDS-Reservas');
+  if ($ledsreservasblock.length) {
+    var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
+    $ledsreservas.empty();
+    var calendarelm = $ledsreservas[0];
+    var calendar = new _fullcalendar_core__WEBPACK_IMPORTED_MODULE_4__.Calendar(calendarelm, {
+      // schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+      locale: _fullcalendar_core_locales_es__WEBPACK_IMPORTED_MODULE_5__["default"],
+      plugins: [_fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_6__["default"], _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_7__["default"]],
+      aspectRatio: 1.3,
+      customButtons: {
+        reservasbutton: {
+          text: 'Refresh',
+          click: function click() {
+            calendar.refetchEvents();
+          }
+        }
+      },
+      validRange: function validRange(nowDate) {
+        return {
+          start: nowDate
+        };
+      },
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'reservasbutton'
+      },
+      defaultAllDay: true,
+      forceEventDuration: true,
+      eventtransform: _transform__WEBPACK_IMPORTED_MODULE_0__.receivedtransform,
+      eventOverlap: false,
+      events: function events(fetchInfo, success, fail) {
+        (0,_api__WEBPACK_IMPORTED_MODULE_3__.callapi)({
+          call: 'eventall',
+          body: {
+            start: new Date(fetchInfo.startStr).getTime(),
+            end: new Date(fetchInfo.endStr).getTime()
+          }
+        }).then(function (result) {
+          success(result);
+          $('#ReservaDay').dialog('close');
+        })["catch"](fail);
+      },
+      dateClick: function dateClick(info) {
+        (0,_form_reserva__WEBPACK_IMPORTED_MODULE_1__["default"])($, calendar, info);
+      },
+      eventClick: function eventClick(event) {
+        (0,_form_event__WEBPACK_IMPORTED_MODULE_2__["default"])($, calendar, event);
+        event.jsEvent.cancelBubble = true;
+        event.jsEvent.preventDefault();
+        return false;
+      },
+      eventsSet: function eventsSet(events) {
+        window.eventsreceived(events); // Global event
+      }
+    });
+    calendar.render();
+  }
+});
 
 /***/ }),
 
@@ -353,7 +278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
 /* harmony import */ var _form_reserva_confirm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-reserva-confirm */ "./src/app/js/reservas/form-reserva-confirm.js");
 /* harmony import */ var _form_reserva_message__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-reserva-message */ "./src/app/js/reservas/form-reserva-message.js");
-/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
 
 
 
@@ -377,7 +302,7 @@ __webpack_require__.r(__webpack_exports__);
         (0,_form_reserva_message__WEBPACK_IMPORTED_MODULE_2__["default"])($, {
           message: 'Borrando evento...'
         });
-        (0,_dataapi__WEBPACK_IMPORTED_MODULE_3__.callapi)({
+        (0,_api__WEBPACK_IMPORTED_MODULE_3__.callapi)({
           call: 'eventdelete',
           body: {
             eventid: event.event.id
@@ -417,7 +342,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
-/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
 /* harmony import */ var _form_acceptemail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-acceptemail */ "./src/app/js/reservas/form-acceptemail.js");
 /* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
 /* harmony import */ var _form_validatelogin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form-validatelogin */ "./src/app/js/reservas/form-validatelogin.js");
@@ -430,7 +355,7 @@ var validateemail = function validateemail(email) {
   var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
   return emailReg.test(email);
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+var _formlogin = function formlogin($) {
   var usermail = localStorage.getItem('LEDS-Reservas-Email');
   if (usermail) {
     return (0,_form_acceptemail__WEBPACK_IMPORTED_MODULE_2__["default"])($);
@@ -462,8 +387,7 @@ var validateemail = function validateemail(email) {
       (0,_form_message__WEBPACK_IMPORTED_MODULE_3__["default"])($, {
         message: 'Comprobando...'
       });
-      var $this = $(this);
-      (0,_dataapi__WEBPACK_IMPORTED_MODULE_1__.callapi)({
+      (0,_api__WEBPACK_IMPORTED_MODULE_1__.callapi)({
         call: 'validateuser',
         body: {
           email: $yourmail.val()
@@ -471,12 +395,17 @@ var validateemail = function validateemail(email) {
       }).then(function (result) {
         return (0,_form_validatelogin__WEBPACK_IMPORTED_MODULE_4__["default"])($, $yourmail.val());
       })["catch"](function (error) {
-        console.log('Error');
-        console.log(error);
+        (0,_form_message__WEBPACK_IMPORTED_MODULE_3__["default"])($, {
+          message: "\n                Ha habido un error procesando tu mail, vuelve a intentarlo, por favor.\n                <br/>\n                [".concat(error.reason, "]\n              ")
+        });
+        setTimeout(function () {
+          _formlogin($);
+        }, 3000);
       });
     });
   }
-});
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_formlogin);
 
 /***/ }),
 
@@ -575,7 +504,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
-/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
 
 moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
 
@@ -590,7 +519,7 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
 
   // Redraw forms dom
 
-  var drawform = function drawform(formid) {
+  var _drawform = function drawform(formid) {
     $formwrapper.empty();
     switch (formid) {
       case 'dates':
@@ -660,8 +589,8 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
       $formwrapper.remove();
     });
     $reservarmas.length && $reservarmas.on('click', function () {
-      drawform('saving');
-      (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.processreserva)({
+      _drawform('saving');
+      (0,_api__WEBPACK_IMPORTED_MODULE_2__.processreserva)({
         title: $reservatitle.val(),
         day: dayinfo.dateStr,
         hora: $selecthour.val(),
@@ -670,7 +599,7 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
         recurrentuntil: $recurrentuntil.val()
       }).then(function (processresult) {
         window.eventsreceived = function (events) {
-          drawform('saved');
+          _drawform('saved');
           setTimeout(function () {
             $formwrapper.fadeOut(1000, function () {
               $formwrapper.remove();
@@ -682,7 +611,7 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
       return false;
     });
     $reservar.length && $reservar.on('click', function () {
-      drawform('confirm');
+      _drawform('confirm');
     });
     $confirmreservation.length && $confirmreservation.on('click', function () {
       window.eventsreceived = function (events) {
@@ -691,7 +620,7 @@ moment__WEBPACK_IMPORTED_MODULE_0___default().locale('es');
       calendar.refetchEvents();
     });
   };
-  drawform('dates');
+  _drawform('dates');
 });
 
 /***/ }),
@@ -709,7 +638,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
 /* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
-/* harmony import */ var _dataapi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dataapi */ "./src/app/js/reservas/dataapi.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
 /* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
 
 
@@ -736,7 +665,7 @@ __webpack_require__.r(__webpack_exports__);
       (0,_form_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, {
         message: 'Validando...'
       });
-      (0,_dataapi__WEBPACK_IMPORTED_MODULE_2__.callapi)({
+      (0,_api__WEBPACK_IMPORTED_MODULE_2__.callapi)({
         call: 'validatecode',
         body: {
           email: email,
@@ -766,14 +695,14 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   formacceptemail: () => (/* binding */ formacceptemail),
-/* harmony export */   formconfirmhtml: () => (/* binding */ formconfirmhtml),
-/* harmony export */   formdateshtml: () => (/* binding */ formdateshtml),
-/* harmony export */   formeventhtml: () => (/* binding */ formeventhtml),
-/* harmony export */   formloginhtml: () => (/* binding */ formloginhtml),
-/* harmony export */   formmessagehtml: () => (/* binding */ formmessagehtml),
-/* harmony export */   formreservaconfirmhtml: () => (/* binding */ formreservaconfirmhtml),
-/* harmony export */   formvalidateloginhtml: () => (/* binding */ formvalidateloginhtml)
+/* harmony export */   "formacceptemail": () => (/* binding */ formacceptemail),
+/* harmony export */   "formconfirmhtml": () => (/* binding */ formconfirmhtml),
+/* harmony export */   "formdateshtml": () => (/* binding */ formdateshtml),
+/* harmony export */   "formeventhtml": () => (/* binding */ formeventhtml),
+/* harmony export */   "formloginhtml": () => (/* binding */ formloginhtml),
+/* harmony export */   "formmessagehtml": () => (/* binding */ formmessagehtml),
+/* harmony export */   "formreservaconfirmhtml": () => (/* binding */ formreservaconfirmhtml),
+/* harmony export */   "formvalidateloginhtml": () => (/* binding */ formvalidateloginhtml)
 /* harmony export */ });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
@@ -789,7 +718,7 @@ var formloginhtml = function formloginhtml(data) {
   return "\n    <div \n      id=\"Form\"\n      class=\"FormLogin\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Por favor usa tu mail para que podamos identificar tus reservas.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmmail\"\n          type=\"submit\" \n          value=\"Confirmar\" \n          disabled=\"disabled\"\n        /> \n        <div class=\"ErrorMessage\"></div>\n      </div>\n    </div>\n  ";
 };
 var formvalidateloginhtml = function formvalidateloginhtml(data) {
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormValidateLogin\"\n    > \n      <div class=\"Text\">\n        Te hemos enviado un mail a tu correo, \n        Por favor escribe el c\xF3digo recibido \n        para validar tu direcci\xF3n de coreo electr\xF3nico.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"validatecode\"\n            type=\"text\" \n            placeholder=\"Codigo recibido\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmcode\"\n          type=\"submit\" \n          value=\"Confirmar c\xF3digo\" \n          disabled=\"disabled\"\n        /> \n      </div>\n    </div>\n  ";
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormValidateLogin\"\n    > \n      <div class=\"Text\">\n        Te hemos enviado un mail a tu correo, \n        Por favor escribe el c\xF3digo recibido \n        para validar tu direcci\xF3n de coreo electr\xF3nico.\n        <strong>El c\xF3digo es v\xE1lido durante los pr\xF3ximos 10 minutos.</strong>\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"validatecode\"\n            type=\"text\" \n            placeholder=\"Codigo recibido\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmcode\"\n          type=\"submit\" \n          value=\"Confirmar c\xF3digo\" \n          disabled=\"disabled\"\n        /> \n      </div>\n    </div>\n  ";
 };
 var formdateshtml = function formdateshtml(data) {
   var houroptions = '<option value="Todo">Todo el día</option>';
@@ -851,6 +780,92 @@ window.eventsreceived = function (events) {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
   (0,_form_login__WEBPACK_IMPORTED_MODULE_0__["default"])($);
 });
+
+/***/ }),
+
+/***/ "./src/app/js/reservas/transform.js":
+/*!******************************************!*\
+  !*** ./src/app/js/reservas/transform.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "receivedtransform": () => (/* binding */ receivedtransform),
+/* harmony export */   "senttransform": () => (/* binding */ senttransform)
+/* harmony export */ });
+var receivedtransform = function receivedtransform(data) {
+  var transformeddata = {
+    id: data.id,
+    overlap: data.overlap == "1",
+    title: data.title,
+    // url: null, //data.url,
+    interactive: false,
+    // data.interactive == "1",
+
+    groupId: data.groupId,
+    allDay: data.allDay == "1",
+    start: data.start ? parseInt(data.start) : null,
+    end: data.end ? parseInt(data.end) : null,
+    daysOfWeek: data.daysOfWeek ? JSON.parse(data.daysOfWeek) : null,
+    startTime: data.startTime ? parseInt(data.startTime) : null,
+    endTime: data.endTime ? parseInt(data.endTime) : null,
+    startRecur: data.startRecur ? parseInt(data.startRecur) : null,
+    endRecur: data.endRecur ? parseInt(data.endRecur) : null,
+    editable: data.editable == "1",
+    startEditable: data.startEditable,
+    durationEditable: data.durationEditable,
+    resourceEditable: data.resourceEditable,
+    resourceId: data.resourceId,
+    resourceIds: data.resourceIds,
+    display: data.display,
+    restriction: data.restriction,
+    className: data.className,
+    color: data.color,
+    backgroundColor: data.backgroundColor,
+    borderColor: data.borderColor,
+    textColor: data.textColor,
+    extendedProps: data.extendedProps ? JSON.parse(data.extendedProps) : null,
+    state: data.state
+  };
+  return transformeddata;
+};
+var senttransform = function senttransform(data) {
+  var transformeddata = {
+    overlap: false,
+    // data.overlap,
+
+    title: data.title,
+    url: data.url,
+    interactive: data.interactive,
+    groupId: data.groupId,
+    allDay: data.allDay,
+    start: data.start,
+    end: data.end,
+    daysOfWeek: data.daysOfWeek ? JSON.stringify(data.daysOfWeek) : null,
+    startTime: data.startTime,
+    endTime: data.endTime,
+    startRecur: data.startRecur,
+    endRecur: data.endRecur,
+    editable: data.editable,
+    startEditable: data.startEditable,
+    durationEditable: data.durationEditable,
+    resourceEditable: data.resourceEditable,
+    resourceId: data.resourceId,
+    resourceIds: data.resourceIds,
+    display: data.display,
+    restriction: data.restriction,
+    className: data.className,
+    color: data.color,
+    backgroundColor: data.backgroundColor,
+    borderColor: data.borderColor,
+    textColor: data.textColor,
+    extendedProps: data.extendedProps ? JSON.stringify(data.extendedProps) : null,
+    state: data.state
+  };
+  return transformeddata;
+};
 
 /***/ }),
 
@@ -22735,49 +22750,49 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Children: () => (/* binding */ O),
-/* harmony export */   Component: () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.Component),
-/* harmony export */   Fragment: () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.Fragment),
-/* harmony export */   PureComponent: () => (/* binding */ w),
-/* harmony export */   StrictMode: () => (/* binding */ vn),
-/* harmony export */   Suspense: () => (/* binding */ D),
-/* harmony export */   SuspenseList: () => (/* binding */ V),
-/* harmony export */   __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: () => (/* binding */ rn),
-/* harmony export */   cloneElement: () => (/* binding */ cn),
-/* harmony export */   createContext: () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createContext),
-/* harmony export */   createElement: () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createElement),
-/* harmony export */   createFactory: () => (/* binding */ on),
-/* harmony export */   createPortal: () => (/* binding */ j),
-/* harmony export */   createRef: () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createRef),
+/* harmony export */   "Children": () => (/* binding */ O),
+/* harmony export */   "Component": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.Component),
+/* harmony export */   "Fragment": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.Fragment),
+/* harmony export */   "PureComponent": () => (/* binding */ w),
+/* harmony export */   "StrictMode": () => (/* binding */ vn),
+/* harmony export */   "Suspense": () => (/* binding */ D),
+/* harmony export */   "SuspenseList": () => (/* binding */ V),
+/* harmony export */   "__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED": () => (/* binding */ rn),
+/* harmony export */   "cloneElement": () => (/* binding */ cn),
+/* harmony export */   "createContext": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createContext),
+/* harmony export */   "createElement": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createElement),
+/* harmony export */   "createFactory": () => (/* binding */ on),
+/* harmony export */   "createPortal": () => (/* binding */ j),
+/* harmony export */   "createRef": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_0__.createRef),
 /* harmony export */   "default": () => (/* binding */ bn),
-/* harmony export */   findDOMNode: () => (/* binding */ an),
-/* harmony export */   flushSync: () => (/* binding */ hn),
-/* harmony export */   forwardRef: () => (/* binding */ k),
-/* harmony export */   hydrate: () => (/* binding */ q),
-/* harmony export */   isValidElement: () => (/* binding */ ln),
-/* harmony export */   lazy: () => (/* binding */ M),
-/* harmony export */   memo: () => (/* binding */ R),
-/* harmony export */   render: () => (/* binding */ Y),
-/* harmony export */   startTransition: () => (/* binding */ dn),
-/* harmony export */   unmountComponentAtNode: () => (/* binding */ fn),
-/* harmony export */   unstable_batchedUpdates: () => (/* binding */ sn),
-/* harmony export */   useCallback: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useCallback),
-/* harmony export */   useContext: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useContext),
-/* harmony export */   useDebugValue: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useDebugValue),
-/* harmony export */   useDeferredValue: () => (/* binding */ pn),
-/* harmony export */   useEffect: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useEffect),
-/* harmony export */   useErrorBoundary: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useErrorBoundary),
-/* harmony export */   useId: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useId),
-/* harmony export */   useImperativeHandle: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useImperativeHandle),
-/* harmony export */   useInsertionEffect: () => (/* binding */ yn),
-/* harmony export */   useLayoutEffect: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect),
-/* harmony export */   useMemo: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useMemo),
-/* harmony export */   useReducer: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useReducer),
-/* harmony export */   useRef: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useRef),
-/* harmony export */   useState: () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useState),
-/* harmony export */   useSyncExternalStore: () => (/* binding */ _n),
-/* harmony export */   useTransition: () => (/* binding */ mn),
-/* harmony export */   version: () => (/* binding */ un)
+/* harmony export */   "findDOMNode": () => (/* binding */ an),
+/* harmony export */   "flushSync": () => (/* binding */ hn),
+/* harmony export */   "forwardRef": () => (/* binding */ k),
+/* harmony export */   "hydrate": () => (/* binding */ q),
+/* harmony export */   "isValidElement": () => (/* binding */ ln),
+/* harmony export */   "lazy": () => (/* binding */ M),
+/* harmony export */   "memo": () => (/* binding */ R),
+/* harmony export */   "render": () => (/* binding */ Y),
+/* harmony export */   "startTransition": () => (/* binding */ dn),
+/* harmony export */   "unmountComponentAtNode": () => (/* binding */ fn),
+/* harmony export */   "unstable_batchedUpdates": () => (/* binding */ sn),
+/* harmony export */   "useCallback": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useCallback),
+/* harmony export */   "useContext": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useContext),
+/* harmony export */   "useDebugValue": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useDebugValue),
+/* harmony export */   "useDeferredValue": () => (/* binding */ pn),
+/* harmony export */   "useEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useEffect),
+/* harmony export */   "useErrorBoundary": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useErrorBoundary),
+/* harmony export */   "useId": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useId),
+/* harmony export */   "useImperativeHandle": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useImperativeHandle),
+/* harmony export */   "useInsertionEffect": () => (/* binding */ yn),
+/* harmony export */   "useLayoutEffect": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useLayoutEffect),
+/* harmony export */   "useMemo": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useMemo),
+/* harmony export */   "useReducer": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useReducer),
+/* harmony export */   "useRef": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useRef),
+/* harmony export */   "useState": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_1__.useState),
+/* harmony export */   "useSyncExternalStore": () => (/* binding */ _n),
+/* harmony export */   "useTransition": () => (/* binding */ mn),
+/* harmony export */   "version": () => (/* binding */ un)
 /* harmony export */ });
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 /* harmony import */ var preact_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/hooks */ "./node_modules/preact/hooks/dist/hooks.module.js");
@@ -22796,18 +22811,18 @@ function g(n,t){for(var e in t)n[e]=t[e];return n}function C(n,t){for(var e in n
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Component: () => (/* binding */ x),
-/* harmony export */   Fragment: () => (/* binding */ _),
-/* harmony export */   cloneElement: () => (/* binding */ F),
-/* harmony export */   createContext: () => (/* binding */ G),
-/* harmony export */   createElement: () => (/* binding */ y),
-/* harmony export */   createRef: () => (/* binding */ d),
-/* harmony export */   h: () => (/* binding */ y),
-/* harmony export */   hydrate: () => (/* binding */ E),
-/* harmony export */   isValidElement: () => (/* binding */ i),
-/* harmony export */   options: () => (/* binding */ l),
-/* harmony export */   render: () => (/* binding */ D),
-/* harmony export */   toChildArray: () => (/* binding */ j)
+/* harmony export */   "Component": () => (/* binding */ x),
+/* harmony export */   "Fragment": () => (/* binding */ _),
+/* harmony export */   "cloneElement": () => (/* binding */ F),
+/* harmony export */   "createContext": () => (/* binding */ G),
+/* harmony export */   "createElement": () => (/* binding */ y),
+/* harmony export */   "createRef": () => (/* binding */ d),
+/* harmony export */   "h": () => (/* binding */ y),
+/* harmony export */   "hydrate": () => (/* binding */ E),
+/* harmony export */   "isValidElement": () => (/* binding */ i),
+/* harmony export */   "options": () => (/* binding */ l),
+/* harmony export */   "render": () => (/* binding */ D),
+/* harmony export */   "toChildArray": () => (/* binding */ j)
 /* harmony export */ });
 var n,l,u,i,t,r,o,f,e,c={},s=[],a=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;function h(n,l){for(var u in l)n[u]=l[u];return n}function v(n){var l=n.parentNode;l&&l.removeChild(n)}function y(l,u,i){var t,r,o,f={};for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];if(arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),"function"==typeof l&&null!=l.defaultProps)for(o in l.defaultProps)void 0===f[o]&&(f[o]=l.defaultProps[o]);return p(l,f,t,r,null)}function p(n,i,t,r,o){var f={type:n,props:i,key:t,ref:r,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,__h:null,constructor:void 0,__v:null==o?++u:o};return null==o&&null!=l.vnode&&l.vnode(f),f}function d(){return{current:null}}function _(n){return n.children}function k(n,l,u,i,t){var r;for(r in u)"children"===r||"key"===r||r in l||g(n,r,null,u[r],i);for(r in l)t&&"function"!=typeof l[r]||"children"===r||"key"===r||"value"===r||"checked"===r||u[r]===l[r]||g(n,r,l[r],u[r],i)}function b(n,l,u){"-"===l[0]?n.setProperty(l,null==u?"":u):n[l]=null==u?"":"number"!=typeof u||a.test(l)?u:u+"px"}function g(n,l,u,i,t){var r;n:if("style"===l)if("string"==typeof u)n.style.cssText=u;else{if("string"==typeof i&&(n.style.cssText=i=""),i)for(l in i)u&&l in u||b(n.style,l,"");if(u)for(l in u)i&&u[l]===i[l]||b(n.style,l,u[l])}else if("o"===l[0]&&"n"===l[1])r=l!==(l=l.replace(/Capture$/,"")),l=l.toLowerCase()in n?l.toLowerCase().slice(2):l.slice(2),n.l||(n.l={}),n.l[l+r]=u,u?i||n.addEventListener(l,r?w:m,r):n.removeEventListener(l,r?w:m,r);else if("dangerouslySetInnerHTML"!==l){if(t)l=l.replace(/xlink(H|:h)/,"h").replace(/sName$/,"s");else if("width"!==l&&"height"!==l&&"href"!==l&&"list"!==l&&"form"!==l&&"tabIndex"!==l&&"download"!==l&&l in n)try{n[l]=null==u?"":u;break n}catch(n){}"function"==typeof u||(null==u||!1===u&&-1==l.indexOf("-")?n.removeAttribute(l):n.setAttribute(l,u))}}function m(n){t=!0;try{return this.l[n.type+!1](l.event?l.event(n):n)}finally{t=!1}}function w(n){t=!0;try{return this.l[n.type+!0](l.event?l.event(n):n)}finally{t=!1}}function x(n,l){this.props=n,this.context=l}function A(n,l){if(null==l)return n.__?A(n.__,n.__.__k.indexOf(n)+1):null;for(var u;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e)return u.__e;return"function"==typeof n.type?A(n):null}function P(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++)if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break}return P(n)}}function C(n){t?setTimeout(n):f(n)}function T(n){(!n.__d&&(n.__d=!0)&&r.push(n)&&!$.__r++||o!==l.debounceRendering)&&((o=l.debounceRendering)||C)($)}function $(){var n,l,u,i,t,o,f,e;for(r.sort(function(n,l){return n.__v.__b-l.__v.__b});n=r.shift();)n.__d&&(l=r.length,i=void 0,t=void 0,f=(o=(u=n).__v).__e,(e=u.__P)&&(i=[],(t=h({},o)).__v=o.__v+1,M(e,o,t,u.__n,void 0!==e.ownerSVGElement,null!=o.__h?[f]:null,i,null==f?A(o):f,o.__h),N(i,o),o.__e!=f&&P(o)),r.length>l&&r.sort(function(n,l){return n.__v.__b-l.__v.__b}));$.__r=0}function H(n,l,u,i,t,r,o,f,e,a){var h,v,y,d,k,b,g,m=i&&i.__k||s,w=m.length;for(u.__k=[],h=0;h<l.length;h++)if(null!=(d=u.__k[h]=null==(d=l[h])||"boolean"==typeof d?null:"string"==typeof d||"number"==typeof d||"bigint"==typeof d?p(null,d,null,null,d):Array.isArray(d)?p(_,{children:d},null,null,null):d.__b>0?p(d.type,d.props,d.key,d.ref?d.ref:null,d.__v):d)){if(d.__=u,d.__b=u.__b+1,null===(y=m[h])||y&&d.key==y.key&&d.type===y.type)m[h]=void 0;else for(v=0;v<w;v++){if((y=m[v])&&d.key==y.key&&d.type===y.type){m[v]=void 0;break}y=null}M(n,d,y=y||c,t,r,o,f,e,a),k=d.__e,(v=d.ref)&&y.ref!=v&&(g||(g=[]),y.ref&&g.push(y.ref,null,d),g.push(v,d.__c||k,d)),null!=k?(null==b&&(b=k),"function"==typeof d.type&&d.__k===y.__k?d.__d=e=I(d,e,n):e=z(n,d,y,m,k,e),"function"==typeof u.type&&(u.__d=e)):e&&y.__e==e&&e.parentNode!=n&&(e=A(y))}for(u.__e=b,h=w;h--;)null!=m[h]&&("function"==typeof u.type&&null!=m[h].__e&&m[h].__e==u.__d&&(u.__d=L(i).nextSibling),q(m[h],m[h]));if(g)for(h=0;h<g.length;h++)S(g[h],g[++h],g[++h])}function I(n,l,u){for(var i,t=n.__k,r=0;t&&r<t.length;r++)(i=t[r])&&(i.__=n,l="function"==typeof i.type?I(i,l,u):z(u,i,i,t,i.__e,l));return l}function j(n,l){return l=l||[],null==n||"boolean"==typeof n||(Array.isArray(n)?n.some(function(n){j(n,l)}):l.push(n)),l}function z(n,l,u,i,t,r){var o,f,e;if(void 0!==l.__d)o=l.__d,l.__d=void 0;else if(null==u||t!=r||null==t.parentNode)n:if(null==r||r.parentNode!==n)n.appendChild(t),o=null;else{for(f=r,e=0;(f=f.nextSibling)&&e<i.length;e+=1)if(f==t)break n;n.insertBefore(t,r),o=r}return void 0!==o?o:t.nextSibling}function L(n){var l,u,i;if(null==n.type||"string"==typeof n.type)return n.__e;if(n.__k)for(l=n.__k.length-1;l>=0;l--)if((u=n.__k[l])&&(i=L(u)))return i;return null}function M(n,u,i,t,r,o,f,e,c){var s,a,v,y,p,d,k,b,g,m,w,A,P,C,T,$=u.type;if(void 0!==u.constructor)return null;null!=i.__h&&(c=i.__h,e=u.__e=i.__e,u.__h=null,o=[e]),(s=l.__b)&&s(u);try{n:if("function"==typeof $){if(b=u.props,g=(s=$.contextType)&&t[s.__c],m=s?g?g.props.value:s.__:t,i.__c?k=(a=u.__c=i.__c).__=a.__E:("prototype"in $&&$.prototype.render?u.__c=a=new $(b,m):(u.__c=a=new x(b,m),a.constructor=$,a.render=B),g&&g.sub(a),a.props=b,a.state||(a.state={}),a.context=m,a.__n=t,v=a.__d=!0,a.__h=[],a._sb=[]),null==a.__s&&(a.__s=a.state),null!=$.getDerivedStateFromProps&&(a.__s==a.state&&(a.__s=h({},a.__s)),h(a.__s,$.getDerivedStateFromProps(b,a.__s))),y=a.props,p=a.state,a.__v=u,v)null==$.getDerivedStateFromProps&&null!=a.componentWillMount&&a.componentWillMount(),null!=a.componentDidMount&&a.__h.push(a.componentDidMount);else{if(null==$.getDerivedStateFromProps&&b!==y&&null!=a.componentWillReceiveProps&&a.componentWillReceiveProps(b,m),!a.__e&&null!=a.shouldComponentUpdate&&!1===a.shouldComponentUpdate(b,a.__s,m)||u.__v===i.__v){for(u.__v!==i.__v&&(a.props=b,a.state=a.__s,a.__d=!1),u.__e=i.__e,u.__k=i.__k,u.__k.forEach(function(n){n&&(n.__=u)}),w=0;w<a._sb.length;w++)a.__h.push(a._sb[w]);a._sb=[],a.__h.length&&f.push(a);break n}null!=a.componentWillUpdate&&a.componentWillUpdate(b,a.__s,m),null!=a.componentDidUpdate&&a.__h.push(function(){a.componentDidUpdate(y,p,d)})}if(a.context=m,a.props=b,a.__P=n,A=l.__r,P=0,"prototype"in $&&$.prototype.render){for(a.state=a.__s,a.__d=!1,A&&A(u),s=a.render(a.props,a.state,a.context),C=0;C<a._sb.length;C++)a.__h.push(a._sb[C]);a._sb=[]}else do{a.__d=!1,A&&A(u),s=a.render(a.props,a.state,a.context),a.state=a.__s}while(a.__d&&++P<25);a.state=a.__s,null!=a.getChildContext&&(t=h(h({},t),a.getChildContext())),v||null==a.getSnapshotBeforeUpdate||(d=a.getSnapshotBeforeUpdate(y,p)),T=null!=s&&s.type===_&&null==s.key?s.props.children:s,H(n,Array.isArray(T)?T:[T],u,i,t,r,o,f,e,c),a.base=u.__e,u.__h=null,a.__h.length&&f.push(a),k&&(a.__E=a.__=null),a.__e=!1}else null==o&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=O(i.__e,u,i,t,r,o,f,c);(s=l.diffed)&&s(u)}catch(n){u.__v=null,(c||null!=o)&&(u.__e=e,u.__h=!!c,o[o.indexOf(e)]=null),l.__e(n,u,i)}}function N(n,u){l.__c&&l.__c(u,n),n.some(function(u){try{n=u.__h,u.__h=[],n.some(function(n){n.call(u)})}catch(n){l.__e(n,u.__v)}})}function O(l,u,i,t,r,o,f,e){var s,a,h,y=i.props,p=u.props,d=u.type,_=0;if("svg"===d&&(r=!0),null!=o)for(;_<o.length;_++)if((s=o[_])&&"setAttribute"in s==!!d&&(d?s.localName===d:3===s.nodeType)){l=s,o[_]=null;break}if(null==l){if(null===d)return document.createTextNode(p);l=r?document.createElementNS("http://www.w3.org/2000/svg",d):document.createElement(d,p.is&&p),o=null,e=!1}if(null===d)y===p||e&&l.data===p||(l.data=p);else{if(o=o&&n.call(l.childNodes),a=(y=i.props||c).dangerouslySetInnerHTML,h=p.dangerouslySetInnerHTML,!e){if(null!=o)for(y={},_=0;_<l.attributes.length;_++)y[l.attributes[_].name]=l.attributes[_].value;(h||a)&&(h&&(a&&h.__html==a.__html||h.__html===l.innerHTML)||(l.innerHTML=h&&h.__html||""))}if(k(l,p,y,r,e),h)u.__k=[];else if(_=u.props.children,H(l,Array.isArray(_)?_:[_],u,i,t,r&&"foreignObject"!==d,o,f,o?o[0]:i.__k&&A(i,0),e),null!=o)for(_=o.length;_--;)null!=o[_]&&v(o[_]);e||("value"in p&&void 0!==(_=p.value)&&(_!==l.value||"progress"===d&&!_||"option"===d&&_!==y.value)&&g(l,"value",_,y.value,!1),"checked"in p&&void 0!==(_=p.checked)&&_!==l.checked&&g(l,"checked",_,y.checked,!1))}return l}function S(n,u,i){try{"function"==typeof n?n(u):n.current=u}catch(n){l.__e(n,i)}}function q(n,u,i){var t,r;if(l.unmount&&l.unmount(n),(t=n.ref)&&(t.current&&t.current!==n.__e||S(t,null,u)),null!=(t=n.__c)){if(t.componentWillUnmount)try{t.componentWillUnmount()}catch(n){l.__e(n,u)}t.base=t.__P=null,n.__c=void 0}if(t=n.__k)for(r=0;r<t.length;r++)t[r]&&q(t[r],u,i||"function"!=typeof n.type);i||null==n.__e||v(n.__e),n.__=n.__e=n.__d=void 0}function B(n,l,u){return this.constructor(n,u)}function D(u,i,t){var r,o,f;l.__&&l.__(u,i),o=(r="function"==typeof t)?null:t&&t.__k||i.__k,f=[],M(i,u=(!r&&t||i).__k=y(_,null,[u]),o||c,c,void 0!==i.ownerSVGElement,!r&&t?[t]:o?null:i.firstChild?n.call(i.childNodes):null,f,!r&&t?t:o?o.__e:i.firstChild,r),N(f,u)}function E(n,l){D(n,l,E)}function F(l,u,i){var t,r,o,f=h({},l.props);for(o in u)"key"==o?t=u[o]:"ref"==o?r=u[o]:f[o]=u[o];return arguments.length>2&&(f.children=arguments.length>3?n.call(arguments,2):i),p(l.type,f,t||l.key,r||l.ref,null)}function G(n,l){var u={__c:l="__cC"+e++,__:n,Consumer:function(n,l){return n.children(l)},Provider:function(n){var u,i;return this.getChildContext||(u=[],(i={})[l]=this,this.getChildContext=function(){return i},this.shouldComponentUpdate=function(n){this.props.value!==n.value&&u.some(function(n){n.__e=!0,T(n)})},this.sub=function(n){u.push(n);var l=n.componentWillUnmount;n.componentWillUnmount=function(){u.splice(u.indexOf(n),1),l&&l.call(n)}}),n.children}};return u.Provider.__=u.Consumer.contextType=u}n=s.slice,l={__e:function(n,l,u,i){for(var t,r,o;l=l.__;)if((t=l.__c)&&!t.__)try{if((r=t.constructor)&&null!=r.getDerivedStateFromError&&(t.setState(r.getDerivedStateFromError(n)),o=t.__d),null!=t.componentDidCatch&&(t.componentDidCatch(n,i||{}),o=t.__d),o)return t.__E=t}catch(l){n=l}throw n}},u=0,i=function(n){return null!=n&&void 0===n.constructor},t=!1,x.prototype.setState=function(n,l){var u;u=null!=this.__s&&this.__s!==this.state?this.__s:this.__s=h({},this.state),"function"==typeof n&&(n=n(h({},u),this.props)),n&&h(u,n),null!=n&&this.__v&&(l&&this._sb.push(l),T(this))},x.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),T(this))},x.prototype.render=_,r=[],f="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,$.__r=0,e=0;
 //# sourceMappingURL=preact.module.js.map
@@ -22824,18 +22839,18 @@ var n,l,u,i,t,r,o,f,e,c={},s=[],a=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   useCallback: () => (/* binding */ T),
-/* harmony export */   useContext: () => (/* binding */ q),
-/* harmony export */   useDebugValue: () => (/* binding */ x),
-/* harmony export */   useEffect: () => (/* binding */ h),
-/* harmony export */   useErrorBoundary: () => (/* binding */ P),
-/* harmony export */   useId: () => (/* binding */ V),
-/* harmony export */   useImperativeHandle: () => (/* binding */ A),
-/* harmony export */   useLayoutEffect: () => (/* binding */ s),
-/* harmony export */   useMemo: () => (/* binding */ F),
-/* harmony export */   useReducer: () => (/* binding */ y),
-/* harmony export */   useRef: () => (/* binding */ _),
-/* harmony export */   useState: () => (/* binding */ p)
+/* harmony export */   "useCallback": () => (/* binding */ T),
+/* harmony export */   "useContext": () => (/* binding */ q),
+/* harmony export */   "useDebugValue": () => (/* binding */ x),
+/* harmony export */   "useEffect": () => (/* binding */ h),
+/* harmony export */   "useErrorBoundary": () => (/* binding */ P),
+/* harmony export */   "useId": () => (/* binding */ V),
+/* harmony export */   "useImperativeHandle": () => (/* binding */ A),
+/* harmony export */   "useLayoutEffect": () => (/* binding */ s),
+/* harmony export */   "useMemo": () => (/* binding */ F),
+/* harmony export */   "useReducer": () => (/* binding */ y),
+/* harmony export */   "useRef": () => (/* binding */ _),
+/* harmony export */   "useState": () => (/* binding */ p)
 /* harmony export */ });
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 var t,r,u,i,o=0,f=[],c=[],e=preact__WEBPACK_IMPORTED_MODULE_0__.options.__b,a=preact__WEBPACK_IMPORTED_MODULE_0__.options.__r,v=preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed,l=preact__WEBPACK_IMPORTED_MODULE_0__.options.__c,m=preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount;function d(t,u){preact__WEBPACK_IMPORTED_MODULE_0__.options.__h&&preact__WEBPACK_IMPORTED_MODULE_0__.options.__h(r,t,o||u),o=0;var i=r.__H||(r.__H={__:[],__h:[]});return t>=i.__.length&&i.__.push({__V:c}),i.__[t]}function p(n){return o=1,y(B,n)}function y(n,u,i){var o=d(t++,2);if(o.t=n,!o.__c&&(o.__=[i?i(u):B(void 0,u),function(n){var t=o.__N?o.__N[0]:o.__[0],r=o.t(t,n);t!==r&&(o.__N=[r,o.__[1]],o.__c.setState({}))}],o.__c=r,!r.u)){r.u=!0;var f=r.shouldComponentUpdate;r.shouldComponentUpdate=function(n,t,r){if(!o.__c.__H)return!0;var u=o.__c.__H.__.filter(function(n){return n.__c});if(u.every(function(n){return!n.__N}))return!f||f.call(this,n,t,r);var i=!1;return u.forEach(function(n){if(n.__N){var t=n.__[0];n.__=n.__N,n.__N=void 0,t!==n.__[0]&&(i=!0)}}),!(!i&&o.__c.props===n)&&(!f||f.call(this,n,t,r))}}return o.__N||o.__}function h(u,i){var o=d(t++,3);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&z(o.__H,i)&&(o.__=u,o.i=i,r.__H.__h.push(o))}function s(u,i){var o=d(t++,4);!preact__WEBPACK_IMPORTED_MODULE_0__.options.__s&&z(o.__H,i)&&(o.__=u,o.i=i,r.__h.push(o))}function _(n){return o=5,F(function(){return{current:n}},[])}function A(n,t,r){o=6,s(function(){return"function"==typeof n?(n(t()),function(){return n(null)}):n?(n.current=t(),function(){return n.current=null}):void 0},null==r?r:r.concat(n))}function F(n,r){var u=d(t++,7);return z(u.__H,r)?(u.__V=n(),u.i=r,u.__h=n,u.__V):u.__}function T(n,t){return o=8,F(function(){return n},t)}function q(n){var u=r.context[n.__c],i=d(t++,9);return i.c=n,u?(null==i.__&&(i.__=!0,u.sub(r)),u.props.value):n.__}function x(t,r){preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue&&preact__WEBPACK_IMPORTED_MODULE_0__.options.useDebugValue(r?r(t):t)}function P(n){var u=d(t++,10),i=p();return u.__=n,r.componentDidCatch||(r.componentDidCatch=function(n,t){u.__&&u.__(n,t),i[1](n)}),[i[0],function(){i[1](void 0)}]}function V(){var n=d(t++,11);if(!n.__){for(var u=r.__v;null!==u&&!u.__m&&null!==u.__;)u=u.__;var i=u.__m||(u.__m=[0,0]);n.__="P"+i[0]+"-"+i[1]++}return n.__}function b(){for(var t;t=f.shift();)if(t.__P&&t.__H)try{t.__H.__h.forEach(k),t.__H.__h.forEach(w),t.__H.__h=[]}catch(r){t.__H.__h=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(r,t.__v)}}preact__WEBPACK_IMPORTED_MODULE_0__.options.__b=function(n){r=null,e&&e(n)},preact__WEBPACK_IMPORTED_MODULE_0__.options.__r=function(n){a&&a(n),t=0;var i=(r=n.__c).__H;i&&(u===r?(i.__h=[],r.__h=[],i.__.forEach(function(n){n.__N&&(n.__=n.__N),n.__V=c,n.__N=n.i=void 0})):(i.__h.forEach(k),i.__h.forEach(w),i.__h=[])),u=r},preact__WEBPACK_IMPORTED_MODULE_0__.options.diffed=function(t){v&&v(t);var o=t.__c;o&&o.__H&&(o.__H.__h.length&&(1!==f.push(o)&&i===preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame||((i=preact__WEBPACK_IMPORTED_MODULE_0__.options.requestAnimationFrame)||j)(b)),o.__H.__.forEach(function(n){n.i&&(n.__H=n.i),n.__V!==c&&(n.__=n.__V),n.i=void 0,n.__V=c})),u=r=null},preact__WEBPACK_IMPORTED_MODULE_0__.options.__c=function(t,r){r.some(function(t){try{t.__h.forEach(k),t.__h=t.__h.filter(function(n){return!n.__||w(n)})}catch(u){r.some(function(n){n.__h&&(n.__h=[])}),r=[],preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(u,t.__v)}}),l&&l(t,r)},preact__WEBPACK_IMPORTED_MODULE_0__.options.unmount=function(t){m&&m(t);var r,u=t.__c;u&&u.__H&&(u.__H.__.forEach(function(n){try{k(n)}catch(n){r=n}}),u.__H=void 0,r&&preact__WEBPACK_IMPORTED_MODULE_0__.options.__e(r,u.__v))};var g="function"==typeof requestAnimationFrame;function j(n){var t,r=function(){clearTimeout(u),g&&cancelAnimationFrame(t),setTimeout(n)},u=setTimeout(r,100);g&&(t=requestAnimationFrame(r))}function k(n){var t=r,u=n.__c;"function"==typeof u&&(n.__c=void 0,u()),r=t}function w(n){var t=r;n.__c=n.__(),r=t}function z(n,t){return!n||n.length!==t.length||t.some(function(t,r){return t!==n[r]})}function B(n,t){return"function"==typeof t?t(n):t}
@@ -22853,15 +22868,15 @@ var t,r,u,i,o=0,f=[],c=[],e=preact__WEBPACK_IMPORTED_MODULE_0__.options.__b,a=pr
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Calendar: () => (/* binding */ Calendar),
-/* harmony export */   JsonRequestError: () => (/* reexport safe */ _internal_common_js__WEBPACK_IMPORTED_MODULE_0__.ag),
-/* harmony export */   createPlugin: () => (/* binding */ createPlugin),
-/* harmony export */   formatDate: () => (/* binding */ formatDate),
-/* harmony export */   formatRange: () => (/* binding */ formatRange),
-/* harmony export */   globalLocales: () => (/* binding */ globalLocales),
-/* harmony export */   globalPlugins: () => (/* binding */ globalPlugins),
-/* harmony export */   sliceEvents: () => (/* binding */ sliceEvents),
-/* harmony export */   version: () => (/* binding */ version)
+/* harmony export */   "Calendar": () => (/* binding */ Calendar),
+/* harmony export */   "JsonRequestError": () => (/* reexport safe */ _internal_common_js__WEBPACK_IMPORTED_MODULE_0__.ag),
+/* harmony export */   "createPlugin": () => (/* binding */ createPlugin),
+/* harmony export */   "formatDate": () => (/* binding */ formatDate),
+/* harmony export */   "formatRange": () => (/* binding */ formatRange),
+/* harmony export */   "globalLocales": () => (/* binding */ globalLocales),
+/* harmony export */   "globalPlugins": () => (/* binding */ globalPlugins),
+/* harmony export */   "sliceEvents": () => (/* binding */ sliceEvents),
+/* harmony export */   "version": () => (/* binding */ version)
 /* harmony export */ });
 /* harmony import */ var _internal_common_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./internal-common.js */ "./node_modules/@fullcalendar/core/internal-common.js");
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
@@ -25020,223 +25035,223 @@ const version = '6.1.15';
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   $: () => (/* binding */ elementClosest),
-/* harmony export */   A: () => (/* binding */ memoizeObjArg),
-/* harmony export */   B: () => (/* binding */ BaseComponent),
-/* harmony export */   C: () => (/* binding */ ContentContainer),
-/* harmony export */   D: () => (/* binding */ DelayedRunner),
-/* harmony export */   E: () => (/* binding */ isPropsEqual),
-/* harmony export */   F: () => (/* binding */ Emitter),
-/* harmony export */   G: () => (/* binding */ getInitialDate),
-/* harmony export */   H: () => (/* binding */ rangeContainsMarker),
-/* harmony export */   I: () => (/* binding */ createEmptyEventStore),
-/* harmony export */   J: () => (/* binding */ reduceCurrentDate),
-/* harmony export */   K: () => (/* binding */ reduceEventStore),
-/* harmony export */   L: () => (/* binding */ rezoneEventStoreDates),
-/* harmony export */   M: () => (/* binding */ mergeRawOptions),
-/* harmony export */   N: () => (/* binding */ BASE_OPTION_REFINERS),
-/* harmony export */   O: () => (/* binding */ CALENDAR_LISTENER_REFINERS),
-/* harmony export */   P: () => (/* binding */ CALENDAR_OPTION_REFINERS),
-/* harmony export */   Q: () => (/* binding */ COMPLEX_OPTION_COMPARATORS),
-/* harmony export */   R: () => (/* binding */ VIEW_OPTION_REFINERS),
-/* harmony export */   S: () => (/* binding */ DateEnv),
-/* harmony export */   T: () => (/* binding */ Theme),
-/* harmony export */   U: () => (/* binding */ DateProfileGenerator),
-/* harmony export */   V: () => (/* binding */ ViewContextType),
-/* harmony export */   W: () => (/* binding */ createEventUi),
-/* harmony export */   X: () => (/* binding */ parseBusinessHours),
-/* harmony export */   Y: () => (/* binding */ setRef),
-/* harmony export */   Z: () => (/* binding */ Interaction),
-/* harmony export */   _: () => (/* binding */ getElSeg),
-/* harmony export */   a: () => (/* binding */ mapHash),
-/* harmony export */   a$: () => (/* binding */ getSlotClassNames),
-/* harmony export */   a0: () => (/* binding */ EventImpl),
-/* harmony export */   a1: () => (/* binding */ listenBySelector),
-/* harmony export */   a2: () => (/* binding */ listenToHoverBySelector),
-/* harmony export */   a3: () => (/* binding */ PureComponent),
-/* harmony export */   a4: () => (/* binding */ buildViewContext),
-/* harmony export */   a5: () => (/* binding */ getUniqueDomId),
-/* harmony export */   a6: () => (/* binding */ parseInteractionSettings),
-/* harmony export */   a7: () => (/* binding */ interactionSettingsStore),
-/* harmony export */   a8: () => (/* binding */ getNow),
-/* harmony export */   a9: () => (/* binding */ CalendarImpl),
-/* harmony export */   aA: () => (/* binding */ diffDates),
-/* harmony export */   aB: () => (/* binding */ removeExact),
-/* harmony export */   aC: () => (/* binding */ memoizeArraylike),
-/* harmony export */   aD: () => (/* binding */ memoizeHashlike),
-/* harmony export */   aE: () => (/* binding */ intersectRects),
-/* harmony export */   aF: () => (/* binding */ pointInsideRect),
-/* harmony export */   aG: () => (/* binding */ constrainPoint),
-/* harmony export */   aH: () => (/* binding */ getRectCenter),
-/* harmony export */   aI: () => (/* binding */ diffPoints),
-/* harmony export */   aJ: () => (/* binding */ translateRect),
-/* harmony export */   aK: () => (/* binding */ compareObjs),
-/* harmony export */   aL: () => (/* binding */ collectFromHash),
-/* harmony export */   aM: () => (/* binding */ findElements),
-/* harmony export */   aN: () => (/* binding */ findDirectChildren),
-/* harmony export */   aO: () => (/* binding */ removeElement),
-/* harmony export */   aP: () => (/* binding */ applyStyle),
-/* harmony export */   aQ: () => (/* binding */ elementMatches),
-/* harmony export */   aR: () => (/* binding */ getEventTargetViaRoot),
-/* harmony export */   aS: () => (/* binding */ parseClassNames),
-/* harmony export */   aT: () => (/* binding */ getCanVGrowWithinCell),
-/* harmony export */   aU: () => (/* binding */ mergeEventStores),
-/* harmony export */   aV: () => (/* binding */ getRelevantEvents),
-/* harmony export */   aW: () => (/* binding */ eventTupleToStore),
-/* harmony export */   aX: () => (/* binding */ combineEventUis),
-/* harmony export */   aY: () => (/* binding */ Splitter),
-/* harmony export */   aZ: () => (/* binding */ getDayClassNames),
-/* harmony export */   a_: () => (/* binding */ getDateMeta),
-/* harmony export */   aa: () => (/* binding */ flushSync),
-/* harmony export */   ab: () => (/* binding */ CalendarRoot),
-/* harmony export */   ac: () => (/* binding */ RenderId),
-/* harmony export */   ad: () => (/* binding */ ensureElHasStyles),
-/* harmony export */   ae: () => (/* binding */ applyStyleProp),
-/* harmony export */   af: () => (/* binding */ sliceEventStore),
-/* harmony export */   ag: () => (/* binding */ JsonRequestError),
-/* harmony export */   ah: () => (/* binding */ createContext),
-/* harmony export */   ai: () => (/* binding */ refineProps),
-/* harmony export */   aj: () => (/* binding */ createEventInstance),
-/* harmony export */   ak: () => (/* binding */ parseEventDef),
-/* harmony export */   al: () => (/* binding */ refineEventDef),
-/* harmony export */   am: () => (/* binding */ padStart),
-/* harmony export */   an: () => (/* binding */ isInt),
-/* harmony export */   ao: () => (/* binding */ parseFieldSpecs),
-/* harmony export */   ap: () => (/* binding */ compareByFieldSpecs),
-/* harmony export */   aq: () => (/* binding */ flexibleCompare),
-/* harmony export */   ar: () => (/* binding */ preventSelection),
-/* harmony export */   as: () => (/* binding */ allowSelection),
-/* harmony export */   at: () => (/* binding */ preventContextMenu),
-/* harmony export */   au: () => (/* binding */ allowContextMenu),
-/* harmony export */   av: () => (/* binding */ compareNumbers),
-/* harmony export */   aw: () => (/* binding */ enableCursor),
-/* harmony export */   ax: () => (/* binding */ disableCursor),
-/* harmony export */   ay: () => (/* binding */ computeVisibleDayRange),
-/* harmony export */   az: () => (/* binding */ isMultiDayRange),
-/* harmony export */   b: () => (/* binding */ buildViewClassNames),
-/* harmony export */   b$: () => (/* binding */ SimpleScrollGrid),
-/* harmony export */   b0: () => (/* binding */ buildNavLinkAttrs),
-/* harmony export */   b1: () => (/* binding */ preventDefault),
-/* harmony export */   b2: () => (/* binding */ whenTransitionDone),
-/* harmony export */   b3: () => (/* binding */ computeInnerRect),
-/* harmony export */   b4: () => (/* binding */ computeEdges),
-/* harmony export */   b5: () => (/* binding */ getClippingParents),
-/* harmony export */   b6: () => (/* binding */ computeRect),
-/* harmony export */   b7: () => (/* binding */ rangesEqual),
-/* harmony export */   b8: () => (/* binding */ rangesIntersect),
-/* harmony export */   b9: () => (/* binding */ rangeContainsRange),
-/* harmony export */   bA: () => (/* binding */ SegHierarchy),
-/* harmony export */   bB: () => (/* binding */ buildEntryKey),
-/* harmony export */   bC: () => (/* binding */ getEntrySpanEnd),
-/* harmony export */   bD: () => (/* binding */ binarySearch),
-/* harmony export */   bE: () => (/* binding */ groupIntersectingEntries),
-/* harmony export */   bF: () => (/* binding */ intersectSpans),
-/* harmony export */   bG: () => (/* binding */ interactionSettingsToStore),
-/* harmony export */   bH: () => (/* binding */ ElementDragging),
-/* harmony export */   bI: () => (/* binding */ config),
-/* harmony export */   bJ: () => (/* binding */ parseDragMeta),
-/* harmony export */   bK: () => (/* binding */ DayHeader),
-/* harmony export */   bL: () => (/* binding */ computeFallbackHeaderFormat),
-/* harmony export */   bM: () => (/* binding */ TableDateCell),
-/* harmony export */   bN: () => (/* binding */ TableDowCell),
-/* harmony export */   bO: () => (/* binding */ DaySeriesModel),
-/* harmony export */   bP: () => (/* binding */ hasBgRendering),
-/* harmony export */   bQ: () => (/* binding */ buildSegTimeText),
-/* harmony export */   bR: () => (/* binding */ sortEventSegs),
-/* harmony export */   bS: () => (/* binding */ getSegMeta),
-/* harmony export */   bT: () => (/* binding */ buildEventRangeKey),
-/* harmony export */   bU: () => (/* binding */ getSegAnchorAttrs),
-/* harmony export */   bV: () => (/* binding */ DayTableModel),
-/* harmony export */   bW: () => (/* binding */ Slicer),
-/* harmony export */   bX: () => (/* binding */ applyMutationToEventStore),
-/* harmony export */   bY: () => (/* binding */ isPropsValid),
-/* harmony export */   bZ: () => (/* binding */ isInteractionValid),
-/* harmony export */   b_: () => (/* binding */ isDateSelectionValid),
-/* harmony export */   ba: () => (/* binding */ PositionCache),
-/* harmony export */   bb: () => (/* binding */ ScrollController),
-/* harmony export */   bc: () => (/* binding */ ElementScrollController),
-/* harmony export */   bd: () => (/* binding */ WindowScrollController),
-/* harmony export */   be: () => (/* binding */ DateComponent),
-/* harmony export */   bf: () => (/* binding */ isDateSpansEqual),
-/* harmony export */   bg: () => (/* binding */ addMs),
-/* harmony export */   bh: () => (/* binding */ addWeeks),
-/* harmony export */   bi: () => (/* binding */ diffWeeks),
-/* harmony export */   bj: () => (/* binding */ diffWholeWeeks),
-/* harmony export */   bk: () => (/* binding */ diffDayAndTime),
-/* harmony export */   bl: () => (/* binding */ diffDays),
-/* harmony export */   bm: () => (/* binding */ isValidDate),
-/* harmony export */   bn: () => (/* binding */ asCleanDays),
-/* harmony export */   bo: () => (/* binding */ multiplyDuration),
-/* harmony export */   bp: () => (/* binding */ addDurations),
-/* harmony export */   bq: () => (/* binding */ asRoughMinutes),
-/* harmony export */   br: () => (/* binding */ asRoughSeconds),
-/* harmony export */   bs: () => (/* binding */ asRoughMs),
-/* harmony export */   bt: () => (/* binding */ wholeDivideDurations),
-/* harmony export */   bu: () => (/* binding */ formatIsoTimeString),
-/* harmony export */   bv: () => (/* binding */ formatDayString),
-/* harmony export */   bw: () => (/* binding */ buildIsoString),
-/* harmony export */   bx: () => (/* binding */ formatIsoMonthStr),
-/* harmony export */   by: () => (/* binding */ NamedTimeZoneImpl),
-/* harmony export */   bz: () => (/* binding */ parse),
-/* harmony export */   c: () => (/* binding */ greatestDurationDenominator),
-/* harmony export */   c0: () => (/* binding */ hasShrinkWidth),
-/* harmony export */   c1: () => (/* binding */ renderMicroColGroup),
-/* harmony export */   c2: () => (/* binding */ getScrollGridClassNames),
-/* harmony export */   c3: () => (/* binding */ getSectionClassNames),
-/* harmony export */   c4: () => (/* binding */ getSectionHasLiquidHeight),
-/* harmony export */   c5: () => (/* binding */ getAllowYScrolling),
-/* harmony export */   c6: () => (/* binding */ renderChunkContent),
-/* harmony export */   c7: () => (/* binding */ computeShrinkWidth),
-/* harmony export */   c8: () => (/* binding */ sanitizeShrinkWidth),
-/* harmony export */   c9: () => (/* binding */ isColPropsEqual),
-/* harmony export */   ca: () => (/* binding */ renderScrollShim),
-/* harmony export */   cb: () => (/* binding */ getStickyFooterScrollbar),
-/* harmony export */   cc: () => (/* binding */ getStickyHeaderDates),
-/* harmony export */   cd: () => (/* binding */ Scroller),
-/* harmony export */   ce: () => (/* binding */ getScrollbarWidths),
-/* harmony export */   cf: () => (/* binding */ RefMap),
-/* harmony export */   cg: () => (/* binding */ getIsRtlScrollbarOnLeft),
-/* harmony export */   ch: () => (/* binding */ NowTimer),
-/* harmony export */   ci: () => (/* binding */ ScrollResponder),
-/* harmony export */   cj: () => (/* binding */ StandardEvent),
-/* harmony export */   ck: () => (/* binding */ NowIndicatorContainer),
-/* harmony export */   cl: () => (/* binding */ DayCellContainer),
-/* harmony export */   cm: () => (/* binding */ hasCustomDayCellContent),
-/* harmony export */   cn: () => (/* binding */ EventContainer),
-/* harmony export */   co: () => (/* binding */ renderFill),
-/* harmony export */   cp: () => (/* binding */ BgEvent),
-/* harmony export */   cq: () => (/* binding */ WeekNumberContainer),
-/* harmony export */   cr: () => (/* binding */ MoreLinkContainer),
-/* harmony export */   cs: () => (/* binding */ computeEarliestSegStart),
-/* harmony export */   ct: () => (/* binding */ ViewContainer),
-/* harmony export */   cu: () => (/* binding */ triggerDateSelect),
-/* harmony export */   cv: () => (/* binding */ getDefaultEventEnd),
-/* harmony export */   cw: () => (/* binding */ injectStyles),
-/* harmony export */   cx: () => (/* binding */ buildElAttrs),
-/* harmony export */   cy: () => (/* binding */ CustomRenderingStore),
-/* harmony export */   d: () => (/* binding */ createDuration),
-/* harmony export */   e: () => (/* binding */ BASE_OPTION_DEFAULTS),
-/* harmony export */   f: () => (/* binding */ arrayToHash),
-/* harmony export */   g: () => (/* binding */ guid),
-/* harmony export */   h: () => (/* binding */ filterHash),
-/* harmony export */   i: () => (/* binding */ isArraysEqual),
-/* harmony export */   j: () => (/* binding */ buildEventSourceRefiners),
-/* harmony export */   k: () => (/* binding */ formatWithOrdinals),
-/* harmony export */   l: () => (/* binding */ buildRangeApiWithTimeZone),
-/* harmony export */   m: () => (/* binding */ mergeProps),
-/* harmony export */   n: () => (/* binding */ identity),
-/* harmony export */   o: () => (/* binding */ intersectRanges),
-/* harmony export */   p: () => (/* binding */ parseEventSource),
-/* harmony export */   q: () => (/* binding */ startOfDay),
-/* harmony export */   r: () => (/* binding */ requestJson),
-/* harmony export */   s: () => (/* binding */ subtractDurations),
-/* harmony export */   t: () => (/* binding */ addDays),
-/* harmony export */   u: () => (/* binding */ unpromisify),
-/* harmony export */   v: () => (/* binding */ hashValuesToArray),
-/* harmony export */   w: () => (/* binding */ buildEventApis),
-/* harmony export */   x: () => (/* binding */ createFormatter),
-/* harmony export */   y: () => (/* binding */ diffWholeDays),
-/* harmony export */   z: () => (/* binding */ memoize)
+/* harmony export */   "$": () => (/* binding */ elementClosest),
+/* harmony export */   "A": () => (/* binding */ memoizeObjArg),
+/* harmony export */   "B": () => (/* binding */ BaseComponent),
+/* harmony export */   "C": () => (/* binding */ ContentContainer),
+/* harmony export */   "D": () => (/* binding */ DelayedRunner),
+/* harmony export */   "E": () => (/* binding */ isPropsEqual),
+/* harmony export */   "F": () => (/* binding */ Emitter),
+/* harmony export */   "G": () => (/* binding */ getInitialDate),
+/* harmony export */   "H": () => (/* binding */ rangeContainsMarker),
+/* harmony export */   "I": () => (/* binding */ createEmptyEventStore),
+/* harmony export */   "J": () => (/* binding */ reduceCurrentDate),
+/* harmony export */   "K": () => (/* binding */ reduceEventStore),
+/* harmony export */   "L": () => (/* binding */ rezoneEventStoreDates),
+/* harmony export */   "M": () => (/* binding */ mergeRawOptions),
+/* harmony export */   "N": () => (/* binding */ BASE_OPTION_REFINERS),
+/* harmony export */   "O": () => (/* binding */ CALENDAR_LISTENER_REFINERS),
+/* harmony export */   "P": () => (/* binding */ CALENDAR_OPTION_REFINERS),
+/* harmony export */   "Q": () => (/* binding */ COMPLEX_OPTION_COMPARATORS),
+/* harmony export */   "R": () => (/* binding */ VIEW_OPTION_REFINERS),
+/* harmony export */   "S": () => (/* binding */ DateEnv),
+/* harmony export */   "T": () => (/* binding */ Theme),
+/* harmony export */   "U": () => (/* binding */ DateProfileGenerator),
+/* harmony export */   "V": () => (/* binding */ ViewContextType),
+/* harmony export */   "W": () => (/* binding */ createEventUi),
+/* harmony export */   "X": () => (/* binding */ parseBusinessHours),
+/* harmony export */   "Y": () => (/* binding */ setRef),
+/* harmony export */   "Z": () => (/* binding */ Interaction),
+/* harmony export */   "_": () => (/* binding */ getElSeg),
+/* harmony export */   "a": () => (/* binding */ mapHash),
+/* harmony export */   "a$": () => (/* binding */ getSlotClassNames),
+/* harmony export */   "a0": () => (/* binding */ EventImpl),
+/* harmony export */   "a1": () => (/* binding */ listenBySelector),
+/* harmony export */   "a2": () => (/* binding */ listenToHoverBySelector),
+/* harmony export */   "a3": () => (/* binding */ PureComponent),
+/* harmony export */   "a4": () => (/* binding */ buildViewContext),
+/* harmony export */   "a5": () => (/* binding */ getUniqueDomId),
+/* harmony export */   "a6": () => (/* binding */ parseInteractionSettings),
+/* harmony export */   "a7": () => (/* binding */ interactionSettingsStore),
+/* harmony export */   "a8": () => (/* binding */ getNow),
+/* harmony export */   "a9": () => (/* binding */ CalendarImpl),
+/* harmony export */   "aA": () => (/* binding */ diffDates),
+/* harmony export */   "aB": () => (/* binding */ removeExact),
+/* harmony export */   "aC": () => (/* binding */ memoizeArraylike),
+/* harmony export */   "aD": () => (/* binding */ memoizeHashlike),
+/* harmony export */   "aE": () => (/* binding */ intersectRects),
+/* harmony export */   "aF": () => (/* binding */ pointInsideRect),
+/* harmony export */   "aG": () => (/* binding */ constrainPoint),
+/* harmony export */   "aH": () => (/* binding */ getRectCenter),
+/* harmony export */   "aI": () => (/* binding */ diffPoints),
+/* harmony export */   "aJ": () => (/* binding */ translateRect),
+/* harmony export */   "aK": () => (/* binding */ compareObjs),
+/* harmony export */   "aL": () => (/* binding */ collectFromHash),
+/* harmony export */   "aM": () => (/* binding */ findElements),
+/* harmony export */   "aN": () => (/* binding */ findDirectChildren),
+/* harmony export */   "aO": () => (/* binding */ removeElement),
+/* harmony export */   "aP": () => (/* binding */ applyStyle),
+/* harmony export */   "aQ": () => (/* binding */ elementMatches),
+/* harmony export */   "aR": () => (/* binding */ getEventTargetViaRoot),
+/* harmony export */   "aS": () => (/* binding */ parseClassNames),
+/* harmony export */   "aT": () => (/* binding */ getCanVGrowWithinCell),
+/* harmony export */   "aU": () => (/* binding */ mergeEventStores),
+/* harmony export */   "aV": () => (/* binding */ getRelevantEvents),
+/* harmony export */   "aW": () => (/* binding */ eventTupleToStore),
+/* harmony export */   "aX": () => (/* binding */ combineEventUis),
+/* harmony export */   "aY": () => (/* binding */ Splitter),
+/* harmony export */   "aZ": () => (/* binding */ getDayClassNames),
+/* harmony export */   "a_": () => (/* binding */ getDateMeta),
+/* harmony export */   "aa": () => (/* binding */ flushSync),
+/* harmony export */   "ab": () => (/* binding */ CalendarRoot),
+/* harmony export */   "ac": () => (/* binding */ RenderId),
+/* harmony export */   "ad": () => (/* binding */ ensureElHasStyles),
+/* harmony export */   "ae": () => (/* binding */ applyStyleProp),
+/* harmony export */   "af": () => (/* binding */ sliceEventStore),
+/* harmony export */   "ag": () => (/* binding */ JsonRequestError),
+/* harmony export */   "ah": () => (/* binding */ createContext),
+/* harmony export */   "ai": () => (/* binding */ refineProps),
+/* harmony export */   "aj": () => (/* binding */ createEventInstance),
+/* harmony export */   "ak": () => (/* binding */ parseEventDef),
+/* harmony export */   "al": () => (/* binding */ refineEventDef),
+/* harmony export */   "am": () => (/* binding */ padStart),
+/* harmony export */   "an": () => (/* binding */ isInt),
+/* harmony export */   "ao": () => (/* binding */ parseFieldSpecs),
+/* harmony export */   "ap": () => (/* binding */ compareByFieldSpecs),
+/* harmony export */   "aq": () => (/* binding */ flexibleCompare),
+/* harmony export */   "ar": () => (/* binding */ preventSelection),
+/* harmony export */   "as": () => (/* binding */ allowSelection),
+/* harmony export */   "at": () => (/* binding */ preventContextMenu),
+/* harmony export */   "au": () => (/* binding */ allowContextMenu),
+/* harmony export */   "av": () => (/* binding */ compareNumbers),
+/* harmony export */   "aw": () => (/* binding */ enableCursor),
+/* harmony export */   "ax": () => (/* binding */ disableCursor),
+/* harmony export */   "ay": () => (/* binding */ computeVisibleDayRange),
+/* harmony export */   "az": () => (/* binding */ isMultiDayRange),
+/* harmony export */   "b": () => (/* binding */ buildViewClassNames),
+/* harmony export */   "b$": () => (/* binding */ SimpleScrollGrid),
+/* harmony export */   "b0": () => (/* binding */ buildNavLinkAttrs),
+/* harmony export */   "b1": () => (/* binding */ preventDefault),
+/* harmony export */   "b2": () => (/* binding */ whenTransitionDone),
+/* harmony export */   "b3": () => (/* binding */ computeInnerRect),
+/* harmony export */   "b4": () => (/* binding */ computeEdges),
+/* harmony export */   "b5": () => (/* binding */ getClippingParents),
+/* harmony export */   "b6": () => (/* binding */ computeRect),
+/* harmony export */   "b7": () => (/* binding */ rangesEqual),
+/* harmony export */   "b8": () => (/* binding */ rangesIntersect),
+/* harmony export */   "b9": () => (/* binding */ rangeContainsRange),
+/* harmony export */   "bA": () => (/* binding */ SegHierarchy),
+/* harmony export */   "bB": () => (/* binding */ buildEntryKey),
+/* harmony export */   "bC": () => (/* binding */ getEntrySpanEnd),
+/* harmony export */   "bD": () => (/* binding */ binarySearch),
+/* harmony export */   "bE": () => (/* binding */ groupIntersectingEntries),
+/* harmony export */   "bF": () => (/* binding */ intersectSpans),
+/* harmony export */   "bG": () => (/* binding */ interactionSettingsToStore),
+/* harmony export */   "bH": () => (/* binding */ ElementDragging),
+/* harmony export */   "bI": () => (/* binding */ config),
+/* harmony export */   "bJ": () => (/* binding */ parseDragMeta),
+/* harmony export */   "bK": () => (/* binding */ DayHeader),
+/* harmony export */   "bL": () => (/* binding */ computeFallbackHeaderFormat),
+/* harmony export */   "bM": () => (/* binding */ TableDateCell),
+/* harmony export */   "bN": () => (/* binding */ TableDowCell),
+/* harmony export */   "bO": () => (/* binding */ DaySeriesModel),
+/* harmony export */   "bP": () => (/* binding */ hasBgRendering),
+/* harmony export */   "bQ": () => (/* binding */ buildSegTimeText),
+/* harmony export */   "bR": () => (/* binding */ sortEventSegs),
+/* harmony export */   "bS": () => (/* binding */ getSegMeta),
+/* harmony export */   "bT": () => (/* binding */ buildEventRangeKey),
+/* harmony export */   "bU": () => (/* binding */ getSegAnchorAttrs),
+/* harmony export */   "bV": () => (/* binding */ DayTableModel),
+/* harmony export */   "bW": () => (/* binding */ Slicer),
+/* harmony export */   "bX": () => (/* binding */ applyMutationToEventStore),
+/* harmony export */   "bY": () => (/* binding */ isPropsValid),
+/* harmony export */   "bZ": () => (/* binding */ isInteractionValid),
+/* harmony export */   "b_": () => (/* binding */ isDateSelectionValid),
+/* harmony export */   "ba": () => (/* binding */ PositionCache),
+/* harmony export */   "bb": () => (/* binding */ ScrollController),
+/* harmony export */   "bc": () => (/* binding */ ElementScrollController),
+/* harmony export */   "bd": () => (/* binding */ WindowScrollController),
+/* harmony export */   "be": () => (/* binding */ DateComponent),
+/* harmony export */   "bf": () => (/* binding */ isDateSpansEqual),
+/* harmony export */   "bg": () => (/* binding */ addMs),
+/* harmony export */   "bh": () => (/* binding */ addWeeks),
+/* harmony export */   "bi": () => (/* binding */ diffWeeks),
+/* harmony export */   "bj": () => (/* binding */ diffWholeWeeks),
+/* harmony export */   "bk": () => (/* binding */ diffDayAndTime),
+/* harmony export */   "bl": () => (/* binding */ diffDays),
+/* harmony export */   "bm": () => (/* binding */ isValidDate),
+/* harmony export */   "bn": () => (/* binding */ asCleanDays),
+/* harmony export */   "bo": () => (/* binding */ multiplyDuration),
+/* harmony export */   "bp": () => (/* binding */ addDurations),
+/* harmony export */   "bq": () => (/* binding */ asRoughMinutes),
+/* harmony export */   "br": () => (/* binding */ asRoughSeconds),
+/* harmony export */   "bs": () => (/* binding */ asRoughMs),
+/* harmony export */   "bt": () => (/* binding */ wholeDivideDurations),
+/* harmony export */   "bu": () => (/* binding */ formatIsoTimeString),
+/* harmony export */   "bv": () => (/* binding */ formatDayString),
+/* harmony export */   "bw": () => (/* binding */ buildIsoString),
+/* harmony export */   "bx": () => (/* binding */ formatIsoMonthStr),
+/* harmony export */   "by": () => (/* binding */ NamedTimeZoneImpl),
+/* harmony export */   "bz": () => (/* binding */ parse),
+/* harmony export */   "c": () => (/* binding */ greatestDurationDenominator),
+/* harmony export */   "c0": () => (/* binding */ hasShrinkWidth),
+/* harmony export */   "c1": () => (/* binding */ renderMicroColGroup),
+/* harmony export */   "c2": () => (/* binding */ getScrollGridClassNames),
+/* harmony export */   "c3": () => (/* binding */ getSectionClassNames),
+/* harmony export */   "c4": () => (/* binding */ getSectionHasLiquidHeight),
+/* harmony export */   "c5": () => (/* binding */ getAllowYScrolling),
+/* harmony export */   "c6": () => (/* binding */ renderChunkContent),
+/* harmony export */   "c7": () => (/* binding */ computeShrinkWidth),
+/* harmony export */   "c8": () => (/* binding */ sanitizeShrinkWidth),
+/* harmony export */   "c9": () => (/* binding */ isColPropsEqual),
+/* harmony export */   "ca": () => (/* binding */ renderScrollShim),
+/* harmony export */   "cb": () => (/* binding */ getStickyFooterScrollbar),
+/* harmony export */   "cc": () => (/* binding */ getStickyHeaderDates),
+/* harmony export */   "cd": () => (/* binding */ Scroller),
+/* harmony export */   "ce": () => (/* binding */ getScrollbarWidths),
+/* harmony export */   "cf": () => (/* binding */ RefMap),
+/* harmony export */   "cg": () => (/* binding */ getIsRtlScrollbarOnLeft),
+/* harmony export */   "ch": () => (/* binding */ NowTimer),
+/* harmony export */   "ci": () => (/* binding */ ScrollResponder),
+/* harmony export */   "cj": () => (/* binding */ StandardEvent),
+/* harmony export */   "ck": () => (/* binding */ NowIndicatorContainer),
+/* harmony export */   "cl": () => (/* binding */ DayCellContainer),
+/* harmony export */   "cm": () => (/* binding */ hasCustomDayCellContent),
+/* harmony export */   "cn": () => (/* binding */ EventContainer),
+/* harmony export */   "co": () => (/* binding */ renderFill),
+/* harmony export */   "cp": () => (/* binding */ BgEvent),
+/* harmony export */   "cq": () => (/* binding */ WeekNumberContainer),
+/* harmony export */   "cr": () => (/* binding */ MoreLinkContainer),
+/* harmony export */   "cs": () => (/* binding */ computeEarliestSegStart),
+/* harmony export */   "ct": () => (/* binding */ ViewContainer),
+/* harmony export */   "cu": () => (/* binding */ triggerDateSelect),
+/* harmony export */   "cv": () => (/* binding */ getDefaultEventEnd),
+/* harmony export */   "cw": () => (/* binding */ injectStyles),
+/* harmony export */   "cx": () => (/* binding */ buildElAttrs),
+/* harmony export */   "cy": () => (/* binding */ CustomRenderingStore),
+/* harmony export */   "d": () => (/* binding */ createDuration),
+/* harmony export */   "e": () => (/* binding */ BASE_OPTION_DEFAULTS),
+/* harmony export */   "f": () => (/* binding */ arrayToHash),
+/* harmony export */   "g": () => (/* binding */ guid),
+/* harmony export */   "h": () => (/* binding */ filterHash),
+/* harmony export */   "i": () => (/* binding */ isArraysEqual),
+/* harmony export */   "j": () => (/* binding */ buildEventSourceRefiners),
+/* harmony export */   "k": () => (/* binding */ formatWithOrdinals),
+/* harmony export */   "l": () => (/* binding */ buildRangeApiWithTimeZone),
+/* harmony export */   "m": () => (/* binding */ mergeProps),
+/* harmony export */   "n": () => (/* binding */ identity),
+/* harmony export */   "o": () => (/* binding */ intersectRanges),
+/* harmony export */   "p": () => (/* binding */ parseEventSource),
+/* harmony export */   "q": () => (/* binding */ startOfDay),
+/* harmony export */   "r": () => (/* binding */ requestJson),
+/* harmony export */   "s": () => (/* binding */ subtractDurations),
+/* harmony export */   "t": () => (/* binding */ addDays),
+/* harmony export */   "u": () => (/* binding */ unpromisify),
+/* harmony export */   "v": () => (/* binding */ hashValuesToArray),
+/* harmony export */   "w": () => (/* binding */ buildEventApis),
+/* harmony export */   "x": () => (/* binding */ createFormatter),
+/* harmony export */   "y": () => (/* binding */ diffWholeDays),
+/* harmony export */   "z": () => (/* binding */ memoize)
 /* harmony export */ });
 /* harmony import */ var preact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.module.js");
 /* harmony import */ var preact_compat__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! preact/compat */ "./node_modules/preact/compat/dist/compat.module.js");
@@ -32848,15 +32863,15 @@ var index = (0,_fullcalendar_core_index_js__WEBPACK_IMPORTED_MODULE_0__.createPl
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   DayGridView: () => (/* binding */ DayTableView),
-/* harmony export */   DayTable: () => (/* binding */ DayTable),
-/* harmony export */   DayTableSlicer: () => (/* binding */ DayTableSlicer),
-/* harmony export */   Table: () => (/* binding */ Table),
-/* harmony export */   TableDateProfileGenerator: () => (/* binding */ TableDateProfileGenerator),
-/* harmony export */   TableRows: () => (/* binding */ TableRows),
-/* harmony export */   TableView: () => (/* binding */ TableView),
-/* harmony export */   buildDayTableModel: () => (/* binding */ buildDayTableModel),
-/* harmony export */   buildDayTableRenderRange: () => (/* binding */ buildDayTableRenderRange)
+/* harmony export */   "DayGridView": () => (/* binding */ DayTableView),
+/* harmony export */   "DayTable": () => (/* binding */ DayTable),
+/* harmony export */   "DayTableSlicer": () => (/* binding */ DayTableSlicer),
+/* harmony export */   "Table": () => (/* binding */ Table),
+/* harmony export */   "TableDateProfileGenerator": () => (/* binding */ TableDateProfileGenerator),
+/* harmony export */   "TableRows": () => (/* binding */ TableRows),
+/* harmony export */   "TableView": () => (/* binding */ TableView),
+/* harmony export */   "buildDayTableModel": () => (/* binding */ buildDayTableModel),
+/* harmony export */   "buildDayTableRenderRange": () => (/* binding */ buildDayTableRenderRange)
 /* harmony export */ });
 /* harmony import */ var _fullcalendar_core_internal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @fullcalendar/core/internal.js */ "./node_modules/@fullcalendar/core/internal-common.js");
 /* harmony import */ var _fullcalendar_core_preact_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core/preact.js */ "./node_modules/preact/dist/preact.module.js");
@@ -33858,8 +33873,8 @@ var css_248z = ":root{--fc-daygrid-event-dot-width:8px}.fc-daygrid-day-events:af
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Draggable: () => (/* binding */ ExternalDraggable),
-/* harmony export */   ThirdPartyDraggable: () => (/* binding */ ThirdPartyDraggable),
+/* harmony export */   "Draggable": () => (/* binding */ ExternalDraggable),
+/* harmony export */   "ThirdPartyDraggable": () => (/* binding */ ThirdPartyDraggable),
 /* harmony export */   "default": () => (/* binding */ index)
 /* harmony export */ });
 /* harmony import */ var _fullcalendar_core_index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @fullcalendar/core/index.js */ "./node_modules/@fullcalendar/core/index.js");

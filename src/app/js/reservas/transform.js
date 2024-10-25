@@ -1,4 +1,4 @@
-export const receiveddatatransform = data => {
+export const receivedtransform = data => {
 
   const transformeddata = {
     id: data.id,
@@ -40,7 +40,7 @@ export const receiveddatatransform = data => {
   return transformeddata
 }
 
-export const sentdatatransform = data => {
+export const senttransform = data => {
   
   const transformeddata = {
 

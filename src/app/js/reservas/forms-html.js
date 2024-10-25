@@ -87,6 +87,7 @@ export const formvalidateloginhtml = data => {
         Te hemos enviado un mail a tu correo, 
         Por favor escribe el código recibido 
         para validar tu dirección de coreo electrónico.
+        <strong>El código es válido durante los próximos 10 minutos.</strong>
       </div>
       <div class="Fields">
         <div class="Field Mail">

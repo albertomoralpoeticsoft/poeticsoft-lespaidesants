@@ -7,14 +7,14 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import esLocale from '@fullcalendar/core/locales/es'
 
 import {
-  receiveddatatransform
-} from './datatransform'
+  receivedtransform
+} from './transform'
 import formreserva from './form-reserva'
 import formevent from './form-event'
 
 import { 
   callapi
-} from './dataapi'
+} from './api'
 
 export default $ => { 
   
@@ -55,7 +55,7 @@ export default $ => {
         },
         defaultAllDay: true,
         forceEventDuration: true,
-        eventDataTransform: receiveddatatransform,
+        eventtransform: receivedtransform,
         eventOverlap: false,
         events: (
           fetchInfo,
