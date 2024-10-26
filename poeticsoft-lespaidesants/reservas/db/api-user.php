@@ -110,10 +110,10 @@ function lespaidesants_plugin_reservas_user_validatecode( WP_REST_Request $req )
     $query = "
       SELECT * 
       FROM {$tablename}
-      WHERE email = '$email' AND code = '$token';
+      WHERE email = '$email';
     "; 
     $result = $wpdb->get_results($query);
-
+    
     if(count($result)) {   
 
       $user = $result[0];   
@@ -125,11 +125,16 @@ function lespaidesants_plugin_reservas_user_validatecode( WP_REST_Request $req )
         throw new Exception('Código caducado', 428);
       }
 
+      if($user->code != $token) {
+
+        throw new Exception('Codigo no válido', 410);
+      }
+
       $res->set_data($user->id);
 
     } else {    
 
-      throw new Exception('Código caducado', 428);
+      throw new Exception('Usuario no encontrado', 410);
     }
       
   } catch (Exception $e) {

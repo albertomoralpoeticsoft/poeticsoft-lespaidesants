@@ -28,16 +28,16 @@ export const formacceptemail = data => {
         quieres usarlo para identificar tus reservas?
       </div>
       <div class="Actions">
-        <input 
+        <button 
           id="confirmmail"
-          type="submit" 
-          value="Si"
-        /> 
-        <input 
+        >
+          Si
+        </button> 
+        <button 
           id="changemail"
-          type="submit" 
-          value="No, quiero usar otro"
-        /> 
+        >
+          No, quiero usar otro
+        </button> 
       </div>
     </div>
   `
@@ -64,12 +64,12 @@ export const formloginhtml = data => {
         </div>
       </div>
       <div class="Actions">
-        <input 
+        <button 
           id="confirmmail"
-          type="submit" 
-          value="Confirmar" 
           disabled="disabled"
-        /> 
+        >
+          Confirmar
+        </button>
         <div class="ErrorMessage"></div>
       </div>
     </div>
@@ -99,12 +99,12 @@ export const formvalidateloginhtml = data => {
         </div>
       </div>
       <div class="Actions">
-        <input 
-          id="confirmcode"
-          type="submit" 
-          value="Confirmar código" 
+        <button 
+          id="confirmcode" 
           disabled="disabled"
-        /> 
+        >
+          Confirmar código
+        </button>
       </div>
     </div>
   `
@@ -201,18 +201,18 @@ export const formdateshtml = data => {
         </div>
       </div>
       <div class="Actions">
-        <input 
+        <button 
           id="reservarmas"
-          type="submit" 
-          value="Guardar y seleccionar más dias"
-          disabled="disabled" 
-        /> 
-        <input 
-          id="reservar"
-          type="submit" 
-          value="Reservar" 
-          disabled="disabled" 
-        /> 
+          disabled="disabled"
+        >
+          Guardar y seleccionar más dias
+        </button>
+        <button 
+          id="reservar" 
+          disabled="disabled"
+        >
+          Reservar
+        </button>
       </div>
     </div>
   `
@@ -232,11 +232,32 @@ export const formreservaconfirmhtml = data => {
         ${ data.message }
       </div>
       <div class="Actions">
-        <input 
+        <button 
           id="confirm"
-          type="submit" 
-          value="Si"
-        />
+        >
+          Si
+        </button>
+      </div>
+    </div>
+  `
+}
+
+export const formerrorhtml = data => {
+
+  return `
+    <div 
+      id="Form"
+      class="FormError"
+    >   
+      <div class="Text">
+        ${ data.message }
+      </div>
+      <div class="Actions">
+        <button 
+          id="confirm"
+        >
+          ${ data.confirmtext }
+        </button>
       </div>
     </div>
   `

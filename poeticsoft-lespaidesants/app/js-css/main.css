@@ -160,7 +160,7 @@ body {
   margin: 16px 0 0 0;
   text-align: center;
 }
-#LEDS-Reservas #Form .Actions input {
+#LEDS-Reservas #Form .Actions button {
   width: 90%;
   padding: 8px 16px;
   margin: 4px auto;
@@ -169,7 +169,7 @@ body {
   transition-property: opacity;
   transition-duration: 1s;
 }
-#LEDS-Reservas #Form .Actions input:disabled {
+#LEDS-Reservas #Form .Actions button:disabled {
   opacity: 0.2;
   cursor: not-allowed;
 }

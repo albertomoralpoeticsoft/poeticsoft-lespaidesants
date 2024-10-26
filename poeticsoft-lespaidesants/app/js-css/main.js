@@ -264,6 +264,33 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./src/app/js/reservas/form-error.js":
+/*!*******************************************!*\
+  !*** ./src/app/js/reservas/form-error.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($, data) {
+  var $ledsreservasblock = $('#LEDS-Reservas');
+  if ($ledsreservasblock.length) {
+    var $ledsreservas = $ledsreservasblock.eq(0); // Only allow one instance
+    $ledsreservas.empty();
+    $ledsreservas.append((0,_forms_html__WEBPACK_IMPORTED_MODULE_0__.formerrorhtml)(data));
+    var $errorform = $ledsreservas.find('#Form.FormError');
+    var $confirm = $errorform.find('#confirm');
+    $confirm.on('click', data.action);
+  }
+});
+
+/***/ }),
+
 /***/ "./src/app/js/reservas/form-event.js":
 /*!*******************************************!*\
   !*** ./src/app/js/reservas/form-event.js ***!
@@ -346,6 +373,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _form_acceptemail__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-acceptemail */ "./src/app/js/reservas/form-acceptemail.js");
 /* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
 /* harmony import */ var _form_validatelogin__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form-validatelogin */ "./src/app/js/reservas/form-validatelogin.js");
+/* harmony import */ var _form_error__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./form-error */ "./src/app/js/reservas/form-error.js");
+
 
 
 
@@ -395,12 +424,13 @@ var _formlogin = function formlogin($) {
       }).then(function (result) {
         return (0,_form_validatelogin__WEBPACK_IMPORTED_MODULE_4__["default"])($, $yourmail.val());
       })["catch"](function (error) {
-        (0,_form_message__WEBPACK_IMPORTED_MODULE_3__["default"])($, {
-          message: "\n                Ha habido un error procesando tu mail, vuelve a intentarlo, por favor.\n                <br/>\n                [".concat(error.reason, "]\n              ")
+        (0,_form_error__WEBPACK_IMPORTED_MODULE_5__["default"])($, {
+          message: "\n                Ha habido un error procesando tu mail, vuelve a intentarlo, por favor.\n                <br/>\n                [".concat(error.reason, "]\n              "),
+          confirmtext: "De acuerdo",
+          action: function action() {
+            return _formlogin($);
+          }
         });
-        setTimeout(function () {
-          _formlogin($);
-        }, 3000);
       });
     });
   }
@@ -638,8 +668,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _forms_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./forms-html */ "./src/app/js/reservas/forms-html.js");
 /* harmony import */ var _form_message__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./form-message */ "./src/app/js/reservas/form-message.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
-/* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
+/* harmony import */ var _form_validatelogin__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./form-validatelogin */ "./src/app/js/reservas/form-validatelogin.js");
+/* harmony import */ var _form_login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./form-login */ "./src/app/js/reservas/form-login.js");
+/* harmony import */ var _form_error__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./form-error */ "./src/app/js/reservas/form-error.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./api */ "./src/app/js/reservas/api.js");
+/* harmony import */ var _calendar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./calendar */ "./src/app/js/reservas/calendar.js");
+
+
+
 
 
 
@@ -665,7 +701,7 @@ __webpack_require__.r(__webpack_exports__);
       (0,_form_message__WEBPACK_IMPORTED_MODULE_1__["default"])($, {
         message: 'Validando...'
       });
-      (0,_api__WEBPACK_IMPORTED_MODULE_2__.callapi)({
+      (0,_api__WEBPACK_IMPORTED_MODULE_5__.callapi)({
         call: 'validatecode',
         body: {
           email: email,
@@ -677,8 +713,39 @@ __webpack_require__.r(__webpack_exports__);
           message: "\n                C\xF3digo v\xE1lido para <strong>".concat(email, "</strong>, gracias por tu inter\xE9s \n                en nuestro espacio, por favor, \n                selecciona tu/s reserva/s en el calendario.\n              ")
         });
         setTimeout(function () {
-          (0,_calendar__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+          (0,_calendar__WEBPACK_IMPORTED_MODULE_6__["default"])($);
         }, 4000);
+      })["catch"](function (error) {
+        console.log(error);
+        switch (error.status) {
+          case 428:
+            (0,_form_error__WEBPACK_IMPORTED_MODULE_4__["default"])($, {
+              message: "\n                    El c\xF3digo ha caducado, solo es v\xE1lido durante 10 minutos.\n                  ",
+              confirmtext: "Solicitar nuevo c\xF3digo",
+              action: function action() {
+                return (0,_form_validatelogin__WEBPACK_IMPORTED_MODULE_2__["default"])($, email);
+              }
+            });
+            break;
+          case 410:
+            (0,_form_error__WEBPACK_IMPORTED_MODULE_4__["default"])($, {
+              message: "\n                    No existe un usuario con ese mail o el c\xF3digo no es v\xE1lido.\n                  ",
+              confirmtext: "Volver a escribir mail",
+              action: function action() {
+                return (0,_form_login__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+              }
+            });
+            break;
+          default:
+            (0,_form_error__WEBPACK_IMPORTED_MODULE_4__["default"])($, {
+              message: "\n                    Ha habido un error validando tu c\xF3digo.\n                  ",
+              confirmtext: "Intentar de nuevo",
+              action: function action() {
+                return (0,_form_validatelogin__WEBPACK_IMPORTED_MODULE_2__["default"])($, email);
+              }
+            });
+            break;
+        }
       });
     });
   }
@@ -698,6 +765,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "formacceptemail": () => (/* binding */ formacceptemail),
 /* harmony export */   "formconfirmhtml": () => (/* binding */ formconfirmhtml),
 /* harmony export */   "formdateshtml": () => (/* binding */ formdateshtml),
+/* harmony export */   "formerrorhtml": () => (/* binding */ formerrorhtml),
 /* harmony export */   "formeventhtml": () => (/* binding */ formeventhtml),
 /* harmony export */   "formloginhtml": () => (/* binding */ formloginhtml),
 /* harmony export */   "formmessagehtml": () => (/* binding */ formmessagehtml),
@@ -712,13 +780,13 @@ var formmessagehtml = function formmessagehtml(data) {
   return "\n    <div \n    id=\"Form\"\n    class=\"FormMessage\"\n  > \n      <div class=\"Message\">\n        ".concat(data.message, "\n      </div>\n    </div>\n  ");
 };
 var formacceptemail = function formacceptemail(data) {
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormAcceptEmail\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Tu mail guardado es <strong>".concat(data.emailsaved, "</strong>\n        quieres usarlo para identificar tus reservas?\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmmail\"\n          type=\"submit\" \n          value=\"Si\"\n        /> \n        <input \n          id=\"changemail\"\n          type=\"submit\" \n          value=\"No, quiero usar otro\"\n        /> \n      </div>\n    </div>\n  ");
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormAcceptEmail\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Tu mail guardado es <strong>".concat(data.emailsaved, "</strong>\n        quieres usarlo para identificar tus reservas?\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"confirmmail\"\n        >\n          Si\n        </button> \n        <button \n          id=\"changemail\"\n        >\n          No, quiero usar otro\n        </button> \n      </div>\n    </div>\n  ");
 };
 var formloginhtml = function formloginhtml(data) {
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormLogin\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Por favor usa tu mail para que podamos identificar tus reservas.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmmail\"\n          type=\"submit\" \n          value=\"Confirmar\" \n          disabled=\"disabled\"\n        /> \n        <div class=\"ErrorMessage\"></div>\n      </div>\n    </div>\n  ";
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormLogin\"\n    > \n      <div class=\"Text\">\n        Bienvenido a la reserva de sala.\n        Por favor usa tu mail para que podamos identificar tus reservas.\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"yourmail\"\n            type=\"email\" \n            placeholder=\"Tu Email\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"confirmmail\"\n          disabled=\"disabled\"\n        >\n          Confirmar\n        </button>\n        <div class=\"ErrorMessage\"></div>\n      </div>\n    </div>\n  ";
 };
 var formvalidateloginhtml = function formvalidateloginhtml(data) {
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormValidateLogin\"\n    > \n      <div class=\"Text\">\n        Te hemos enviado un mail a tu correo, \n        Por favor escribe el c\xF3digo recibido \n        para validar tu direcci\xF3n de coreo electr\xF3nico.\n        <strong>El c\xF3digo es v\xE1lido durante los pr\xF3ximos 10 minutos.</strong>\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"validatecode\"\n            type=\"text\" \n            placeholder=\"Codigo recibido\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirmcode\"\n          type=\"submit\" \n          value=\"Confirmar c\xF3digo\" \n          disabled=\"disabled\"\n        /> \n      </div>\n    </div>\n  ";
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormValidateLogin\"\n    > \n      <div class=\"Text\">\n        Te hemos enviado un mail a tu correo, \n        Por favor escribe el c\xF3digo recibido \n        para validar tu direcci\xF3n de coreo electr\xF3nico.\n        <strong>El c\xF3digo es v\xE1lido durante los pr\xF3ximos 10 minutos.</strong>\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field Mail\">\n          <input \n            id=\"validatecode\"\n            type=\"text\" \n            placeholder=\"Codigo recibido\"\n          /> \n        </div>\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"confirmcode\" \n          disabled=\"disabled\"\n        >\n          Confirmar c\xF3digo\n        </button>\n      </div>\n    </div>\n  ";
 };
 var formdateshtml = function formdateshtml(data) {
   var houroptions = '<option value="Todo">Todo el día</option>';
@@ -734,10 +802,13 @@ var formdateshtml = function formdateshtml(data) {
   for (var _i2 = 3; _i2 < 9; _i2++) {
     durantenoptions += "<option\n      value=\"".concat(_i2, "\"\n    >\n      Durante ").concat(_i2, " semanas\n    </option>");
   }
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormDates\"\n    > \n      <div class=\"Title\">\n        <div class=\"TitleText\">\n          ".concat("Reserva el ".concat(data.diasemana, " d\xEDa ").concat(data.dia), "\n        </div>\n        <button class=\"Close\">x</button>\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field HourSelector\">\n          <select \n            id=\"selecthour\"\n            name=\"hour\"\n          > \n            ", houroptions, "\n          </select> \n        </div>\n        <div class=\"Field DurationSelector\">\n          <select \n            id=\"selectduration\"\n            name=\"duration\" \n            disabled=\"disabled\"\n          > \n            ").concat(durationoptions, "\n          </select> \n        </div>\n        <div class=\"Field Recurrent\">\n          <input \n            id=\"isrecurrent\"\n            type=\"checkbox\" \n            name=\"recurrent\"\n          /> \n          <label for=\"recurrent\">\n            Quiero reservar este horario los ").concat(data.diasemana, "\n          </label>\n        </div>\n        <div class=\"Field Durante\">\n          <select \n            id=\"recurrentuntil\"\n            name=\"duranten\"\n            disabled=\"disabled\"\n          > \n            ").concat(durantenoptions, "\n          </select> \n        </div>\n        <div class=\"Field Title\">\n          <input \n            id=\"reservatitle\"\n            name=\"title\"\n            placeholder=\"Titulo de la reserva (requerido)\"\n          />\n        </div>\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"reservarmas\"\n          type=\"submit\" \n          value=\"Guardar y seleccionar m\xE1s dias\"\n          disabled=\"disabled\" \n        /> \n        <input \n          id=\"reservar\"\n          type=\"submit\" \n          value=\"Reservar\" \n          disabled=\"disabled\" \n        /> \n      </div>\n    </div>\n  ");
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormDates\"\n    > \n      <div class=\"Title\">\n        <div class=\"TitleText\">\n          ".concat("Reserva el ".concat(data.diasemana, " d\xEDa ").concat(data.dia), "\n        </div>\n        <button class=\"Close\">x</button>\n      </div>\n      <div class=\"Fields\">\n        <div class=\"Field HourSelector\">\n          <select \n            id=\"selecthour\"\n            name=\"hour\"\n          > \n            ", houroptions, "\n          </select> \n        </div>\n        <div class=\"Field DurationSelector\">\n          <select \n            id=\"selectduration\"\n            name=\"duration\" \n            disabled=\"disabled\"\n          > \n            ").concat(durationoptions, "\n          </select> \n        </div>\n        <div class=\"Field Recurrent\">\n          <input \n            id=\"isrecurrent\"\n            type=\"checkbox\" \n            name=\"recurrent\"\n          /> \n          <label for=\"recurrent\">\n            Quiero reservar este horario los ").concat(data.diasemana, "\n          </label>\n        </div>\n        <div class=\"Field Durante\">\n          <select \n            id=\"recurrentuntil\"\n            name=\"duranten\"\n            disabled=\"disabled\"\n          > \n            ").concat(durantenoptions, "\n          </select> \n        </div>\n        <div class=\"Field Title\">\n          <input \n            id=\"reservatitle\"\n            name=\"title\"\n            placeholder=\"Titulo de la reserva (requerido)\"\n          />\n        </div>\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"reservarmas\"\n          disabled=\"disabled\"\n        >\n          Guardar y seleccionar m\xE1s dias\n        </button>\n        <button \n          id=\"reservar\" \n          disabled=\"disabled\"\n        >\n          Reservar\n        </button>\n      </div>\n    </div>\n  ");
 };
 var formreservaconfirmhtml = function formreservaconfirmhtml(data) {
-  return "\n    <div \n      id=\"Form\"\n      class=\"FormReservaConfirm\"\n    >   \n      <div class=\"Title\">\n        <button class=\"Close\">x</button>\n      </div>    \n      <div class=\"Text\">\n        ".concat(data.message, "\n      </div>\n      <div class=\"Actions\">\n        <input \n          id=\"confirm\"\n          type=\"submit\" \n          value=\"Si\"\n        />\n      </div>\n    </div>\n  ");
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormReservaConfirm\"\n    >   \n      <div class=\"Title\">\n        <button class=\"Close\">x</button>\n      </div>    \n      <div class=\"Text\">\n        ".concat(data.message, "\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"confirm\"\n        >\n          Si\n        </button>\n      </div>\n    </div>\n  ");
+};
+var formerrorhtml = function formerrorhtml(data) {
+  return "\n    <div \n      id=\"Form\"\n      class=\"FormError\"\n    >   \n      <div class=\"Text\">\n        ".concat(data.message, "\n      </div>\n      <div class=\"Actions\">\n        <button \n          id=\"confirm\"\n        >\n          ").concat(data.confirmtext, "\n        </button>\n      </div>\n    </div>\n  ");
 };
 var formeventhtml = function formeventhtml(data) {
   console.log(data.event.extendedProps);

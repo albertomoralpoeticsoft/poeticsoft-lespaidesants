@@ -5,6 +5,7 @@ import { callapi } from './api'
 import formacceptemail from './form-acceptemail'
 import formmessage from './form-message'
 import formvalidatelogin from './form-validatelogin'
+import formerror from './form-error'
 
 const validateemail = email => {
 
@@ -84,22 +85,18 @@ const formlogin = $ => {
         .then(result => formvalidatelogin($, $yourmail.val()))
         .catch(error => {
 
-          formmessage(
+          formerror(
             $,
             {
               message: `
                 Ha habido un error procesando tu mail, vuelve a intentarlo, por favor.
                 <br/>
                 [${ error.reason }]
-              `
+              `,
+              confirmtext: `De acuerdo`,
+              action: () => formlogin($)
             }
           )
-
-          setTimeout(() => {
-
-            formlogin($)
-            
-          }, 3000)
         })
       }
     )
