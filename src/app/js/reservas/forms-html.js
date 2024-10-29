@@ -84,7 +84,7 @@ export const formvalidateloginhtml = data => {
       class="FormValidateLogin"
     > 
       <div class="Text">
-        Te hemos enviado un mail a tu correo, 
+        Te hemos enviado un mail a tu correo, revisa tu carpeta de spam por si se fué allí.
         Por favor escribe el código recibido 
         para validar tu dirección de coreo electrónico.
       </div>
@@ -178,7 +178,7 @@ export const formdateshtml = data => {
             type="checkbox" 
             name="recurrent"
           /> 
-          <label for="recurrent">
+          <label for="isrecurrent">
             Quiero reservar este horario los ${ data.diasemana }
           </label>
         </div>

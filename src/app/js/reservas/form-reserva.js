@@ -73,8 +73,6 @@ export default (
     const $isrecurrent = $form.find('#isrecurrent')
     const $recurrentuntil = $form.find('#recurrentuntil')
     const $reservatitle = $form.find('#reservatitle')
-    const $reservatitleerrormessage = $form.find('#reservatitleerrormessage')
-    const $yourmail = $form.find('#yourmail')
     const $reservarmas = $form.find('#reservarmas')
     const $reservar = $form.find('#reservar')
     const $confirmreservation = $form.find('#confirmreservation')
@@ -114,7 +112,7 @@ export default (
         } else {
 
           $recurrentuntil.prop('disabled', 'disabled')
-          $recurrentuntil.val('No')
+          $recurrentuntil.val('2')
         }
       }
     )

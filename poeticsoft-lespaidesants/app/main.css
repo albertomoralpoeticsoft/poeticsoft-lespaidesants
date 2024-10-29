@@ -53,21 +53,22 @@ body {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
   border-radius: 4px;
   text-align: left;
+  line-height: 1.3em;
 }
-#LEDS-Reservas #Form .Title {
+#LEDS-Reservas #Form > .Title {
   margin: 0 0 24px 0;
   padding: 0 32px 0 0;
   position: relative;
   min-height: 16px;
 }
-#LEDS-Reservas #Form .Title .TitleText {
+#LEDS-Reservas #Form > .Title .TitleText {
   flex: 1;
   line-height: 1.1em;
   font-weight: bold;
   font-size: 1.2em;
   text-align: left;
 }
-#LEDS-Reservas #Form .Title .Close {
+#LEDS-Reservas #Form > .Title .Close {
   position: absolute;
   top: -12px;
   right: -12px;
@@ -104,7 +105,7 @@ body {
   border-radius: 0;
   cursor: pointer;
   height: auto !important;
-  font-size: 1em;
+  font-size: 0.95em;
 }
 #LEDS-Reservas #Form .Fields .Field select:disabled {
   opacity: 0.2;
@@ -128,7 +129,8 @@ body {
 }
 #LEDS-Reservas #Form .Fields .Field.Recurrent label {
   flex: 1;
-  font-size: 1em;
+  font-size: 0.95em;
+  cursor: pointer;
 }
 #LEDS-Reservas #Form .Fields .Field.Durante {
   width: 100%;
@@ -162,6 +164,7 @@ body {
 }
 #LEDS-Reservas #Form .Actions input {
   width: 90%;
+  font-size: 0.95em;
   padding: 8px 16px;
   margin: 4px auto;
   cursor: pointer;

@@ -45,8 +45,9 @@
     box-shadow: 0 0 12px $color-dark-transparent-a;
     border-radius: $space * 0.5; 
     text-align: left;
+    line-height: 1.3em;
 
-    .Title {
+    > .Title {
       
       margin: 0 0 $space * 3 0;
       padding: 0 $space * 4 0 0;
@@ -109,7 +110,7 @@
           border-radius: 0;
           cursor: pointer;
           height: auto !important;
-          font-size: 1em;
+          font-size: 0.95em;
 
           &:disabled {
 
@@ -144,7 +145,8 @@
           label {
 
             flex: 1;
-            font-size: 1em;
+            font-size: 0.95em;
+            cursor: pointer;
           }
         }
 
@@ -194,6 +196,7 @@
       input {
 
         width: 90%;
+        font-size: 0.95em;
         padding: $space $space * 2;
         margin: $space * 0.5 auto;
         cursor: pointer;
