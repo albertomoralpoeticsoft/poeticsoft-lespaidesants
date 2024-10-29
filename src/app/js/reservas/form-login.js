@@ -1,10 +1,11 @@
 import { 
   formloginhtml
 } from './forms-html'
-import { callapi } from './dataapi'
+import { callapi } from './api'
 import formacceptemail from './form-acceptemail'
 import formmessage from './form-message'
 import formvalidatelogin from './form-validatelogin'
+import formerror from './form-error'
 
 const validateemail = email => {
 
@@ -12,7 +13,7 @@ const validateemail = email => {
   return emailReg.test(email)
 }
 
-export default $ => {  
+const formlogin = $ => {
 
   const usermail = localStorage.getItem('LEDS-Reservas-Email')
   if(usermail) {
@@ -73,9 +74,7 @@ export default $ => {
           {
             message: 'Comprobando...'
           }
-        )
-
-        const $this = $(this)        
+        )       
 
         callapi({
           call: 'validateuser',
@@ -86,10 +85,22 @@ export default $ => {
         .then(result => formvalidatelogin($, $yourmail.val()))
         .catch(error => {
 
-          console.log('Error')
-          console.log(error)
+          formerror(
+            $,
+            {
+              message: `
+                Ha habido un error procesando tu mail, vuelve a intentarlo, por favor.
+                <br/>
+                [${ error.reason }]
+              `,
+              confirmtext: `De acuerdo`,
+              action: () => formlogin($)
+            }
+          )
         })
       }
     )
   }
 }
+
+export default formlogin

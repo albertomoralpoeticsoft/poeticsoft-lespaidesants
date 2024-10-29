@@ -5,7 +5,7 @@ import {
   formconfirmhtml,
   formmessagehtml
 } from './forms-html'
-import { processreserva } from './dataapi'
+import { processreserva } from './api'
 
 export default (
   $, 

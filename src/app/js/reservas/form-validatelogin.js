@@ -1,6 +1,9 @@
 import { formvalidateloginhtml } from './forms-html'
 import formmessage from './form-message'
-import { callapi } from './dataapi'
+import formvalidatelogin from './form-validatelogin'
+import formlogin from './form-login'
+import formerror from './form-error'
+import { callapi } from './api'
 import calendar from './calendar'
 
 export default ($, email) => {  
@@ -76,6 +79,59 @@ export default ($, email) => {
             calendar($)
             
           }, 4000)
+
+        })
+        .catch(error => {         
+
+          console.log(error)
+
+          switch(error.status) {
+
+            case 428:
+
+              formerror(
+                $,
+                {
+                  message: `
+                    El código ha caducado, solo es válido durante 10 minutos.
+                  `,
+                  confirmtext: `Solicitar nuevo código`,
+                  action: () => formvalidatelogin($, email)
+                }
+              )
+
+              break
+
+            case 410:
+
+              formerror(
+                $,
+                {
+                  message: `
+                    No existe un usuario con ese mail o el código no es válido.
+                  `,
+                  confirmtext: `Volver a escribir mail`,
+                  action: () => formlogin($)
+                }
+              )
+
+              break
+
+            default:
+
+              formerror(
+                $,
+                {
+                  message: `
+                    Ha habido un error validando tu código.
+                  `,
+                  confirmtext: `Intentar de nuevo`,
+                  action: () => formvalidatelogin($, email)
+                }
+              )
+
+              break
+          }
         })
       }
     )

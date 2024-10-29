@@ -2,8 +2,8 @@ import moment from 'moment'
 moment.locale('es')
 
 import {
-  sentdatatransform
-} from './datatransform'
+  senttransform
+} from './transform'
 
 export const callapi = data => {
 
@@ -26,19 +26,19 @@ export const callapi = data => {
 
       case 'eventall':
 
-        url += 'data/event/all' 
+        url += 'event/all' 
 
         break
 
       case 'eventcreate':
 
-        url += 'data/event/create'
+        url += 'event/create'
 
         break
 
       case 'eventdelete':
 
-        url += 'data/event/delete'
+        url += 'event/delete'
 
         break
 
@@ -66,8 +66,26 @@ export const callapi = data => {
         body: JSON.stringify(data.body)
       }
     )
-    .then(response => response.json())
-    .then(resolve)
+    .then(response => {
+
+      if(response.status != 200) {
+
+        response
+        .json()
+        .then(
+          result => reject({
+            status: response.status,
+            reason: result
+          })
+        )
+
+      } else {
+        
+        response
+        .json()
+        .then(result => resolve(result))
+      }
+    })
     .catch(reject)
   })
 
@@ -143,7 +161,7 @@ export const processreserva = data => {
 
     callapi({
       call: 'eventcreate',
-      body: sentdatatransform(eventdata)
+      body: senttransform(eventdata)
     })
     .then(resolve)
     .catch(reject)

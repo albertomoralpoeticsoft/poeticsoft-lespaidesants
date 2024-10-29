@@ -20,10 +20,10 @@ module.exports = env => {
 
     case 'app':
 
-      paths ={
+      paths = {
         entryjs: './src/app/main.js',
         entryscss: './src/app/scss/main.scss',
-        output: destdir  + '/app',
+        output: destdir  + '/app/js-css',
         public: pluginplublic,
         cssfilename: 'main.css'
       }
@@ -35,7 +35,7 @@ module.exports = env => {
       paths ={
         entryjs: './src/block/' + target + '/main.js',
         entryscss: './src/block/' + target + '/main.scss',
-        output: destdir  + '/block/' + target,
+        output: destdir  + '/editor/' + target,
         public: pluginplublic,
         cssfilename: 'main.css'
       }
