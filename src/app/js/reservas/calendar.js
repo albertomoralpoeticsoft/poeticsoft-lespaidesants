@@ -55,7 +55,7 @@ export default $ => {
         },
         defaultAllDay: true,
         forceEventDuration: true,
-        eventtransform: receivedtransform,
+        eventDataTransform: receivedtransform,
         eventOverlap: false,
         events: (
           fetchInfo,

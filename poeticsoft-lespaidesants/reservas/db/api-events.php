@@ -54,7 +54,7 @@ function lespaidesants_plugin_reservas_event_create( WP_REST_Request $req ) {
       $baseprefix .= $blogid . '_';
     }
     $tablename = $baseprefix . 'reservas_events';    
-    $data = lespaidesants_plugin_reservas_event_parsefordb($req->get_params());
+    $data = lespaidesants_plugin_reservas_data_event_parsefordb($req->get_params());
 
     $wpdb->insert(
       $tablename,

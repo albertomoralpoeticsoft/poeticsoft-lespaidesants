@@ -1,0 +1,241 @@
+/*!*****************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/app/scss/main.scss ***!
+  \*****************************************************************************************************************/
+/* SIZES */
+/* Colors */
+/* 
+  ------------------------------------------------
+  Fonts 
+*/
+.fitcontent {
+  width: fit-content;
+}
+
+.borderround {
+  border-radius: 4px;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ast-mobile-header-content .ast-builder-menu-mobile .ast-main-header-bar-alignment .main-header-bar-navigation .site-navigation .main-navigation .main-header-menu .menu-item a {
+  text-align: center;
+}
+.ast-mobile-header-content .ast-builder-layout-element {
+  line-height: 3;
+  text-align: center;
+}
+.ast-mobile-header-content .ast-builder-layout-element .ast-header-social-wrap {
+  width: 100%;
+}
+.ast-mobile-header-content .ast-builder-layout-element .ast-header-social-wrap .header-social-inner-wrap:hover {
+  background-color: var(--ast-global-color-4);
+}
+.ast-mobile-header-content .ast-builder-layout-element .ast-header-social-wrap .header-social-inner-wrap a {
+  width: 100%;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.wp-block-group.slider {
+  position: relative;
+  margin-bottom: 0;
+  overflow: hidden;
+}
+.wp-block-group.slider .flickity-viewport {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100% !important;
+  height: 100% !important;
+}
+.wp-block-group.slider .flickity-viewport .flickity-slider .wp-block-cover {
+  width: 100% !important;
+}
+.wp-block-group.slider .flickity-viewport .flickity-slider .wp-block-cover .wp-block-cover__inner-container > .wp-block-group {
+  max-width: 400px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#LEDS-Reservas {
+  position: relative;
+  padding: 16px;
+  background-color: var(--ast-global-color-4);
+  border-radius: 4px;
+  overflow: hidden;
+}
+#LEDS-Reservas table {
+  margin: 0;
+}
+#LEDS-Reservas .fc-view-harness {
+  background-color: #fff;
+}
+#LEDS-Reservas .fc-day {
+  cursor: pointer;
+}
+#LEDS-Reservas #FormWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  text-align: center;
+}
+#LEDS-Reservas #FormWrapper:before, #LEDS-Reservas #FormWrapper:after {
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 0;
+  vertical-align: middle;
+}
+#LEDS-Reservas #FormWrapper #Form {
+  display: inline-block;
+  vertical-align: middle;
+}
+#LEDS-Reservas #Form {
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: #fff;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  text-align: left;
+  line-height: 1.3em;
+}
+#LEDS-Reservas #Form > .Title {
+  margin: 0 0 24px 0;
+  padding: 0 32px 0 0;
+  position: relative;
+  min-height: 16px;
+}
+#LEDS-Reservas #Form > .Title .TitleText {
+  flex: 1;
+  line-height: 1.1em;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: left;
+}
+#LEDS-Reservas #Form > .Title .Close {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  padding-top: 7px;
+  padding-right: 12px;
+  padding-bottom: 9px;
+  padding-left: 12px;
+}
+#LEDS-Reservas #Form > .Title .Close h3 {
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 0;
+}
+#LEDS-Reservas #Form .Text,
+#LEDS-Reservas #Form .ErrorMessage,
+#LEDS-Reservas #Form .Message {
+  text-align: center;
+}
+#LEDS-Reservas #Form .ErrorMessage {
+  color: #cc0000;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+#LEDS-Reservas #Form .Fields {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#LEDS-Reservas #Form .Fields .Field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+#LEDS-Reservas #Form .Fields .Field select {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+  font-size: 0.95em;
+}
+#LEDS-Reservas #Form .Fields .Field select:disabled {
+  opacity: 0.2;
+}
+#LEDS-Reservas #Form .Fields .Field.HourSelector {
+  width: calc(45% - 8px);
+}
+#LEDS-Reservas #Form .Fields .Field.DurationSelector {
+  width: calc(55% - 8px);
+}
+#LEDS-Reservas #Form .Fields .Field.Recurrent {
+  width: 100%;
+  margin: 16px 0 0 0;
+  align-items: stretch;
+}
+#LEDS-Reservas #Form .Fields .Field.Recurrent input {
+  width: 16px;
+  height: 16px;
+  margin: 2px 6px 0 0;
+  cursor: pointer;
+}
+#LEDS-Reservas #Form .Fields .Field.Recurrent label {
+  flex: 1;
+  font-size: 0.95em;
+  cursor: pointer;
+}
+#LEDS-Reservas #Form .Fields .Field.Durante {
+  width: 100%;
+  margin: 12px 0 0 0;
+}
+#LEDS-Reservas #Form .Fields .Field.Title {
+  margin: 16px 0 0 0;
+}
+#LEDS-Reservas #Form .Fields .Field.Title input {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  height: auto !important;
+}
+#LEDS-Reservas #Form .Fields .Field.Mail {
+  margin: 24px 0 0 0;
+}
+#LEDS-Reservas #Form .Fields .Field.Mail input {
+  width: 100%;
+  padding: 0 0 4px 0 !important;
+  border-width: 0 0 1px 0 !important;
+  border-radius: 0;
+  cursor: pointer;
+  height: auto !important;
+  text-align: center;
+}
+#LEDS-Reservas #Form .Actions {
+  margin: 16px 0 0 0;
+  text-align: center;
+}
+#LEDS-Reservas #Form .Actions button {
+  width: 90%;
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 1s;
+}
+#LEDS-Reservas #Form .Actions button:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+#LEDS-Reservas #Form .Actions button + button {
+  margin: 16px 0 0 0;
+}
+
+/*# sourceMappingURL=main.css.map*/

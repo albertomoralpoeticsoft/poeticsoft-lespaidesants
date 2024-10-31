@@ -18,6 +18,18 @@ module.exports = env => {
 
   switch(section) {
 
+    case 'admin':
+
+      paths = {
+        entryjs: './src/admin/main.js',
+        entryscss: './src/admin/scss/main.scss',
+        output: destdir  + '/admin/js-css',
+        public: pluginplublic,
+        cssfilename: 'main.css'
+      }
+
+      break;
+
     case 'app':
 
       paths = {
@@ -121,6 +133,7 @@ module.exports = env => {
     resolve: {
       extensions: ['.js', '.jsx'],
       alias: {
+        common: path.join(__dirname, 'src/common'),
         assets: path.join(destdir, 'assets'),
         fonts: path.join(destdir, 'assets/fonts')
       }

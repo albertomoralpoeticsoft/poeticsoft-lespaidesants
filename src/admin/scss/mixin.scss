@@ -1,0 +1,161 @@
+@mixin absolutebox(
+  $top: 0,
+  $right: 0,
+  $bottom: 0,
+  $left: 0
+) {
+
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin ellipsis() {
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin boxshadowsoft () {
+
+  box-shadow: 0px 0px 10px rgba(0,0,0,.2);
+}
+
+@mixin boxshadowstrong () {
+
+  box-shadow: 0px 0px 20px rgba(0,0,0,.4);;
+}
+
+@mixin notices() {  
+
+  @include fontAR(true);
+  font-size: 1.2em !important;
+  line-height: 1.2em !important;
+  text-align: center !important;
+}
+
+/* 
+  ------------------------------------------------
+  Fonts 
+*/
+
+@mixin fontAL ($important: false) {
+
+  @if $important { 
+
+    // font-family: "Arial Light" !important;
+    // -moz-font-family: "Arial Light" !important;
+    
+    font-family: "proxima-nova" !important;
+    -moz-font-family: "proxima-nova" !important;
+    font-weight: 300;
+
+  } @else {
+
+    // font-family: "Arial Light";
+    // -moz-font-family: "Arial Light";
+
+    font-family: "proxima-nova";
+    -moz-font-family: "proxima-nova";
+    font-weight: 300;
+  }
+}
+
+@mixin fontAR ($important: false) {
+
+  @if $important { 
+
+    // font-family: "Arial Regular"  !important;
+    // -moz-font-family: "Arial Regular"  !important;
+    
+    font-family: "proxima-nova" !important;
+    -moz-font-family: "proxima-nova" !important;
+    font-weight: 400;
+
+  } @else {
+
+    // font-family: "Arial Regular";
+    // -moz-font-family: "Arial Regular";
+
+    font-family: "proxima-nova";
+    -moz-font-family: "proxima-nova";
+    font-weight: 400;
+  }
+}
+
+@mixin fontAM ($important: false) {
+
+  @if $important { 
+
+    // font-family: "Arial Medium"  !important;
+    // -moz-font-family: "Arial Medium"  !important;
+    
+    font-family: "proxima-nova" !important;
+    -moz-font-family: "proxima-nova" !important;
+    font-weight: 600;
+
+  } @else {
+
+    // font-family: "Arial Medium";
+    // -moz-font-family: "Arial Medium";
+
+    font-family: "proxima-nova";
+    -moz-font-family: "proxima-nova";
+    font-weight: 600;
+  }
+}
+
+@mixin fontAB ($important: false) {
+
+  @if $important { 
+
+    // font-family: "Arial Bold"  !important;
+    // -moz-font-family: "Arial Bold";
+    
+    font-family: "proxima-nova" !important;
+    -moz-font-family: "proxima-nova" !important;
+    font-weight: 800;
+
+  } @else {
+
+    // font-family: "Arial Bold" !important;
+    // -moz-font-family: "Arial Bold";
+
+    font-family: "proxima-nova";
+    -moz-font-family: "proxima-nova";
+    font-weight: 800;
+  }
+}
+
+@mixin button($upper: true, $bold: true) {  
+
+  display: block !important;
+  background-color: var(--ast-global-color-0);
+  color: var(--ast-global-color-4) !important;
+  font-size: 1rem !important;
+  padding: $space * 1.5 $space * 2;
+  white-space: nowrap;
+  width: fit-content;
+
+  &:hover {
+
+    background-color: var(--ast-global-color-1);
+  }
+
+  @if($bold) {
+
+    @include fontAB;
+
+  } @else {
+
+    @include fontAR;
+  }
+
+  @if $upper { 
+
+    text-transform: uppercase;
+  }
+}

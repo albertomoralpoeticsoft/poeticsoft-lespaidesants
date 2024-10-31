@@ -26,6 +26,7 @@ function core_log($display) {
 add_filter('xmlrpc_enabled', '__return_false');
 add_filter('login_display_language_dropdown', '__return_false');
 
+require_once(dirname(__FILE__) . '/admin/main.php');
 require_once(dirname(__FILE__) . '/editor/main.php');
 require_once(dirname(__FILE__) . '/app/main.php');
 require_once(dirname(__FILE__) . '/reservas/main.php');

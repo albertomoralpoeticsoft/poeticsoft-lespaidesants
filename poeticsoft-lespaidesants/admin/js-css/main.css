@@ -1,0 +1,18 @@
+/*!*******************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/admin/scss/main.scss ***!
+  \*******************************************************************************************************************/
+/* SIZES */
+/* Colors */
+/* 
+  ------------------------------------------------
+  Fonts 
+*/
+.fitcontent {
+  width: fit-content;
+}
+
+.borderround {
+  border-radius: 4px;
+}
+
+/*# sourceMappingURL=main.css.map*/

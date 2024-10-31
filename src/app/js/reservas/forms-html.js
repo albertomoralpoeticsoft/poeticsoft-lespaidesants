@@ -153,7 +153,7 @@ export const formdateshtml = data => {
         <div class="TitleText">
           ${ `Reserva el ${ data.diasemana } día ${ data.dia }` }
         </div>
-        <button class="Close">x</button>
+        <button class="Close"><h3>x</h3></button>
       </div>
       <div class="Fields">
         <div class="Field HourSelector">
@@ -205,7 +205,7 @@ export const formdateshtml = data => {
           id="reservarmas"
           disabled="disabled"
         >
-          Guardar y seleccionar más dias
+          Guardar y seguir
         </button>
         <button 
           id="reservar" 
@@ -226,7 +226,7 @@ export const formreservaconfirmhtml = data => {
       class="FormReservaConfirm"
     >   
       <div class="Title">
-        <button class="Close">x</button>
+        <button class="Close"><h3>x</h3></button>
       </div>    
       <div class="Text">
         ${ data.message }
@@ -294,7 +294,7 @@ export const formeventhtml = data => {
         <div class="TitleText">
           Reserva del dia ${ date }
         </div>
-        <button class="Close">x</button>
+        <button class="Close"><h3>x</h3></button>
       </div> 
       <div class="Text">
         ${ message }
