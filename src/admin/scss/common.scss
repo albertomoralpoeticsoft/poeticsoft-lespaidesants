@@ -1,0 +1,17 @@
+.editor-header.edit-post-header {
+
+  .edit-post-fullscreen-mode-close.components-button{
+
+    background: $color-light;
+
+    &:before {
+
+      box-shadow: none;
+    }
+  }
+}
+
+.editor-styles-wrapper {
+
+  background-color: $color-admin-bg;
+}

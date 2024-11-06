@@ -1,6 +1,24 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/app/js/background/rotatory.js":
+/*!*******************************************!*\
+  !*** ./src/app/js/background/rotatory.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
+  $('body').addClass('WithBGRotatory');
+  $('#page').prepend("<div id=\"LEDS-BG-Rotatory\">\n    <div class=\"ImageA\"></div>\n    <div class=\"ImageB\"></div>\n  </div>");
+});
+
+/***/ }),
+
 /***/ "./src/app/js/hero/flickitygallery.js":
 /*!********************************************!*\
   !*** ./src/app/js/hero/flickitygallery.js ***!
@@ -36283,26 +36301,32 @@ var index = (0,_fullcalendar_core_index_js__WEBPACK_IMPORTED_MODULE_1__.createPl
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 (() => {
 "use strict";
 /*!*************************!*\
   !*** ./src/app/main.js ***!
   \*************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_inviewport_inviewport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/inviewport/inviewport */ "./src/app/js/inviewport/inviewport.js");
-/* harmony import */ var _js_hero_flickitygallery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/hero/flickitygallery */ "./src/app/js/hero/flickitygallery.js");
-/* harmony import */ var _js_hero_flickityhero__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/hero/flickityhero */ "./src/app/js/hero/flickityhero.js");
-/* harmony import */ var _js_reservas_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/reservas/main */ "./src/app/js/reservas/main.js");
+/* harmony import */ var _js_background_rotatory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/background/rotatory */ "./src/app/js/background/rotatory.js");
+/* harmony import */ var _js_inviewport_inviewport__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/inviewport/inviewport */ "./src/app/js/inviewport/inviewport.js");
+/* harmony import */ var _js_hero_flickitygallery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/hero/flickitygallery */ "./src/app/js/hero/flickitygallery.js");
+/* harmony import */ var _js_hero_flickityhero__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/hero/flickityhero */ "./src/app/js/hero/flickityhero.js");
+/* harmony import */ var _js_reservas_main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/reservas/main */ "./src/app/js/reservas/main.js");
+
 
 
 
 
 (function ($) {
+  (0,_js_background_rotatory__WEBPACK_IMPORTED_MODULE_0__["default"])($);
   // inviewport($)
   // flickitygallery($)
-  (0,_js_hero_flickityhero__WEBPACK_IMPORTED_MODULE_2__["default"])($);
-  (0,_js_reservas_main__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+  (0,_js_hero_flickityhero__WEBPACK_IMPORTED_MODULE_3__["default"])($);
+  (0,_js_reservas_main__WEBPACK_IMPORTED_MODULE_4__["default"])($);
+  setTimeout(function () {
+    $('#page').css('opacity', 1);
+  }, 500);
 })(jQuery);
 })();
 

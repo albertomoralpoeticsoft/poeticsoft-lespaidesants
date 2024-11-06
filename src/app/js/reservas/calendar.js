@@ -46,7 +46,7 @@ export default $ => {
         validRange: function(nowDate) {
           return {
             start: nowDate
-          };
+          }
         },
         headerToolbar: {
           left: 'prev,next today',
@@ -95,8 +95,8 @@ export default $ => {
             event
           )
 
-          event.jsEvent.cancelBubble = true;
-          event.jsEvent.preventDefault();
+          event.jsEvent.cancelBubble = true
+          event.jsEvent.preventDefault()
 
           return false
         },

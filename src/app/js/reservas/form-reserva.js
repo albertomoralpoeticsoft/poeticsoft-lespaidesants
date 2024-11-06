@@ -41,13 +41,13 @@ export default (
           dia: dia
         }))
 
-        break;
+        break
 
       case 'confirm':
       
         $formwrapper.html(formconfirmhtml())
 
-        break;
+        break
 
       case 'saving':  
       
@@ -55,7 +55,7 @@ export default (
           message: 'Guardando...'
         }))
 
-        break;
+        break
 
       case 'saved':  
       
@@ -63,10 +63,10 @@ export default (
           message: 'Reserva guardada'
         }))
 
-        break;
+        break
     }
 
-    const $form = $formwrapper.find('#Form');
+    const $form = $formwrapper.find('#Form')
     const $close = $form.find('.Title .Close')
     const $selecthour = $form.find('#selecthour')
     const $selectduration = $form.find('#selectduration')

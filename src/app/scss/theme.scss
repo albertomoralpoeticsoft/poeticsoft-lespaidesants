@@ -52,3 +52,12 @@
     }
   }
 }
+
+@media (max-width: 544px) {
+
+  .wp-block-columns .wp-block-column:not(:last-child) {
+
+    margin-bottom: 0;
+  }
+}
+

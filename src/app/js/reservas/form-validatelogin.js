@@ -61,7 +61,7 @@ export default ($, email) => {
         })
         .then(result => {
 
-          localStorage.setItem("LEDS-Reservas-Email", email);
+          localStorage.setItem("LEDS-Reservas-Email", email)
 
           formmessage(
             $,

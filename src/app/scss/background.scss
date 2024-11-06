@@ -1,0 +1,66 @@
+body.WithBGRotatory {
+
+  #masthead {
+
+    z-index: 2;
+  }
+
+  #content {
+
+    z-index: 1;
+  }
+
+  #colophon {
+
+    z-index: 2;
+  }
+}
+
+@keyframes rotatory {
+
+  from { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) translateY(-50%) rotate(359deg); }
+}
+
+#LEDS-BG-Rotatory {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0; 
+
+  .ImageA,
+  .ImageB {
+
+    position: absolute;
+    width:3000px;
+    height: 3000px;
+    opacity: 0.05;
+    background-image: url("~assets/images/color-gigante-a.jpg"); 
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transform-origin: center;
+    transform: translateX(-50%) translateY(-50%) rotate(10deg);    
+    animation-name: rotatory;
+    animation-duration: 30s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+  
+  .ImageA {
+
+    top: 0;
+    left: 0;
+  }
+
+  .ImageB {
+
+    top: 100%;
+    left: 100%;
+  }
+}

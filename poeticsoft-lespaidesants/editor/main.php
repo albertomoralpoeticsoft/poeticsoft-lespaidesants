@@ -9,7 +9,15 @@ add_action(
     wp_register_script(
       'lespaidesants-plugin-block-reservas-js', 
       plugin_dir_url( __FILE__ ) . 'reservas/main.js',
-      [], 
+      [
+        'wp-blocks',
+        'wp-block-editor',
+        'wp-element',
+        'wp-components',
+        'wp-data',
+        'wp-hooks',
+        'lodash'
+      ], 
       filemtime(WP_PLUGIN_DIR . '/poeticsoft-lespaidesants/editor/reservas/main.js'),
       true
     );

@@ -6,7 +6,7 @@ export default $ => {
   const inViewport = e => {
     
     var b = e.get(0).getBoundingClientRect()
-    return !(b.top > window.innerHeight || b.bottom < 0);
+    return !(b.top > window.innerHeight || b.bottom < 0)
   }  
 
   const checkInViewport = els => {    
@@ -47,7 +47,7 @@ export default $ => {
           const st = window.pageYOffset || document.documentElement.scrollTop     
           // const scrollDir = st > lastScrollTop ? 'down' : 'up'
             
-          lastScrollTop = st <= 0 ? 0 : st;
+          lastScrollTop = st <= 0 ? 0 : st
 
           checkInViewport(els)
         }

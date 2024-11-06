@@ -1,0 +1,85 @@
+
+.fitcontent {
+
+  width: fit-content;
+} 
+
+.borderround {
+
+  border-radius: $space * 0.5;
+}
+
+.notdisplayinmobile {
+
+  @media (max-width: 782px) {
+    
+    display: none;
+  }
+}
+
+.rightdisplaced {
+
+  @media (min-width: 782px) {
+    
+    transform: translateX(-10%);
+  }
+}
+
+.disappear {
+
+  @media (max-width: 782px) {
+    
+    display: none; 
+  }
+}
+
+.shadow {
+
+  box-shadow: 0 0 12px $color-dark-transparent-c;
+}
+
+figure {
+
+  position: relative;
+
+  img {
+
+    display: block;
+    margin: 0 auto;
+  }
+  
+  &.groupcap {
+
+    width: 100%;
+    padding: 0 0 50% 0;
+
+    img {
+
+      position: absolute;
+      left: 0;
+      width: 100%;
+      transform: translateY(-40%);
+    }
+  }
+
+  &.zindex-0 { z-index: 0; }
+  &.zindex-1 { z-index: 1; }
+  &.zindex-2 { z-index: 2; }
+  &.zindex-3 { z-index: 3; }
+  &.zindex-4 { z-index: 4; }
+  &.zindex-5 { z-index: 5; }
+  &.zindex-6 { z-index: 6; }
+}
+
+.movedown {
+
+  transform: translateY(30%);
+}
+
+.wp-block-columns.movilinverse {
+
+  @media (max-width: 782px) {
+    
+    flex-direction: column-reverse;
+  }
+}

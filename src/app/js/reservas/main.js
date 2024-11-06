@@ -8,5 +8,5 @@ window.eventsreceived = events => { }
 
 export default $ => {
 
-  login($);
+  login($)
 }
