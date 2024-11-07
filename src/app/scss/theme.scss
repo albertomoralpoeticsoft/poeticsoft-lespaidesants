@@ -1,3 +1,26 @@
+.main-header-menu {
+  
+  > .menu-item {
+
+    margin: 0 0 0 $space;
+
+    > .menu-link {
+
+      background-color: $color-light-transparent-a;
+    }
+  }
+}
+
+#ast-hf-mobile-menu {
+
+  padding-top: 1px;
+  
+  > .menu-item {
+
+    margin: 0 0 0 0;
+  }
+}
+
 .ast-mobile-header-content {
 
   .ast-builder-menu-mobile {
@@ -58,6 +81,40 @@
   .wp-block-columns .wp-block-column:not(:last-child) {
 
     margin-bottom: 0;
+  }
+}
+
+.grecaptcha-badge {
+
+  bottom: $space * 10 !important;
+  z-index: 999;
+}
+
+.pgcal-container {
+
+  padding: $space * 2;
+  background-color: $color-light;
+}
+
+.ast-theme-transparent-header .post-password-form {
+
+  margin-top: 160px;
+  max-width: 300px;
+
+  label {
+
+    input[name="post_password"] {
+      
+      margin: $space * 0.5 auto 0; 
+      width: 200px;
+      display: block;
+      text-align: center;
+    }
+  }
+
+  input[type="submit"] {
+
+    margin: $space * 4 0 0 0;
   }
 }
 

@@ -2,10 +2,13 @@
 
 export default $ => {
 
-  let $sliderhero = $('.wp-block-group.slider .wp-block-group__inner-container')
+  const $sliderherowrapper = $('.wp-block-group.slider')
+  if(!$sliderherowrapper.length) { return }
+
+  let $sliderhero = $('.wp-block-group.slider > .wp-block-group .wp-block-group__inner-container')
   if(!$sliderhero.length) {
 
-    $sliderhero = $('.wp-block-group.slider')
+    $sliderhero = $('.wp-block-group.slider > .wp-block-group')
   }
   if($sliderhero.length) { 
 
@@ -30,7 +33,7 @@ export default $ => {
         }
       )
 
-      if($this.hasClass('autoplay')) {
+      if($sliderherowrapper.hasClass('autoplay')) {
 
         setInterval(() => {
 

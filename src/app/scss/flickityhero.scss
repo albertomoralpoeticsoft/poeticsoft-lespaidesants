@@ -1,36 +1,39 @@
 .wp-block-group.slider {
 
-  position: relative;
-  margin-bottom: 0;
-  overflow: hidden;
+  > .wp-block-group {
 
-  .flickity-viewport {
+    position: relative;
+    margin-bottom: 0;
+    overflow: hidden;
 
-    @include absolutebox();
-    max-width: 100% !important;
-    height: 100% !important;
+    .flickity-viewport {
 
-    .flickity-slider {
+      @include absolutebox();
+      max-width: 100% !important;
+      height: 100% !important;
 
-      .wp-block-cover {
+      .flickity-slider {
 
-        width: 100% !important;
+        .wp-block-cover {
 
-        .wp-block-cover__background {
-
-
-        }   
-
-        .wp-block-cover__inner-container {
-
-          > .wp-block-group {
-
-            max-width: 400px;
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-          }
-        }
+          width: 100% !important;
+        } 
       }
-    } 
+
+      &:after {
+
+        
+      }
+    }
+  }
+
+  > .slidertitle{
+
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    width: fit-content;
+    transform: translateX(-50%) translateY(-50%);
+    border-radius: $space * 0.5;
   }
 }

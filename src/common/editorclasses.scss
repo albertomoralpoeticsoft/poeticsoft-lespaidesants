@@ -83,3 +83,13 @@ figure {
     flex-direction: column-reverse;
   }
 }
+
+.elevar-8 { 
+  
+  margin-top: -$space * 8 !important; 
+
+  @media (max-width: 782px) {
+
+    margin-top: -$space * 5 !important; 
+  }
+}

@@ -12,6 +12,9 @@
 
 // Calendar -- AIzaSyC9mAJ8ylhMf_nXJm0RSUVNhx3DUmh2HiI
 // WP - &g4rI/e~@441
+// ReCaptcha https://www.google.com/recaptcha/admin/site/712435678/setup
+
+/* Debug */
 
 function core_log($display) { 
 
@@ -24,8 +27,40 @@ function core_log($display) {
   );
 }
 
+/* Customization */
+
 add_filter('xmlrpc_enabled', '__return_false');
+
 add_filter('login_display_language_dropdown', '__return_false');
+
+add_filter( 
+  'wp_nav_menu_objects', 
+  function ( 
+    $objects, 
+    $args 
+  ) {
+
+    $siteurl = get_site_url(null, '/');
+
+    foreach($objects as $key => $object) {
+  
+      if(
+        is_front_page()
+        &&        
+        $siteurl === $object->url
+      ) {
+
+        unset( $objects[ $key ] );
+      }
+    }
+  
+    return $objects;  
+  }, 
+  10, 
+  2 
+);
+
+/* Components */
 
 require_once(dirname(__FILE__) . '/admin/main.php');
 require_once(dirname(__FILE__) . '/editor/main.php');

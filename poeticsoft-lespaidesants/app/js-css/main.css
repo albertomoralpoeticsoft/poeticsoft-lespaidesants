@@ -9,6 +9,10 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1em !important;
 }
 
+a {
+  font-weight: 900;
+}
+
 .wp-block-group {
   overflow: hidden;
 }
@@ -49,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .shadow {
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
 
 figure {
@@ -101,6 +105,15 @@ figure.zindex-6 {
   }
 }
 
+.elevar-8 {
+  margin-top: -64px !important;
+}
+@media (max-width: 782px) {
+  .elevar-8 {
+    margin-top: -40px !important;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -113,6 +126,20 @@ body {
   opacity: 0;
   transition-property: opacity;
   transition-duration: 1.5s;
+}
+
+.main-header-menu > .menu-item {
+  margin: 0 0 0 8px;
+}
+.main-header-menu > .menu-item > .menu-link {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+#ast-hf-mobile-menu {
+  padding-top: 1px;
+}
+#ast-hf-mobile-menu > .menu-item {
+  margin: 0 0 0 0;
 }
 
 .ast-mobile-header-content .ast-builder-menu-mobile .ast-main-header-bar-alignment .main-header-bar-navigation .site-navigation .main-navigation .main-header-menu .menu-item a {
@@ -139,12 +166,36 @@ body {
     margin-bottom: 0;
   }
 }
-.wp-block-group.slider {
+.grecaptcha-badge {
+  bottom: 80px !important;
+  z-index: 999;
+}
+
+.pgcal-container {
+  padding: 16px;
+  background-color: #fff;
+}
+
+.ast-theme-transparent-header .post-password-form {
+  margin-top: 160px;
+  max-width: 300px;
+}
+.ast-theme-transparent-header .post-password-form label input[name=post_password] {
+  margin: 4px auto 0;
+  width: 200px;
+  display: block;
+  text-align: center;
+}
+.ast-theme-transparent-header .post-password-form input[type=submit] {
+  margin: 32px 0 0 0;
+}
+
+.wp-block-group.slider > .wp-block-group {
   position: relative;
   margin-bottom: 0;
   overflow: hidden;
 }
-.wp-block-group.slider .flickity-viewport {
+.wp-block-group.slider > .wp-block-group .flickity-viewport {
   position: absolute;
   top: 0;
   right: 0;
@@ -153,13 +204,16 @@ body {
   max-width: 100% !important;
   height: 100% !important;
 }
-.wp-block-group.slider .flickity-viewport .flickity-slider .wp-block-cover {
+.wp-block-group.slider > .wp-block-group .flickity-viewport .flickity-slider .wp-block-cover {
   width: 100% !important;
 }
-.wp-block-group.slider .flickity-viewport .flickity-slider .wp-block-cover .wp-block-cover__inner-container > .wp-block-group {
-  max-width: 400px;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
+.wp-block-group.slider > .slidertitle {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  width: fit-content;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 4px;
 }
 
 #LEDS-Reservas {
@@ -367,7 +421,7 @@ body.WithBGRotatory #colophon {
   position: absolute;
   width: 3000px;
   height: 3000px;
-  opacity: 0.05;
+  opacity: 0.15;
   background-image: url(/wp-content/plugins/poeticsoft-lespaidesants/assets/images/color-gigante-a.jpg);
   background-size: contain;
   background-position: center;
@@ -375,17 +429,64 @@ body.WithBGRotatory #colophon {
   transform-origin: center;
   transform: translateX(-50%) translateY(-50%) rotate(10deg);
   animation-name: rotatory;
-  animation-duration: 30s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 #LEDS-BG-Rotatory .ImageA {
   top: 0;
   left: 0;
+  animation-duration: 30s;
 }
 #LEDS-BG-Rotatory .ImageB {
   top: 100%;
   left: 100%;
+  animation-duration: 20s;
+}
+
+#simple-contact-form form {
+  padding: 0;
+}
+#simple-contact-form form .scf-row {
+  width: 100%;
+}
+#simple-contact-form form .scf-row label {
+  display: block;
+  font-size: 1em;
+}
+#simple-contact-form form .scf-row input {
+  margin-top: 4px;
+}
+#simple-contact-form form .scf-row textarea {
+  width: 100%;
+  margin-top: 4px;
+}
+#simple-contact-form form .scf-row + .scf-row {
+  margin: 16px 0 0 0;
+}
+
+#scf_success pre {
+  white-space: pre-wrap;
+}
+
+p.scf_error,
+p.scf_spam {
+  color: #cc0000;
+}
+
+div.scf-submit {
+  margin-top: 10px;
+}
+
+p.scf_success {
+  color: #669966;
+}
+
+.scf-confirm-checkbox {
+  margin-top: 15px;
+}
+
+.scf-website3dhhsy3 {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map*/

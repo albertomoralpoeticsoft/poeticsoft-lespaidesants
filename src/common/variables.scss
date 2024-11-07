@@ -4,10 +4,10 @@ $space: 8px;
 $color-light: #fff;
 $color-dark: #000;
 
-$color-light-transparent-a: transparentize($color-light, 0.7);
+$color-light-transparent-a: transparentize($color-light, 0.5);
 $color-dark-transparent-a: transparentize($color-dark, 0.4);
 $color-dark-transparent-b: transparentize($color-dark, 0.8);
-$color-dark-transparent-c: transparentize($color-dark, 0.9);
+$color-dark-transparent-c: transparentize($color-dark, 0.7);
 
 $color-admin-bg: #eeeeee;
 

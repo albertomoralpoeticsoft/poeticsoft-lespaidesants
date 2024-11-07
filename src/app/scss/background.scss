@@ -38,16 +38,14 @@ body.WithBGRotatory {
     position: absolute;
     width:3000px;
     height: 3000px;
-    opacity: 0.05;
+    opacity: 0.15;
     background-image: url("~assets/images/color-gigante-a.jpg"); 
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-
     transform-origin: center;
     transform: translateX(-50%) translateY(-50%) rotate(10deg);    
     animation-name: rotatory;
-    animation-duration: 30s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
   }
@@ -56,11 +54,13 @@ body.WithBGRotatory {
 
     top: 0;
     left: 0;
+    animation-duration: 30s;
   }
 
   .ImageB {
 
     top: 100%;
     left: 100%;
+    animation-duration: 20s;
   }
 }

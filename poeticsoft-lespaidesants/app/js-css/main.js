@@ -65,9 +65,13 @@ __webpack_require__.r(__webpack_exports__);
 // https://github.com/metafizzy/flickity
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function ($) {
-  var $sliderhero = $('.wp-block-group.slider .wp-block-group__inner-container');
+  var $sliderherowrapper = $('.wp-block-group.slider');
+  if (!$sliderherowrapper.length) {
+    return;
+  }
+  var $sliderhero = $('.wp-block-group.slider > .wp-block-group .wp-block-group__inner-container');
   if (!$sliderhero.length) {
-    $sliderhero = $('.wp-block-group.slider');
+    $sliderhero = $('.wp-block-group.slider > .wp-block-group');
   }
   if ($sliderhero.length) {
     $sliderhero.each(function () {
@@ -82,7 +86,7 @@ __webpack_require__.r(__webpack_exports__);
       window.addEventListener('resize', function () {
         $this.flickity('resize');
       });
-      if ($this.hasClass('autoplay')) {
+      if ($sliderherowrapper.hasClass('autoplay')) {
         setInterval(function () {
           $this.flickity('next', true, false);
         }, 6000);

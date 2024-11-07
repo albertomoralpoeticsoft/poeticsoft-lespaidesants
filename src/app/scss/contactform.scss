@@ -1,0 +1,68 @@
+#simple-contact-form {
+  
+  form { 
+  
+    padding: 0;
+  
+    .scf-row { 
+    
+      width: 100%;
+      
+      label { 
+    
+         display: block;
+         font-size: 1em;
+      }
+      
+      input { 
+
+        margin-top: $space * 0.5;
+      }
+      
+      textarea { 
+    
+        width: 100%;
+        margin-top: $space * 0.5;
+      } 
+    }
+  
+    .scf-row + .scf-row { 
+
+      margin: $space * 2 0 0 0;
+    }
+  }
+}
+
+#scf_success {
+  
+  pre { 
+  
+    white-space: pre-wrap; 
+  } 
+}
+
+p.scf_error, 
+p.scf_spam { 
+  
+  color: #cc0000; 
+} 
+
+div.scf-submit { 
+  
+  margin-top: 10px; 
+} 
+
+p.scf_success { 
+  
+  color: #669966; 
+} 
+
+.scf-confirm-checkbox { 
+  
+  margin-top: 15px; 
+} 
+
+.scf-website3dhhsy3 { 
+  
+  display: none; 
+}
