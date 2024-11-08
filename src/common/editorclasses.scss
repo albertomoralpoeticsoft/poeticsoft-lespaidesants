@@ -33,6 +33,14 @@
   }
 }
 
+.appear {
+
+  @media (min-width: 782px) {
+    
+    display: none !important;
+  }
+}
+
 .shadow {
 
   box-shadow: 0 0 12px $color-dark-transparent-c;

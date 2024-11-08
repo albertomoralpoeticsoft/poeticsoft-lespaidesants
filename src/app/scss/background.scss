@@ -31,6 +31,7 @@ body.WithBGRotatory {
   height: 100%;
   overflow: hidden;
   z-index: 0; 
+  // filter: sepia(100%);
 
   .ImageA,
   .ImageB {
@@ -38,7 +39,7 @@ body.WithBGRotatory {
     position: absolute;
     width:3000px;
     height: 3000px;
-    opacity: 0.15;
+    opacity: 0.1;
     background-image: url("~assets/images/color-gigante-a.jpg"); 
     background-size: contain;
     background-position: center;
@@ -61,6 +62,6 @@ body.WithBGRotatory {
 
     top: 100%;
     left: 100%;
-    animation-duration: 20s;
+    animation-duration: 40s;
   }
 }

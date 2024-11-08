@@ -1,3 +1,8 @@
+:root :where(.is-layout-flow) > * {
+
+  margin-block-start: 0;
+}
+
 .main-header-menu {
   
   > .menu-item {
@@ -7,6 +12,8 @@
     > .menu-link {
 
       background-color: $color-light-transparent-a;
+      padding: 0 $space;
+      font-size: 0.9em; 
     }
   }
 }

@@ -52,6 +52,12 @@ a {
   }
 }
 
+@media (min-width: 782px) {
+  .appear {
+    display: none !important;
+  }
+}
+
 .shadow {
   box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
 }
@@ -128,11 +134,17 @@ body {
   transition-duration: 1.5s;
 }
 
+:root :where(.is-layout-flow) > * {
+  margin-block-start: 0;
+}
+
 .main-header-menu > .menu-item {
   margin: 0 0 0 8px;
 }
 .main-header-menu > .menu-item > .menu-link {
   background-color: rgba(255, 255, 255, 0.5);
+  padding: 0 8px;
+  font-size: 0.9em;
 }
 
 #ast-hf-mobile-menu {
@@ -254,7 +266,7 @@ body {
   vertical-align: middle;
 }
 #LEDS-Reservas #Form {
-  max-width: 320px;
+  max-width: 340px;
   margin: 0 auto;
   padding: 24px;
   background-color: #fff;
@@ -421,7 +433,7 @@ body.WithBGRotatory #colophon {
   position: absolute;
   width: 3000px;
   height: 3000px;
-  opacity: 0.15;
+  opacity: 0.1;
   background-image: url(/wp-content/plugins/poeticsoft-lespaidesants/assets/images/color-gigante-a.jpg);
   background-size: contain;
   background-position: center;
@@ -440,7 +452,7 @@ body.WithBGRotatory #colophon {
 #LEDS-BG-Rotatory .ImageB {
   top: 100%;
   left: 100%;
-  animation-duration: 20s;
+  animation-duration: 40s;
 }
 
 #simple-contact-form form {
