@@ -1,6 +1,6 @@
 .wp-block-group.slider {
 
-  > .wp-block-group {
+  > .wp-block-group.slides {
 
     position: relative;
     margin-bottom: 0;
@@ -19,21 +19,30 @@
           width: 100% !important;
         } 
       }
-
-      &:after {
-
-        
-      }
     }
   }
 
-  > .slidertitle{
+  > .content {
 
     position: absolute;
-    top: 65%;
+    bottom: 0;
+    // width: fit-content;
     left: 50%;
-    width: fit-content;
-    transform: translateX(-50%) translateY(-50%);
-    border-radius: $space * 0.5;
+    transform: translateX(-50%);
+    width: max-content; 
+
+    // bottom center>(default) left right
+
+    &.left {
+
+      left: 0;
+      transform: none;
+    }
+
+    &.right {
+
+      right: 0;
+      transform: none;
+    }
   }
 }

@@ -202,12 +202,12 @@ body {
   margin: 32px 0 0 0;
 }
 
-.wp-block-group.slider > .wp-block-group {
+.wp-block-group.slider > .wp-block-group.slides {
   position: relative;
   margin-bottom: 0;
   overflow: hidden;
 }
-.wp-block-group.slider > .wp-block-group .flickity-viewport {
+.wp-block-group.slider > .wp-block-group.slides .flickity-viewport {
   position: absolute;
   top: 0;
   right: 0;
@@ -216,16 +216,23 @@ body {
   max-width: 100% !important;
   height: 100% !important;
 }
-.wp-block-group.slider > .wp-block-group .flickity-viewport .flickity-slider .wp-block-cover {
+.wp-block-group.slider > .wp-block-group.slides .flickity-viewport .flickity-slider .wp-block-cover {
   width: 100% !important;
 }
-.wp-block-group.slider > .slidertitle {
+.wp-block-group.slider > .content {
   position: absolute;
-  top: 65%;
+  bottom: 0;
   left: 50%;
-  width: fit-content;
-  transform: translateX(-50%) translateY(-50%);
-  border-radius: 4px;
+  transform: translateX(-50%);
+  width: max-content;
+}
+.wp-block-group.slider > .content.left {
+  left: 0;
+  transform: none;
+}
+.wp-block-group.slider > .content.right {
+  right: 0;
+  transform: none;
 }
 
 #LEDS-Reservas {

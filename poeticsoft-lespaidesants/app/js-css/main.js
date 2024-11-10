@@ -69,9 +69,9 @@ __webpack_require__.r(__webpack_exports__);
   if (!$sliderherowrapper.length) {
     return;
   }
-  var $sliderhero = $('.wp-block-group.slider > .wp-block-group .wp-block-group__inner-container');
+  var $sliderhero = $('.wp-block-group.slider > .wp-block-group.slides .wp-block-group__inner-container');
   if (!$sliderhero.length) {
-    $sliderhero = $('.wp-block-group.slider > .wp-block-group');
+    $sliderhero = $('.wp-block-group.slider > .wp-block-group.slides');
   }
   if ($sliderhero.length) {
     $sliderhero.each(function () {

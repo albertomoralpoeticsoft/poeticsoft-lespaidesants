@@ -5,10 +5,10 @@ export default $ => {
   const $sliderherowrapper = $('.wp-block-group.slider')
   if(!$sliderherowrapper.length) { return }
 
-  let $sliderhero = $('.wp-block-group.slider > .wp-block-group .wp-block-group__inner-container')
+  let $sliderhero = $('.wp-block-group.slider > .wp-block-group.slides .wp-block-group__inner-container')
   if(!$sliderhero.length) {
 
-    $sliderhero = $('.wp-block-group.slider > .wp-block-group')
+    $sliderhero = $('.wp-block-group.slider > .wp-block-group.slides')
   }
   if($sliderhero.length) { 
 
