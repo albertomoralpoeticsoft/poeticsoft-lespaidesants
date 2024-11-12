@@ -4,6 +4,7 @@
 import { Calendar } from '@fullcalendar/core'
 import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
 import esLocale from '@fullcalendar/core/locales/es'
 
 import {
@@ -31,9 +32,10 @@ export default $ => {
         locale: esLocale,
         plugins: [ 
           interactionPlugin,
-          dayGridPlugin
+          dayGridPlugin,
+          timeGridPlugin
         ],
-        aspectRatio: 1.3,
+        aspectRatio: 1,
         customButtons: {
           reservasbutton: {
             text: 'Refresh',
@@ -51,7 +53,7 @@ export default $ => {
         headerToolbar: {
           left: 'prev,next today',
           center: 'title',
-          right: 'reservasbutton'
+          right: 'dayGridMonth,timeGridWeek' // ,reservasbutton'
         },
         defaultAllDay: true,
         forceEventDuration: true,
@@ -95,7 +97,6 @@ export default $ => {
             event
           )
 
-          event.jsEvent.cancelBubble = true
           event.jsEvent.preventDefault()
 
           return false

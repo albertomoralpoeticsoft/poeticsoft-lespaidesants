@@ -1,7 +1,23 @@
+:root {  
+
+  --fc-button-text-color: var(--ast-global-color-5);
+  --fc-button-bg-color: var(--ast-global-color-0);
+  --fc-button-border-color: var(--ast-global-color-0);
+  --fc-button-hover-bg-color: var(--ast-global-color-1);
+  --fc-button-hover-border-color: var(--ast-global-color-1);
+  --fc-button-active-bg-color: var(--ast-global-color-1);
+  --fc-button-active-border-color: var(--ast-global-color-1);  
+
+  --fc-event-bg-color: var(--ast-global-color-1);
+  --fc-event-border-color: var(--ast-global-color-1);
+  --fc-event-text-color: var(--ast-global-color-5);
+  --fc-event-selected-overlay-color: var(--ast-global-color-0);
+}
+
 #LEDS-Reservas {
 
   position: relative;
-  padding: $space * 2;
+  padding: $space * 1.5;
   background-color: var(--ast-global-color-4);
   border-radius: $space * 0.5;
   overflow: hidden;
@@ -19,6 +35,44 @@
   .fc-day {
 
     cursor: pointer;
+  }
+
+  .fc-header-toolbar {
+
+    .fc-toolbar-chunk:nth-child(2) {
+
+      h2 {
+
+        font-size: 1.2rem;
+        text-align: center;
+      }
+    }      
+
+    @media (max-width: 640px) {
+
+      flex-wrap: wrap;
+
+      .fc-toolbar-chunk:nth-child(1) {        
+
+        order: 2;
+      }
+
+      .fc-toolbar-chunk:nth-child(2) {        
+
+        order: 1;
+        width: 100%;
+
+        h2 {
+  
+          margin: 0 0 $space 0;
+        }
+      }
+
+      .fc-toolbar-chunk:nth-child(3) {        
+
+        order: 3;
+      }
+    }
   }
 
   #FormWrapper {
@@ -47,7 +101,7 @@
 
   #Form {
 
-    max-width: 340px;
+    max-width: 310px;
     margin: 0 auto;
     padding: $space * 3;
     background-color: $color-light;
@@ -58,7 +112,7 @@
 
     > .Title {
       
-      margin: 0 0 $space * 3 0;
+      margin: 0 0 $space * 2.5 0;
       padding: 0 $space * 4 0 0;
       position: relative;
       min-height: $space * 2;
@@ -75,7 +129,7 @@
       .Close {
 
         position: absolute;
-        top: -$space * 1.5;
+        top: 0;
         right: -$space * 1.5;
         padding-top: 7px;
         padding-right: 12px;
@@ -147,7 +201,7 @@
         &.Recurrent {
 
           width: 100%;
-          margin: $space * 2 0 0 0;
+          margin: $space * 1.5 0 0 0;
           align-items: stretch;
 
           input {
@@ -174,7 +228,7 @@
 
         &.Title {
 
-          margin: $space * 2 0 0 0;
+          margin: $space * 1.5 0 0 0;
 
           input {
 

@@ -1,7 +1,7 @@
 <?php
 
 register_activation_hook(
-	__FILE__,
+	WP_PLUGIN_DIR  . '/poeticsoft-lespaidesants/plugin.php',
 	function() {  
 
     global $wpdb;
@@ -55,7 +55,9 @@ register_activation_hook(
       "textColor VARCHAR(256)," .
       "extendedProps VARCHAR(4096)," . // JSON object 
 
-      "state VARCHAR(256)," . // reserved | paid | past
+      "state VARCHAR(256)," . // negotiable | reserved | paid
+      "createdDate BIGINT," .
+      "paidDate BIGINT," .
 
       "PRIMARY KEY (id)
     ) $charset_collate;";

@@ -115,7 +115,11 @@ export const processreserva = data => {
       eventdata.extendedProps.startRecur = eventdata.startRecur
       eventdata.extendedProps.endRecur = eventdata.endRecur
 
-      if(data.hora != 'Todo') {
+      if(data.hora != 'Todo') {        
+
+        console.log('-------------------------------')
+        console.log(data.hora)
+        console.log(data.duration)
 
         const hora = parseInt(data.hora)
         const duration = parseInt(data.duration)
@@ -126,6 +130,10 @@ export const processreserva = data => {
   
         eventdata.extendedProps.startTime = eventdata.startTime
         eventdata.extendedProps.endTime = eventdata.endTime
+
+        console.log('-------------------------------')
+        console.log(eventdata.startTime / 1000 / 60 / 60)
+        console.log(eventdata.endTime / 1000 / 60 / 60)
 
       } else {
 

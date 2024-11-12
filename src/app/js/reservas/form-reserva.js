@@ -6,6 +6,7 @@ import {
   formmessagehtml
 } from './forms-html'
 import { processreserva } from './api'
+import formreservaerror from './form-reserva-error'
 
 export default (
   $, 
@@ -191,6 +192,18 @@ export default (
           }
 
           calendar.refetchEvents()
+        })
+        .catch(error => {
+
+          formreservaerror(
+            $,
+            {
+              message: `
+                ${ error.reason }
+              `,
+              confirmtext: `De acuerdo`
+            }
+          )
         })
 
         return false

@@ -25,7 +25,7 @@ function core_log($display) {
     $text . PHP_EOL,
     FILE_APPEND
   );
-}
+} 
 
 /* Customization */
 

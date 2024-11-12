@@ -53,12 +53,26 @@ function lespaidesants_plugin_reservas_event_create( WP_REST_Request $req ) {
       $blogid = get_current_blog_id();
       $baseprefix .= $blogid . '_';
     }
-    $tablename = $baseprefix . 'reservas_events';    
-    $data = lespaidesants_plugin_reservas_data_event_parsefordb($req->get_params());
+    $tablename = $baseprefix . 'reservas_events'; 
 
+    $query = "
+      SELECT * 
+      FROM {$tablename};
+    ";    
+    $allevents = $wpdb->get_results($query);
+    $event = $req->get_params();
+
+    $eventoverlap = lespaidesants_plugin_reservas_event_checkoverlap($allevents, $event);
+
+    if($eventoverlap) {
+
+      throw new Exception('Las fechas/horas seleccionadas están ocupadas, por favor selecciona otras.', 500); 
+
+    }    
+    
     $wpdb->insert(
       $tablename,
-      $data
+      $event
     );
 
     $query = "

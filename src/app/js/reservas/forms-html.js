@@ -265,8 +265,6 @@ export const formerrorhtml = data => {
 
 export const formeventhtml = data => {
 
-  console.log(data.event.extendedProps)
-
   const date = moment(data.event.start).format('DD [de] MMMM [de] YYYY')
   let message = ''
   const extendeddata = data.event.extendedProps
@@ -275,6 +273,8 @@ export const formeventhtml = data => {
 
     const rfrom = moment(extendeddata.startRecur).format('DD [de] MMMM [de] YYYY')
     const rto = moment(extendeddata.endRecur).format('DD [de] MMMM [de] YYYY')
+    const rstart = moment(extendeddata.startTime).subtract(1, 'hour').format('HH:mm')
+    const rend = moment(extendeddata.endTime).subtract(1, 'hour').format('HH:mm')
 
     message += `
       Esta reserva se repite 
@@ -282,7 +282,24 @@ export const formeventhtml = data => {
       <strong>${ rfrom }</strong> 
       hasta el 
       <strong>${ rto }</strong>
+      de las
+      <strong>${ rstart }</strong>
+      hasta las
+      <strong>${ rend }</strong>
+      horas.
     `
+  } else {
+
+    const start = moment(data.event.start).format('HH:mm')
+    const end = moment(data.event.end).format('HH:mm')
+
+    message += `
+      De las
+      <strong>${ start }</strong>
+      hasta las
+      <strong>${ end }</strong>
+      horas.
+    ` 
   }
 
   return `
